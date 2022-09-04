@@ -1,10 +1,10 @@
 package nz.ac.auckland.se206;
 
-import static nz.ac.auckland.se206.ml.DoodlePrediction.printPredictions;
 
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
+import com.opencsv.exceptions.CsvException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
@@ -34,9 +33,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
-
-import com.opencsv.exceptions.CsvException;
-
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -56,22 +52,22 @@ import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
  */
 public class CanvasController {
 
-	@FXML private Canvas canvas;
-	@FXML private Label lblCategory;
-	@FXML private Label lblTime;
-	@FXML private Label lblGuesses;
-	@FXML private Label lblWinOrLose;
-	@FXML private Button btnToMenu;
-	@FXML private Button btnReady;
-	@FXML private Button clearButton;
-	@FXML private Button btnSaveDrawing;
-	@FXML private TextField txtDirectory;
-	@FXML private TextField txtFileName;
+  @FXML private Canvas canvas;
+  @FXML private Label lblCategory;
+  @FXML private Label lblTime;
+  @FXML private Label lblGuesses;
+  @FXML private Label lblWinOrLose;
+  @FXML private Button btnToMenu;
+  @FXML private Button btnReady;
+  @FXML private Button clearButton;
+  @FXML private Button btnSaveDrawing;
+  @FXML private TextField txtDirectory;
+  @FXML private TextField txtFileName;
 
-	private GraphicsContext graphic;
-	private DoodlePrediction model;
-	private String currentWord;
-	private TextToSpeech speech;
+  private GraphicsContext graphic;
+  private DoodlePrediction model;
+  private String currentWord;
+  private TextToSpeech speech;
 
   // mouse coordinates
   private double currentX;
@@ -87,14 +83,14 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, URISyntaxException, CsvException {
     graphic = canvas.getGraphicsContext2D();
-    
+
     // implement the category selector and display the category on the lbl
     CategorySelector categorySelector = new CategorySelector();
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
-    onDraw(); 
+    onDraw();
 
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
@@ -128,13 +124,13 @@ public class CanvasController {
     Thread bgWelcomeSpeech = new Thread(taskWelcomeSpeech);
     bgWelcomeSpeech.start();
   }
-  
+
   @FXML
   private void onSwitchToMenu() {
     Scene sceneBtnIsIn = btnToMenu.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
-  
+
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException {
     // enable the canvas and disable to ready btn
@@ -296,65 +292,65 @@ public class CanvasController {
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
-  
+
   @FXML
   private void onDraw() {
-	// save coordinates when mouse is pressed on the canvas
-	    canvas.setOnMousePressed(
-	        e -> {
-	          currentX = e.getX();
-	          currentY = e.getY();
-	        });
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
 
-	    canvas.setOnMouseDragged(
-	        e -> {
-	          // Brush size (you can change this, it should not be too small or too large).
-	          final double size = 6;
+    canvas.setOnMouseDragged(
+        e -> {
+          // Brush size (you can change this, it should not be too small or too large).
+          final double size = 6;
 
-	          final double x = e.getX() - size / 2;
-	          final double y = e.getY() - size / 2;
+          final double x = e.getX() - size / 2;
+          final double y = e.getY() - size / 2;
 
-	          // This is the colour of the brush.
-	          graphic.setFill(Color.BLACK);
-	          graphic.setLineWidth(size);
+          // This is the colour of the brush.
+          graphic.setStroke(Color.BLACK);
+          graphic.setLineWidth(size);
 
-	          // Create a line that goes from the point (currentX, currentY) and (x,y)
-	          graphic.strokeLine(currentX, currentY, x, y);
+          // Create a line that goes from the point (currentX, currentY) and (x,y)
+          graphic.strokeLine(currentX, currentY, x, y);
 
-	          // update the coordinates
-	          currentX = x;
-	          currentY = y;
-	        });
+          // update the coordinates
+          currentX = x;
+          currentY = y;
+        });
   }
-  
+
   @FXML
   private void onErase() {
     // save coordinates when mouse is pressed on the canvas
-	    canvas.setOnMousePressed(
-	        e -> {
-	          currentX = e.getX();
-	          currentY = e.getY();
-	        });
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
 
-	    canvas.setOnMouseDragged(
-	        e -> {
-	          // Brush size (you can change this, it should not be too small or too large).
-	          final double size = 6;
+    canvas.setOnMouseDragged(
+        e -> {
+          // Brush size (you can change this, it should not be too small or too large).
+          final double size = 6;
 
-	          final double x = e.getX() - size / 2;
-	          final double y = e.getY() - size / 2;
+          final double x = e.getX() - size / 2;
+          final double y = e.getY() - size / 2;
 
-	          // This is the colour of the brush.
-	          graphic.setFill(Color.WHITE);
-	          graphic.setLineWidth(size);
+          // This is the colour of the brush.
+          graphic.setStroke(Color.WHITE);
+          graphic.setLineWidth(size);
 
-	          // Create a line that goes from the point (currentX, currentY) and (x,y)
-	          graphic.strokeLine(currentX, currentY, x, y);
+          // Create a line that goes from the point (currentX, currentY) and (x,y)
+          graphic.strokeLine(currentX, currentY, x, y);
 
-	          // update the coordinates
-	          currentX = x;
-	          currentY = y;
-	        });
+          // update the coordinates
+          currentX = x;
+          currentY = y;
+        });
   }
 
   @FXML
@@ -391,7 +387,7 @@ public class CanvasController {
     fos.write(arr);
     fos.close();
   }
-  
+
   /**
    * This method checks if the current word is in the top x classifications where x is the number
    * specified.
@@ -432,8 +428,6 @@ public class CanvasController {
 
     return imageBinary;
   }
-  
-  
 
   /**
    * Save the current snapshot on a bitmap file.

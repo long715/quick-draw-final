@@ -51,11 +51,11 @@ public class DoodlePrediction {
    * @param predictions The list of predictions to print.
    */
   public static void printPredictions(final List<Classifications.Classification> predictions) {
-	  StringBuilder predictionStrings = getPredictionString(predictions);
+    StringBuilder predictionStrings = getPredictionString(predictions);
 
-	  System.out.println(predictionStrings);
+    System.out.println(predictionStrings);
   }
-  
+
   /**
    * Builds and returns a string version of the prediction list
    *
