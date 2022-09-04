@@ -51,10 +51,28 @@ public class DoodlePrediction {
    * @param predictions The list of predictions to print.
    */
   public static void printPredictions(final List<Classifications.Classification> predictions) {
+    StringBuilder predictionStrings = getPredictionString(predictions);
+
+    System.out.println(predictionStrings);
+  }
+
+  /**
+   * Builds and returns a string version of the prediction list
+   *
+   * @param predictions The list of predictions
+   * @return a multiline string of the prediction list
+   */
+  public static StringBuilder getPredictionString(
+      final List<Classifications.Classification> predictions) {
+
+    // initialise the string variable and the integer representing
+    // the placement of the classification in the list
     final StringBuilder sb = new StringBuilder();
 
     int i = 1;
 
+    // for each classification, append to the string its placement, name and the
+    // prediction probability or confidence statistic of the category
     for (final Classifications.Classification classification : predictions) {
       sb.append("TOP ")
           .append(i)
@@ -67,7 +85,7 @@ public class DoodlePrediction {
       i++;
     }
 
-    System.out.println(sb);
+    return sb;
   }
 
   private final ZooModel<Image, Classifications> model;

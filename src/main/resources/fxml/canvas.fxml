@@ -1,37 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/18"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController"
-  style="-fx-background-color: white;">
+
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController">
   <children>
-    <Label alignment="CENTER" layoutX="124.0" layoutY="14.0" prefHeight="23.0" prefWidth="355.0"
-      text="Quick, Draw! SE206  Edition" textAlignment="CENTER">
-      <font>
-        <Font size="18.0"/>
-      </font>
-    </Label>
-    <Canvas fx:id="canvas" height="243.0" layoutX="101.0" layoutY="65.0" width="400.0">
-      <cursor>
-        <Cursor fx:constant="HAND"/>
-      </cursor>
-    </Canvas>
+      <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="400.0">
+         <children>
+            <Button fx:id="btnToMenu" mnemonicParsing="false" onAction="#onSwitchToMenu" prefHeight="25.0" prefWidth="54.0" text="Menu" />
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="296.0" text="Quick, Draw! SE206  Edition" textAlignment="CENTER">
+            <font>
+              <Font name="System Bold" size="18.0" />
+            </font>
+          </Label>
+            <Label fx:id="lblTime" alignment="CENTER" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="64.0" textFill="RED">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="lblCategory" alignment="CENTER" prefHeight="23.0" prefWidth="355.0" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="226.0" prefWidth="696.0" style="-fx-background-color: white;">
+         <children>
+            <VBox prefHeight="279.0" prefWidth="240.0" style="-fx-border-color: black;">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="242.0" style="-fx-background-color: grey;" text="Top 10 Predictions:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblGuesses" prefHeight="187.0" prefWidth="238.0" style="-fx-background-color: white;" text="&#10;&#10;&#10;&#10;&#10;&#10;&#10;" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="242.0" style="-fx-background-color: grey;" text="Results:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="68.0" prefWidth="238.0" style="-fx-background-color: white;">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+          <Canvas fx:id="canvas" height="271.0" width="456.0">
+            <cursor>
+              <Cursor fx:constant="HAND" />
+            </cursor>
+          </Canvas>
+         </children>
+      </HBox>
     <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="400.0">
       <children>
-        <Button fx:id="predictButton" mnemonicParsing="false" onAction="#onPredict" text="Predict"/>
-        <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" text="Clear"/>
+            <HBox prefHeight="26.0" prefWidth="347.0">
+               <children>
+                  <Button fx:id="btnReady" mnemonicParsing="false" onAction="#onStartGame" style="-fx-background-color: lightgreen;" text="Ready!" />
+                  <Button fx:id="btnSaveDrawing" mnemonicParsing="false" onAction="#onSave" text="Save your drawing" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="355.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onDraw" text="Pen" />
+                  <Button mnemonicParsing="false" onAction="#onErase" text="Eraser" />
+              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" text="Clear" />
+               </children>
+            </HBox>
       </children>
     </HBox>
+      <VBox prefHeight="0.0" prefWidth="696.0">
+         <children>
+            <HBox prefHeight="56.0" prefWidth="696.0">
+               <children>
+                  <Label text="Enter your Directory:  ">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDirectory" prefHeight="26.0" prefWidth="285.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="152.0" text="Enter file name: ">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtFileName" prefHeight="26.0" prefWidth="285.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
 
   </children>
   <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 </VBox>
+
