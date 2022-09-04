@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.MenuController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="98.0" prefHeight="65.0" prefWidth="384.0" text="Quick Draw!" textAlignment="CENTER">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnNewGame" contentDisplay="CENTER" layoutX="263.0" layoutY="214.0" mnemonicParsing="false" onAction="#onCreateGame" text="new game" />
+      <Button fx:id="btnLoadGame" contentDisplay="CENTER" layoutX="239.0" layoutY="259.0" mnemonicParsing="false" onAction="#onSwitchToGame" text="load previous game" />
+   </children>
+</Pane>
