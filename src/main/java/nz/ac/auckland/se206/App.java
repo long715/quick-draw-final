@@ -36,11 +36,11 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-	// initialise and store the menu innstance
-	SceneManager.storeUi(SceneManager.AppUi.MENU, loadFxml("menu"));
+    // initialise and store the menu innstance
+    SceneManager.storeUi(SceneManager.AppUi.MENU, loadFxml("menu"));
 
-	// starting scene should be the menu root
-	final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.MENU), 640, 480);
+    // starting scene should be the menu root
+    final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.MENU), 640, 480);
     stage.setScene(scene);
     stage.show();
   }

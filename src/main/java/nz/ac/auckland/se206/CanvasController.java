@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206;
 
-
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
@@ -90,6 +89,12 @@ public class CanvasController {
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
     onDraw();
 
     // when a new game page is loaded, we want the following:
@@ -295,53 +300,33 @@ public class CanvasController {
 
   @FXML
   private void onDraw() {
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
-        e -> {
-          currentX = e.getX();
-          currentY = e.getY();
-        });
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.BLACK);
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    // This is the colour of the brush.
+    graphic.setStroke(Color.BLACK);
+    setStrokeProperties(6);
   }
 
   @FXML
   private void onErase() {
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
-        e -> {
-          currentX = e.getX();
-          currentY = e.getY();
-        });
 
+    graphic.setStroke(Color.WHITE);
+    setStrokeProperties(8);
+  }
+
+  /**
+   * This is a helper method for onDraw an onErase to set the stroke properties for the canvas.
+   *
+   * @param brushSize The size of the brush which depends if user is drawing or erasing
+   */
+  private void setStrokeProperties(double brushSize) {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
+          final double size = brushSize;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
-          // This is the colour of the brush.
-          graphic.setStroke(Color.WHITE);
           graphic.setLineWidth(size);
 
           // Create a line that goes from the point (currentX, currentY) and (x,y)
