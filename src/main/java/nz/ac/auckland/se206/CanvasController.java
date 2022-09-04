@@ -18,7 +18,13 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -30,6 +36,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
@@ -67,6 +75,9 @@ public class CanvasController {
   private DoodlePrediction model;
   private String currentWord;
   private TextToSpeech speech;
+
+  private IntegerProperty seconds = new SimpleIntegerProperty(60);
+  private Timeline timeline = new Timeline();
 
   // mouse coordinates
   private double currentX;
@@ -142,32 +153,11 @@ public class CanvasController {
     canvas.setDisable(false);
     btnReady.setDisable(true);
 
-    // implementation of timer with concurrency
+    // Start the timer 
 
-    // create the task for the timer
-    Task<Void> taskTimer =
-        new Task<Void>() {
-          protected Void call() {
-            // get the current time
-            long time = System.currentTimeMillis();
-            // run loop when time difference is less than or equals to 60 seconds = 60 000ms
-            while ((System.currentTimeMillis() - time) <= 60000) {
-              // update the text of the label for the timer
-              updateTitle(
-                  String.valueOf(
-                          60
-                              - (int)
-                                  Math.floor((double) (System.currentTimeMillis() - time) / 1000))
-                      + " s");
-              // check if task has been cancelled, this is usually due the user winning early
-              if (this.isCancelled()) {
-                break;
-              }
-            }
+    startTimer();
 
-            return null;
-          }
-        };
+
 
     // create the task for the DL predictions
     Task<Boolean> taskPredict =
@@ -215,7 +205,7 @@ public class CanvasController {
 
                 // check if the user won
                 if (winOrLose.get()) {
-                  taskTimer.cancel();
+                  timeline.pause();
                   return true;
                 }
               }
@@ -225,14 +215,10 @@ public class CanvasController {
           }
         };
 
-    // bind the title property to the timer label
-    lblTime.textProperty().bind(taskTimer.titleProperty());
     // bind the title property to the guesses label
     lblGuesses.textProperty().bind(taskPredict.titleProperty());
 
-    // create the bg thread for the timer task
-    Thread bgTimer = new Thread(taskTimer);
-    bgTimer.start();
+
     // create the bg thread for the dl task
     Thread bgPredict = new Thread(taskPredict);
     bgPredict.start();
@@ -436,5 +422,22 @@ public class CanvasController {
     ImageIO.write(getCurrentSnapshot(), "bmp", imageToClassify);
 
     return imageToClassify;
+  }
+
+  /**
+   * code adapted from
+   * https://asgteach.com/2011/10/javafx-animation-and-binding-simple-countdown-timer-2/#:~:text=To%20start%20the%20timer%2C%20you,15%20and%20restarts%20the%20countdown.
+   *
+   * <p>Starts the timer time-line for the count-down timer
+   */
+  private void startTimer() {
+
+    seconds.set(60);
+    timeline = new Timeline();
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(60), new KeyValue(seconds, 0)));
+    lblTime.textProperty().bind(seconds.asString());
+    // time line plays once only
+    timeline.setCycleCount(1);
+    timeline.playFromStart();
   }
 }
