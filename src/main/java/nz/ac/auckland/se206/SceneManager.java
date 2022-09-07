@@ -48,6 +48,7 @@ public class SceneManager {
     return sceneMap.containsKey(AppUi.CANVAS);
   }
 
+
   /**
    * This method replaces the root instance in the hashmap given the ui type.
    *
