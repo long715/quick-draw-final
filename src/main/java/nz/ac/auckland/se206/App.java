@@ -38,6 +38,7 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
     // initialise and store the menu innstance
     SceneManager.storeUi(SceneManager.AppUi.MENU, loadFxml("menu"));
+    SceneManager.storeUi(SceneManager.AppUi.CHOOSEPLAYER, loadFxml("chooseplayer"));
 
     // starting scene should be the menu root
     final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.MENU), 640, 480);

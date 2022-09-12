@@ -13,7 +13,8 @@ public class SceneManager {
   // create an enum representing the two types of roots: Menu and Game
   public enum AppUi {
     MENU,
-    CANVAS
+    CANVAS,
+    CHOOSEPLAYER
   }
 
   // use hashmap to store the instances of each root
