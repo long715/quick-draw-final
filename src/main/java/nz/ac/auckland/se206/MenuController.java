@@ -9,7 +9,7 @@ public class MenuController {
 
   @FXML private Button btnNewGame;
   @FXML private Button btnLoadGame;
-  @FXML private Button btnChoosePlayer; 
+  @FXML private Button btnChoosePlayer;
 
   @FXML
   private void initialize() {
@@ -40,11 +40,11 @@ public class MenuController {
     Scene sceneBtnIsIn = btnNewGame.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CANVAS));
   }
-  
+
   @FXML
   private void onChoosePlayer() {
-	  // load the choose player root
-	  Scene sceneBtnIsIn = btnChoosePlayer.getScene();
-	  sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
+    // load the choose player root
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
   }
 }

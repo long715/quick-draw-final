@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -31,10 +30,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -108,7 +105,6 @@ public class CanvasController {
     btnSaveDrawing.setDisable(
         true); // user can't save an empty canvas, drawing can only be saved after game ends
 
-
     model = new DoodlePrediction();
     speech = new TextToSpeech();
 
@@ -142,11 +138,9 @@ public class CanvasController {
     canvas.setDisable(false);
     btnReady.setDisable(true);
 
-    // Start the timer 
+    // Start the timer
 
     startTimer();
-
-
 
     // create the task for the DL predictions
     Task<Boolean> taskPredict =
@@ -168,8 +162,8 @@ public class CanvasController {
                 FutureTask<StringBuilder> predict =
                     new FutureTask<StringBuilder>(
                         new Callable<StringBuilder>() {
-                          public StringBuilder call() throws TranslateException {                          
-                           
+                          public StringBuilder call() throws TranslateException {
+
                             // get the list of the top 10 classifications and format the list into
                             // stringbuilder
                             return DoodlePrediction.getPredictionString(
@@ -207,7 +201,6 @@ public class CanvasController {
 
     // bind the title property to the guesses label
     lblGuesses.textProperty().bind(taskPredict.titleProperty());
-
 
     // create the bg thread for the dl task
     Thread bgPredict = new Thread(taskPredict);
@@ -314,23 +307,22 @@ public class CanvasController {
   @FXML
   private void onSave() throws IOException {
 
-      // create new loader to load save menu modal
+    // create new loader to load save menu modal
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/fxml/" + "savemenu" + ".fxml"));
     Parent root = loader.load();
 
-    //configure the modal
-    Stage stage = SceneManager.setModal(btnReady, root); 
+    // configure the modal
+    Stage stage = SceneManager.setModal(btnReady, root);
     stage.setTitle("Save Menu");
 
-    //use instance methods of the controller to pass in the current snapshot
+    // use instance methods of the controller to pass in the current snapshot
     SaveMenuController controller = loader.getController();
     controller.setImage(getCurrentSnapshot());
     controller.setStage(stage);
 
-    //show the modal
+    // show the modal
     stage.showAndWait();
-
   }
 
   /**
@@ -378,16 +370,16 @@ public class CanvasController {
    * code adapted from
    * https://asgteach.com/2011/10/javafx-animation-and-binding-simple-countdown-timer-2/#:~:text=To%20start%20the%20timer%2C%20you,15%20and%20restarts%20the%20countdown.
    *
-   * Starts the timer time-line for the count-down timer
+   * <p>Starts the timer time-line for the count-down timer
    */
   private void startTimer() {
 
-    //creates new timeline for the countdown timer
+    // creates new timeline for the countdown timer
     seconds.set(60);
     timeline = new Timeline();
     timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(60), new KeyValue(seconds, 0)));
 
-    //binds the timer label to the timeline
+    // binds the timer label to the timeline
     lblTime.textProperty().bind(seconds.asString());
     // time line plays once only
     timeline.setCycleCount(1);

@@ -19,5 +19,10 @@
             <Font size="20.0" />
          </font>
       </Button>
+      <Button layoutX="91.0" layoutY="247.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

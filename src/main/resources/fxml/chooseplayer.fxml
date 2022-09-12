@@ -8,13 +8,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChoosePlayerController">
    <children>
-      <ListView fx:id="lstvPlayers" layoutX="63.0" layoutY="68.0" prefHeight="229.0" prefWidth="472.0" style="-fx-background-color: lightgrey;" />
-      <Label layoutX="63.0" layoutY="36.0" text="List of Player:">
+      <ListView fx:id="lstvPlayers" layoutX="81.0" layoutY="86.0" prefHeight="229.0" prefWidth="439.0" style="-fx-background-color: lightgrey;" />
+      <Label layoutX="80.0" layoutY="49.0" text="List of Player:">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <Button fx:id="btnCreatePlayer" layoutX="63.0" layoutY="316.0" mnemonicParsing="false" onAction="#onCreate" text="Create Player" />
-      <Button layoutX="447.0" layoutY="316.0" mnemonicParsing="false" onAction="#onDelete" text="Delete Player" />
+      <Button fx:id="btnCreatePlayer" layoutX="81.0" layoutY="329.0" mnemonicParsing="false" onAction="#onCreate" text="Create Player" />
+      <Button layoutX="431.0" layoutY="329.0" mnemonicParsing="false" onAction="#onDelete" text="Delete Player" />
+      <Button layoutX="25.0" layoutY="23.0" mnemonicParsing="false" onAction="#onSwitchToMenu" text="Cancel" />
    </children>
 </Pane>
