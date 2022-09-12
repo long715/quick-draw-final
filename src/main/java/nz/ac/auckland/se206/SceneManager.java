@@ -2,6 +2,10 @@ package nz.ac.auckland.se206;
 
 import java.util.HashMap;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * This class is used manage the two types of roots in this Scene: Menu and Game.
@@ -59,4 +63,20 @@ public class SceneManager {
   public static void replaceUi(AppUi ui, Parent root) {
     sceneMap.replace(ui, root);
   }
+  
+  /**
+	 * Helper function to configure the modal for the pop up stage. 
+	 * 
+	 * @param btn The button from the scene
+	 * @param root The root of which the function is called 
+	 * @return the stage of the pop up 
+	 **/
+	public static Stage setModal(Button btn, Parent root) {
+		Stage stage = new Stage(); 
+	    stage.initModality(Modality.WINDOW_MODAL);
+	    stage.initOwner(btn.getScene().getWindow());
+	    stage.setScene(new Scene(root));
+	    return stage; 
+	}
+  
 }

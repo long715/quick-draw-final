@@ -320,11 +320,8 @@ public class CanvasController {
     Parent root = loader.load();
 
     //configure the modal
-    Stage stage = new Stage();
+    Stage stage = SceneManager.setModal(btnReady, root); 
     stage.setTitle("Save Menu");
-    stage.initModality(Modality.WINDOW_MODAL);
-    stage.initOwner(btnReady.getScene().getWindow());
-    stage.setScene(new Scene(root));
 
     //use instance methods of the controller to pass in the current snapshot
     SaveMenuController controller = loader.getController();
