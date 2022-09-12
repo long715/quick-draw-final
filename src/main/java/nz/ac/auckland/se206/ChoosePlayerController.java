@@ -6,11 +6,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class ChoosePlayerController {
 	
 	@FXML private Button btnCreatePlayer; 
+	@FXML private ListView<String> lstvPlayers; 
+	
+	private static String name; 
 	
 	@FXML 
 	private void onCreate() throws IOException {
@@ -23,7 +27,18 @@ public class ChoosePlayerController {
 	    CreatePlayerController controller = loader.getController();
 	    controller.setStage(stage);
 	    stage.showAndWait();
+	    
+	    lstvPlayers.getItems().add(name);
 		
+	}
+	
+	@FXML
+	private void onDelete() {
+		lstvPlayers.getItems().remove(lstvPlayers.getSelectionModel().getSelectedIndex()); 
+	}
+	
+	public static void setName(String playerName) {
+		name = playerName; 
 	}
 	
 }

@@ -65,18 +65,18 @@ public class SceneManager {
   }
   
   /**
-	 * Helper function to configure the modal for the pop up stage. 
-	 * 
-	 * @param btn The button from the scene
-	 * @param root The root of which the function is called 
-	 * @return the stage of the pop up 
-	 **/
-	public static Stage setModal(Button btn, Parent root) {
-		Stage stage = new Stage(); 
-	    stage.initModality(Modality.WINDOW_MODAL);
-	    stage.initOwner(btn.getScene().getWindow());
-	    stage.setScene(new Scene(root));
-	    return stage; 
+   * Helper function to configure the modal for the pop up stage. 
+   * 
+   * @param btn The button from the scene
+   * @param root The root of which the function is called 
+   * @return the stage of the pop up 
+   **/
+  public static Stage setModal(Button btn, Parent root) {
+	  Stage stage = new Stage(); 
+	  stage.initModality(Modality.WINDOW_MODAL);
+	  stage.initOwner(btn.getScene().getWindow());
+	  stage.setScene(new Scene(root));
+	  return stage; 
 	}
   
 }
