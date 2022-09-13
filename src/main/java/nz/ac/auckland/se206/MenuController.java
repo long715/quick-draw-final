@@ -12,7 +12,7 @@ public class MenuController {
   @FXML private Button btnChoosePlayer;
 
   @FXML
-  private void initialize() {
+  private void initialize() throws IOException {
     btnLoadGame.setDisable(true); // no game to load at initialisation
   }
 

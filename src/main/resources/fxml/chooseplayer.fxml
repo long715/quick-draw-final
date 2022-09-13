@@ -16,6 +16,7 @@
       </Label>
       <Button fx:id="btnCreatePlayer" layoutX="81.0" layoutY="309.0" mnemonicParsing="false" onAction="#onCreate" text="Create Player" />
       <Button layoutX="431.0" layoutY="309.0" mnemonicParsing="false" onAction="#onDelete" text="Delete Player" />
-      <Button layoutX="464.0" layoutY="346.0" mnemonicParsing="false" onAction="#onSwitchToMenu" text="Cancel" />
+      <Button fx:id="btnOK" layoutX="81.0" layoutY="347.0" mnemonicParsing="false" onAction="#onChoose" prefHeight="26.0" prefWidth="90.0" text="OK" />
+      <Button fx:id="btnCancel" layoutX="431.0" layoutY="348.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="26.0" prefWidth="90.0" text="Cancel" />
    </children>
 </Pane>

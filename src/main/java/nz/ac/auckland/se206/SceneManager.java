@@ -14,12 +14,15 @@ import javafx.stage.Stage;
  * the game root should be initialised every time a new game is made.
  */
 public class SceneManager {
+
   // create an enum representing the two types of roots: Menu and Game
   public enum AppUi {
     MENU,
     CANVAS,
     CHOOSEPLAYER
   }
+
+  private static String mainUser;
 
   // use hashmap to store the instances of each root
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
@@ -117,5 +120,13 @@ public class SceneManager {
     stage.initOwner(btn.getScene().getWindow());
     stage.setScene(new Scene(root));
     return stage;
+  }
+
+  public static void setMainUser(String name) {
+    mainUser = name;
+  }
+
+  public static String getMainUser() {
+    return mainUser;
   }
 }

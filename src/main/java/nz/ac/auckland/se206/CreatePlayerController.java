@@ -14,10 +14,6 @@ public class CreatePlayerController {
   private String tempName;
   private int counter = 1;
 
-  public void setStage(Stage stage) {
-    this.stage = stage;
-  }
-
   @FXML
   private void onClose() throws IOException {
     // the initial name based on user input
@@ -52,5 +48,9 @@ public class CreatePlayerController {
   @FXML
   private void onCancel() {
     this.stage.close();
+  }
+
+  public void setStage(Stage stage) {
+    this.stage = stage;
   }
 }
