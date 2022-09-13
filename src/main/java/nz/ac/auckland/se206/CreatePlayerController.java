@@ -11,6 +11,8 @@ public class CreatePlayerController {
   @FXML private TextField txtPlayerName;
 
   private Stage stage;
+  private String tempName;
+  private int counter = 1;
 
   public void setStage(Stage stage) {
     this.stage = stage;
@@ -18,12 +20,25 @@ public class CreatePlayerController {
 
   @FXML
   private void onClose() throws IOException {
+    // the initial name based on user input
     if (!txtPlayerName.getText().equalsIgnoreCase("")) {
-      ChoosePlayerController.setName(
-          txtPlayerName.getText()); // replaces static every time rather than creating new instances
+      tempName = txtPlayerName.getText();
     } else {
-      ChoosePlayerController.setName("no name");
+      tempName = "no name";
     }
+
+    // check if the input is a valid name eg. no duplicates
+    StringBuilder sb = new StringBuilder();
+    sb.append(tempName);
+    while (SceneManager.ifContainsProfile(sb.toString())) {
+      sb = new StringBuilder();
+      sb.append(tempName);
+      sb.append(counter);
+      counter++;
+    }
+
+    // set the result from string builder to be the final user name
+    ChoosePlayerController.setName(sb.toString());
 
     // create the User Profile instance and create its data file
     UserProfile user = new UserProfile(ChoosePlayerController.getName());

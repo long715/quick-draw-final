@@ -76,6 +76,16 @@ public class SceneManager {
   }
 
   /**
+   * This method checks if the profile exists in hashmap.
+   *
+   * @param name The user name to check
+   * @return boolean of whether the map contains the name
+   */
+  public static boolean ifContainsProfile(String name) {
+    return profileMap.containsKey(name);
+  }
+
+  /**
    * This method checks if a previous game has already been mapped to the CANVAS key.
    *
    * @return a boolean that represents if a previous game already exists
