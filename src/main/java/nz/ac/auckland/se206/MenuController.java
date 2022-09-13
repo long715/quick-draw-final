@@ -4,15 +4,19 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class MenuController {
 
   @FXML private Button btnNewGame;
   @FXML private Button btnLoadGame;
+  @FXML private Button btnChoosePlayer;
+  @FXML private Label lblUser;
 
   @FXML
-  private void initialize() {
+  private void initialize() throws IOException {
     btnLoadGame.setDisable(true); // no game to load at initialisation
+    lblUser.setText("Hi, " + SceneManager.getMainUser());
   }
 
   @FXML
@@ -38,5 +42,12 @@ public class MenuController {
     // load the game instance
     Scene sceneBtnIsIn = btnNewGame.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CANVAS));
+  }
+
+  @FXML
+  private void onChoosePlayer() {
+    // load the choose player root
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
   }
 }

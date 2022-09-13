@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -18,17 +17,13 @@ import javax.swing.filechooser.FileSystemView;
 
 public class SaveMenuController {
 
-  @FXML
-  private TextField txtFileName;
+  @FXML private TextField txtFileName;
 
-  @FXML
-  private TextField txtDirectory;
+  @FXML private TextField txtDirectory;
 
-  @FXML
-  private Button btnSave;
+  @FXML private Button btnSave;
 
-  @FXML
-  private Button btnCancel;
+  @FXML private Button btnCancel;
 
   private BufferedImage image;
 
@@ -78,7 +73,6 @@ public class SaveMenuController {
     fos.close();
 
     this.stage.close();
-
   }
 
   @FXML
@@ -101,12 +95,12 @@ public class SaveMenuController {
     }
 
     // We save the image to a file in the tmp folder.
-    final File imageToClassify = new File(tmpFolder.getName() + "/snapshot" + System.currentTimeMillis() + ".bmp");
+    final File imageToClassify =
+        new File(tmpFolder.getName() + "/snapshot" + System.currentTimeMillis() + ".bmp");
 
     // Save the image to a file.
     ImageIO.write(image, "bmp", imageToClassify);
 
     return imageToClassify;
   }
-
 }

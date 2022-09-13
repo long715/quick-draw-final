@@ -7,12 +7,18 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.MenuController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="98.0" prefHeight="65.0" prefWidth="384.0" text="Quick Draw!" textAlignment="CENTER">
+      <Label fx:id="lblUser" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="79.0" prefHeight="35.0" prefWidth="384.0" text="Hi, " textAlignment="CENTER">
          <font>
-            <Font size="53.0" />
+            <Font size="34.0" />
          </font>
       </Label>
       <Button fx:id="btnNewGame" contentDisplay="CENTER" layoutX="263.0" layoutY="214.0" mnemonicParsing="false" onAction="#onCreateGame" text="new game" />
       <Button fx:id="btnLoadGame" contentDisplay="CENTER" layoutX="239.0" layoutY="259.0" mnemonicParsing="false" onAction="#onSwitchToGame" text="load previous game" />
+      <Button fx:id="btnChoosePlayer" layoutX="492.0" layoutY="14.0" mnemonicParsing="false" onAction="#onChoosePlayer" text="choose player" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="130.0" prefHeight="35.0" prefWidth="384.0" text="Welcome to Quick Draw!" textAlignment="CENTER">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
