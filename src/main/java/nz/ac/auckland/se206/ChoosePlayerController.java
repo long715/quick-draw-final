@@ -14,6 +14,7 @@ public class ChoosePlayerController {
   @FXML private Button btnCreatePlayer;
   @FXML private Button btnOK;
   @FXML private Button btnCancel;
+  @FXML private Button btnDelete; 
   @FXML private ListView<String> lstvPlayers;
 
   // used to access the name to be added to the list in other controllers
@@ -42,9 +43,10 @@ public class ChoosePlayerController {
 
     // during initialise where the main user is null, cancel must always be disabled
     btnCancel.setDisable(true);
-    // if list is empty, disable ok button
+    // if list is empty, disable ok and delete button
     if (lstvPlayers.getItems().isEmpty()) {
       btnOK.setDisable(true);
+      btnDelete.setDisable(true);
     }
   }
 
@@ -69,6 +71,7 @@ public class ChoosePlayerController {
 
     // enable the buttons since there is at least one user
     btnOK.setDisable(false);
+    btnDelete.setDisable(false);
     // check if this is the first entry to the instance
     if (!SceneManager.getMainUser().equalsIgnoreCase("")) { // if not, enable cancel button
       btnCancel.setDisable(false);
@@ -91,6 +94,7 @@ public class ChoosePlayerController {
     // check if there are users
     if (lstvPlayers.getItems().isEmpty()) {
       btnOK.setDisable(true);
+      btnDelete.setDisable(true);
     }
 
     // check if the main user is not in the list, if deleted, disable cancel btn
