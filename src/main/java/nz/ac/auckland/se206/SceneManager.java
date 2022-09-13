@@ -22,7 +22,7 @@ public class SceneManager {
     CHOOSEPLAYER
   }
 
-  private static String mainUser;
+  private static String mainUser = "";
 
   // use hashmap to store the instances of each root
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
@@ -76,6 +76,11 @@ public class SceneManager {
    */
   public static void deleteProfile(String name) {
     profileMap.remove(name);
+  }
+
+  /** This method deletes the canvas from sceneMap. */
+  public static void deleteCanvas() {
+    sceneMap.remove(AppUi.CANVAS);
   }
 
   /**

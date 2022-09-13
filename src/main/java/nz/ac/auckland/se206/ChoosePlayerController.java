@@ -70,7 +70,7 @@ public class ChoosePlayerController {
     // enable the buttons since there is at least one user
     btnOK.setDisable(false);
     // check if this is the first entry to the instance
-    if (SceneManager.getMainUser() != null) { // if not, enable cancel button
+    if (!SceneManager.getMainUser().equalsIgnoreCase("")) { // if not, enable cancel button
       btnCancel.setDisable(false);
     }
   }
@@ -106,12 +106,24 @@ public class ChoosePlayerController {
    * @throws IOException
    */
   @FXML
-  private void onChoose() {
+  private void onChoose() throws IOException {
     // get the name of the selected user
     String userName = lstvPlayers.getSelectionModel().getSelectedItem();
-    SceneManager.setMainUser(userName);
-    // switch to the main menu aka onCancel
-    onCancel();
+    if (userName != null) { // prevents the case when user did not select anything from the list
+
+      // check if previous userName is the same as the selected one
+      if (!SceneManager.getMainUser().equalsIgnoreCase(userName)) {
+        // if they are not the same user, remove the CANVAS key from the sceneMap
+        // and reset the menu
+        SceneManager.deleteCanvas();
+        SceneManager.setMainUser(userName); // set user befpre initialising menu
+        SceneManager.replaceUi(SceneManager.AppUi.MENU, App.loadFxml("menu"));
+      }
+
+      btnCancel.setDisable(false);
+      // switch to the main menu aka onCancel
+      onCancel();
+    }
   }
 
   @FXML
