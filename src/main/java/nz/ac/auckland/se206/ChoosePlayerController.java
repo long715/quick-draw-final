@@ -2,6 +2,8 @@ package nz.ac.auckland.se206;
 
 import java.io.File;
 import java.io.IOException;
+
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -43,11 +45,9 @@ public class ChoosePlayerController {
 
     // during initialise where the main user is null, cancel must always be disabled
     btnCancel.setDisable(true);
-    // if list is empty, disable ok and delete button
-    if (lstvPlayers.getItems().isEmpty()) {
-      btnOK.setDisable(true);
-      btnDelete.setDisable(true);
-    }
+    // disable property depends whether or not there is a selected item 
+    btnOK.disableProperty().bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
+    btnDelete.disableProperty().bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
   }
 
   @FXML
@@ -69,13 +69,6 @@ public class ChoosePlayerController {
     }
     name = ""; // reset name variable
 
-    // enable the buttons since there is at least one user
-    btnOK.setDisable(false);
-    btnDelete.setDisable(false);
-    // check if this is the first entry to the instance
-    if (!SceneManager.getMainUser().equalsIgnoreCase("")) { // if not, enable cancel button
-      btnCancel.setDisable(false);
-    }
   }
 
   @FXML
@@ -92,12 +85,6 @@ public class ChoosePlayerController {
         file.delete();
         // remove the name from list view
         lstvPlayers.getItems().remove(lstvPlayers.getSelectionModel().getSelectedIndex());
-
-        // check if there are users
-        if (lstvPlayers.getItems().isEmpty()) {
-          btnOK.setDisable(true);
-          btnDelete.setDisable(true);
-        }
 
         // check if the main user is not in the list, if deleted, disable cancel btn
         if (!lstvPlayers.getItems().contains(SceneManager.getMainUser())) {
