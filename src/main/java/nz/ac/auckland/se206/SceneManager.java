@@ -23,6 +23,8 @@ public class SceneManager {
 
   // use hashmap to store the instances of each root
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
+  // use hashmap to store user profile instances using its name (string) as the key
+  private static HashMap<String, UserProfile> profileMap = new HashMap<String, UserProfile>();
 
   /**
    * This method maps the ui and its associated root instance to the hashmap.
@@ -35,6 +37,16 @@ public class SceneManager {
   }
 
   /**
+   * This method maps the user name to the user profile instances.
+   *
+   * @param name The name of the selected user
+   * @param profile The UserProfile instance associated with the name
+   */
+  public static void storeProfile(String name, UserProfile profile) {
+    profileMap.put(name, profile);
+  }
+
+  /**
    * This method retrieves and returns the root instance from the root type.
    *
    * @param ui the type of the root
@@ -42,6 +54,25 @@ public class SceneManager {
    */
   public static Parent getUi(AppUi ui) {
     return sceneMap.get(ui);
+  }
+
+  /**
+   * This method retrieves and returns the UserProfile stance given the name of the user
+   *
+   * @param name The name of the user
+   * @return the user profile instance
+   */
+  public static UserProfile getProfile(String name) {
+    return profileMap.get(name);
+  }
+
+  /**
+   * This method deletes the user in the database.
+   *
+   * @param name The name of the user to be deleted
+   */
+  public static void deleteProfile(String name) {
+    profileMap.remove(name);
   }
 
   /**

@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,15 @@ public class ChoosePlayerController {
 
   @FXML
   private void onDelete() {
+    // delete the user instance from hash map
+    SceneManager.deleteProfile(lstvPlayers.getSelectionModel().getSelectedItem());
+    // delete the file
+    File file =
+        new File(
+            "src/main/resources/data",
+            lstvPlayers.getSelectionModel().getSelectedItem().replace(" ", "_") + ".txt");
+    file.delete();
+    // remove the name from list view
     lstvPlayers.getItems().remove(lstvPlayers.getSelectionModel().getSelectedIndex());
   }
 
@@ -45,5 +55,9 @@ public class ChoosePlayerController {
 
   public static void setName(String playerName) {
     name = playerName;
+  }
+
+  public static String getName() {
+    return name;
   }
 }
