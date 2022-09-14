@@ -16,8 +16,8 @@ public class CreatePlayerController {
 
   @FXML
   private void onClose() throws IOException {
-	  
-	String initialInput = txtPlayerName.getText().trim(); 
+
+    String initialInput = txtPlayerName.getText().trim();
     // the initial name based on user input
     if (!initialInput.equalsIgnoreCase("")) {
       tempName = initialInput;

@@ -91,11 +91,14 @@ public class UserProfile {
 
   public void addWord(String word) {
     this.words.add(word);
-      
   }
 
   public int getBestTime() {
     return this.best_time;
+  }
+
+  public String getBestWord() {
+    return this.best_name;
   }
 
   public void setBestTime(int time) {
@@ -104,5 +107,13 @@ public class UserProfile {
 
   public void setBestWord(String word) {
     this.best_name = word;
+  }
+
+  public int getWins() {
+    return this.wins;
+  }
+
+  public int getLosses() {
+    return this.loss;
   }
 }

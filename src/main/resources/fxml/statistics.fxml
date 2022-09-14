@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.StatisticsController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="674.0" text="STATISTICS">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="347.0" prefWidth="600.0">
+         <children>
+            <PieChart fx:id="pieChart" legendVisible="false" prefHeight="347.0" prefWidth="299.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="347.0" prefWidth="303.0">
+               <children>
+                  <Label prefHeight="62.0" prefWidth="235.0" text="YOUR BEST WORD WAS">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblBestWord" alignment="CENTER" prefHeight="132.0" prefWidth="302.0" text="Label" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="51.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="60.0" prefWidth="134.0" text="with a time of">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblBestTime" alignment="CENTER" prefHeight="97.0" prefWidth="331.0" text="Label">
+                     <font>
+                        <Font size="51.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

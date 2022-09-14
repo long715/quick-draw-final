@@ -6,6 +6,7 @@ import ai.djl.translate.TranslateException;
 import com.opencsv.exceptions.CsvException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -37,8 +38,6 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
-import java.io.File;
-
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -73,7 +72,6 @@ public class CanvasController {
   private Timeline timeline = new Timeline();
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
 
-
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -93,9 +91,8 @@ public class CanvasController {
     CategorySelector categorySelector = new CategorySelector();
     ArrayList<String> playedWords = currentUser.getWords();
 
-
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
-    while (playedWords.contains(randomWord)){
+    while (playedWords.contains(randomWord)) {
       randomWord = categorySelector.getRandomCategory(Difficulty.E);
     }
 
@@ -240,7 +237,7 @@ public class CanvasController {
               currentUser.addWin();
               if ((60 - Integer.parseInt(lblTime.getText())) < currentUser.getBestTime()) {
                 currentUser.setBestWord(currentWord);
-                currentUser.setBestTime(60-Integer.parseInt(lblTime.getText()));
+                currentUser.setBestTime(60 - Integer.parseInt(lblTime.getText()));
               }
 
               // create a task for the winning text-to-speech message
@@ -271,7 +268,10 @@ public class CanvasController {
               Thread bgLoseSpeech = new Thread(taskLose);
               bgLoseSpeech.start();
             }
-            currentUser.writeData(new File("src/main/resources/data/users", SceneManager.getMainUser().replace(" ", "_") + ".txt"));
+            currentUser.writeData(
+                new File(
+                    "src/main/resources/data/users",
+                    SceneManager.getMainUser().replace(" ", "_") + ".txt"));
 
           } catch (InterruptedException | ExecutionException | IOException e) {
             e.printStackTrace();

@@ -11,12 +11,14 @@ public class MenuController {
   @FXML private Button btnNewGame;
   @FXML private Button btnLoadGame;
   @FXML private Button btnChoosePlayer;
+  @FXML private Button btnStatistics;
   @FXML private Label lblUser;
 
   @FXML
   private void initialize() throws IOException {
     btnLoadGame.setDisable(true); // no game to load at initialisation
     lblUser.setText("Hi, " + SceneManager.getMainUser());
+    SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
   }
 
   @FXML
@@ -49,5 +51,11 @@ public class MenuController {
     // load the choose player root
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
+  }
+
+  @FXML
+  private void onStatistics() {
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS));
   }
 }
