@@ -84,4 +84,13 @@ public class UserProfile {
   public void addLoss() {
     this.loss += 1;
   }
+
+  public ArrayList<String> getWords() {
+    return this.words;
+  }
+
+  public void addWord(String word) {
+    this.words.add(word);
+      
+  }
 }

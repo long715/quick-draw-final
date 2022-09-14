@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -37,8 +38,6 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 
 /**
@@ -72,6 +71,8 @@ public class CanvasController {
 
   private IntegerProperty seconds = new SimpleIntegerProperty(60);
   private Timeline timeline = new Timeline();
+  private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
+
 
   // mouse coordinates
   private double currentX;
@@ -90,7 +91,15 @@ public class CanvasController {
 
     // implement the category selector and display the category on the lbl
     CategorySelector categorySelector = new CategorySelector();
+    ArrayList<String> playedWords = currentUser.getWords();
+
+
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    while (playedWords.contains(randomWord)){
+      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    }
+
+    currentUser.addWord(randomWord);
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
@@ -226,7 +235,6 @@ public class CanvasController {
           // update the winOrLose label and use the text to speech to tell the user if the they have
           // won or lost
           try {
-            UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
             if (taskPredict.get()) { // returns true if user has won
               lblWinOrLose.setText("WIN");
               currentUser.addWin();
