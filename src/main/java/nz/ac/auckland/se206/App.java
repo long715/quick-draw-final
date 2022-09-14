@@ -2,10 +2,13 @@ package nz.ac.auckland.se206;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -45,5 +48,17 @@ public class App extends Application {
     final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER), 640, 480);
     stage.setScene(scene);
     stage.show();
+    
+    // have an event handler to when the user closes the app 
+    // should close the threads 
+    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    	@Override 
+    	public void handle(WindowEvent event) {
+    		// calls the application stop method
+    		Platform.exit();
+    		// terminates any running programs aka threads
+    		System.exit(0);
+    	}
+    });
   }
 }
