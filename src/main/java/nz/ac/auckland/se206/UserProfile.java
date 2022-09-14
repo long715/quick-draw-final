@@ -76,4 +76,12 @@ public class UserProfile {
     this.best_time = Integer.valueOf(reader.readLine());
     reader.close();
   }
+
+  public void addWin() {
+    this.wins += 1;
+  }
+
+  public void addLoss() {
+    this.loss += 1;
+  }
 }

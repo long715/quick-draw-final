@@ -36,6 +36,10 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -222,8 +226,10 @@ public class CanvasController {
           // update the winOrLose label and use the text to speech to tell the user if the they have
           // won or lost
           try {
+            UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
             if (taskPredict.get()) { // returns true if user has won
               lblWinOrLose.setText("WIN");
+              currentUser.addWin();
 
               // create a task for the winning text-to-speech message
               Task<Void> taskWin =
@@ -239,6 +245,7 @@ public class CanvasController {
 
             } else {
               lblWinOrLose.setText("LOSE");
+              currentUser.addLoss();
 
               // create a task for the losing text-to-speech message
               Task<Void> taskLose =
@@ -252,7 +259,9 @@ public class CanvasController {
               Thread bgLoseSpeech = new Thread(taskLose);
               bgLoseSpeech.start();
             }
-          } catch (InterruptedException | ExecutionException e) {
+            currentUser.writeData(new File("src/main/resources/data/users", SceneManager.getMainUser().replace(" ", "_") + ".txt"));
+
+          } catch (InterruptedException | ExecutionException | IOException e) {
             e.printStackTrace();
           }
         });
