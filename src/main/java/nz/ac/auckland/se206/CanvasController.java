@@ -182,7 +182,7 @@ public class CanvasController {
                 // get the top 10 list and check if the current word is within the top 3 (EASY)
                 Platform.runLater(predict);
                 Platform.runLater(winOrLose);
-                updateTitle(predict.get().toString());
+                updateTitle(predict.get().toString().replace("_", " ")); // remove the underscores
 
                 // set the temp time
                 temp = System.currentTimeMillis();
@@ -335,7 +335,8 @@ public class CanvasController {
    */
   private boolean isWin(List<Classification> classifications, int topPredictions) {
     for (int i = 0; i < topPredictions; i++) {
-      if (classifications.get(i).getClassName().equals(currentWord)) {
+    	// format the category name from ML the same way as current word 
+      if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
         return true;
       }
     }
