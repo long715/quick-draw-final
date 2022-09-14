@@ -238,6 +238,10 @@ public class CanvasController {
             if (taskPredict.get()) { // returns true if user has won
               lblWinOrLose.setText("WIN");
               currentUser.addWin();
+              if ((60 - Integer.parseInt(lblTime.getText())) < currentUser.getBestTime()) {
+                currentUser.setBestWord(currentWord);
+                currentUser.setBestTime(60-Integer.parseInt(lblTime.getText()));
+              }
 
               // create a task for the winning text-to-speech message
               Task<Void> taskWin =

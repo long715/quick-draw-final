@@ -93,4 +93,16 @@ public class UserProfile {
     this.words.add(word);
       
   }
+
+  public int getBestTime() {
+    return this.best_time;
+  }
+
+  public void setBestTime(int time) {
+    this.best_time = time;
+  }
+
+  public void setBestWord(String word) {
+    this.best_name = word;
+  }
 }
