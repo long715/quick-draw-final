@@ -13,11 +13,13 @@ public class StatisticsController {
   @FXML
   private void initialize() {
 
+    //set the labels to show the relevant information for the current user
     UserProfile user = SceneManager.getProfile(SceneManager.getMainUser());
     if (!(user == null)) {
       lblBestTime.setText(String.valueOf(user.getBestTime()) + "s");
       lblBestWord.setText(user.getBestWord());
 
+      //add and display wins and losses on the piechart
       PieChart.Data slice1 = new PieChart.Data("Wins", user.getWins());
       PieChart.Data slice2 = new PieChart.Data("Losses", user.getLosses());
 
