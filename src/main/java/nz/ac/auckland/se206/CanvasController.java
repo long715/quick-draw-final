@@ -268,6 +268,7 @@ public class CanvasController {
               Thread bgLoseSpeech = new Thread(taskLose);
               bgLoseSpeech.start();
             }
+            SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
             currentUser.writeData(
                 new File(
                     "src/main/resources/data/users",
