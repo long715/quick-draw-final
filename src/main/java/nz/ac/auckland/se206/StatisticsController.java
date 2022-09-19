@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 public class StatisticsController {
 
   @FXML private Label lblBestTime;
@@ -22,8 +21,8 @@ public class StatisticsController {
       lblBestWord.setText(user.getBestWord());
 
       //add and display wins and losses on the piechart
-      PieChart.Data slice1 = new PieChart.Data("Wins", user.getWins());
-      PieChart.Data slice2 = new PieChart.Data("Losses", user.getLosses());
+      PieChart.Data slice1 = new PieChart.Data("Wins: " + user.getWins(), user.getWins());
+      PieChart.Data slice2 = new PieChart.Data("Losses: " + user.getLosses(), user.getLosses());
 
       pieChart.getData().add(slice1);
       pieChart.getData().add(slice2);
