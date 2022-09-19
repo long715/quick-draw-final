@@ -77,6 +77,7 @@ public class UserProfile {
     reader.close();
   }
 
+  // below are all the simple getter/setter and increment methods
   public void addWin() {
     this.wins += 1;
   }

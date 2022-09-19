@@ -4,12 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 public class StatisticsController {
 
   @FXML private Label lblBestTime;
   @FXML private Label lblBestWord;
   @FXML private PieChart pieChart;
   @FXML private Button btnBack;
+  @FXML private ListView lstvWordHistory;
 
   @FXML
   private void initialize() {
@@ -19,6 +21,9 @@ public class StatisticsController {
     if (!(user == null)) {
       lblBestTime.setText(String.valueOf(user.getBestTime()) + "s");
       lblBestWord.setText(user.getBestWord());
+
+      //display word history
+      lstvWordHistory.getItems().addAll(user.getWords());
 
       //add and display wins and losses on the piechart
       PieChart.Data slice1 = new PieChart.Data("Wins: " + user.getWins(), user.getWins());
