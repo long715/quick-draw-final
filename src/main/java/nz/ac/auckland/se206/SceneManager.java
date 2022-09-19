@@ -19,7 +19,8 @@ public class SceneManager {
   public enum AppUi {
     MENU,
     CANVAS,
-    CHOOSEPLAYER
+    CHOOSEPLAYER,
+    STATISTICS
   }
 
   private static String mainUser = "";

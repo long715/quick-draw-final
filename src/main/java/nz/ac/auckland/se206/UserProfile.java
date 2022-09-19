@@ -76,4 +76,45 @@ public class UserProfile {
     this.best_time = Integer.valueOf(reader.readLine());
     reader.close();
   }
+
+  // below are all the simple getter/setter and increment methods
+  public void addWin() {
+    this.wins += 1;
+  }
+
+  public void addLoss() {
+    this.loss += 1;
+  }
+
+  public ArrayList<String> getWords() {
+    return this.words;
+  }
+
+  public void addWord(String word) {
+    this.words.add(word);
+  }
+
+  public int getBestTime() {
+    return this.best_time;
+  }
+
+  public String getBestWord() {
+    return this.best_name;
+  }
+
+  public void setBestTime(int time) {
+    this.best_time = time;
+  }
+
+  public void setBestWord(String word) {
+    this.best_name = word;
+  }
+
+  public int getWins() {
+    return this.wins;
+  }
+
+  public int getLosses() {
+    return this.loss;
+  }
 }

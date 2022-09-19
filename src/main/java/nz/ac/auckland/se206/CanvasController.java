@@ -6,8 +6,10 @@ import ai.djl.translate.TranslateException;
 import com.opencsv.exceptions.CsvException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -68,6 +70,9 @@ public class CanvasController {
 
   private IntegerProperty seconds = new SimpleIntegerProperty(60);
   private Timeline timeline = new Timeline();
+  private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
+
+  private int timePlayed;
 
   // mouse coordinates
   private double currentX;
@@ -86,7 +91,14 @@ public class CanvasController {
 
     // implement the category selector and display the category on the lbl
     CategorySelector categorySelector = new CategorySelector();
+    ArrayList<String> playedWords = currentUser.getWords();
+
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    }
+
+    currentUser.addWord(randomWord);
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
@@ -224,6 +236,12 @@ public class CanvasController {
           try {
             if (taskPredict.get()) { // returns true if user has won
               lblWinOrLose.setText("WIN");
+              currentUser.addWin();
+              timePlayed = 60 - Integer.parseInt(lblTime.getText());
+              if (timePlayed < currentUser.getBestTime()) {
+                currentUser.setBestWord(currentWord);
+                currentUser.setBestTime(timePlayed);
+              }
 
               // create a task for the winning text-to-speech message
               Task<Void> taskWin =
@@ -239,6 +257,7 @@ public class CanvasController {
 
             } else {
               lblWinOrLose.setText("LOSE");
+              currentUser.addLoss();
 
               // create a task for the losing text-to-speech message
               Task<Void> taskLose =
@@ -252,7 +271,13 @@ public class CanvasController {
               Thread bgLoseSpeech = new Thread(taskLose);
               bgLoseSpeech.start();
             }
-          } catch (InterruptedException | ExecutionException e) {
+            SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+            currentUser.writeData(
+                new File(
+                    "src/main/resources/data/users",
+                    SceneManager.getMainUser().replace(" ", "_") + ".txt"));
+
+          } catch (InterruptedException | ExecutionException | IOException e) {
             e.printStackTrace();
           }
         });

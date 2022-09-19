@@ -20,5 +20,6 @@
             <Font size="34.0" />
          </font>
       </Label>
+      <Button fx:id="btnStatistics" layoutX="268.0" layoutY="303.0" mnemonicParsing="false" onAction="#onStatistics" text="statistics" />
    </children>
 </Pane>

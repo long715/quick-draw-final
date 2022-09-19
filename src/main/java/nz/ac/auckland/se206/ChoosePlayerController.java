@@ -2,7 +2,6 @@ package nz.ac.auckland.se206;
 
 import java.io.File;
 import java.io.IOException;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,7 @@ public class ChoosePlayerController {
   @FXML private Button btnCreatePlayer;
   @FXML private Button btnOK;
   @FXML private Button btnCancel;
-  @FXML private Button btnDelete; 
+  @FXML private Button btnDelete;
   @FXML private ListView<String> lstvPlayers;
 
   // used to access the name to be added to the list in other controllers
@@ -45,9 +44,13 @@ public class ChoosePlayerController {
 
     // during initialise where the main user is null, cancel must always be disabled
     btnCancel.setDisable(true);
-    // disable property depends whether or not there is a selected item 
-    btnOK.disableProperty().bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
-    btnDelete.disableProperty().bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
+    // disable property depends whether or not there is a selected item
+    btnOK
+        .disableProperty()
+        .bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
+    btnDelete
+        .disableProperty()
+        .bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
   }
 
   @FXML
@@ -68,28 +71,27 @@ public class ChoosePlayerController {
       lstvPlayers.getItems().add(name);
     }
     name = ""; // reset name variable
-
   }
 
   @FXML
   private void onDelete() {
-	 // only start deleting when an item is selected
-    if(!lstvPlayers.getSelectionModel().isEmpty()) {
-    	// delete the user instance from hash map
-        SceneManager.deleteProfile(lstvPlayers.getSelectionModel().getSelectedItem());
-        // delete the file
-        File file =
-            new File(
-                "src/main/resources/data/users",
-                lstvPlayers.getSelectionModel().getSelectedItem().replace(" ", "_") + ".txt");
-        file.delete();
-        // remove the name from list view
-        lstvPlayers.getItems().remove(lstvPlayers.getSelectionModel().getSelectedIndex());
+    // only start deleting when an item is selected
+    if (!lstvPlayers.getSelectionModel().isEmpty()) {
+      // delete the user instance from hash map
+      SceneManager.deleteProfile(lstvPlayers.getSelectionModel().getSelectedItem());
+      // delete the file
+      File file =
+          new File(
+              "src/main/resources/data/users",
+              lstvPlayers.getSelectionModel().getSelectedItem().replace(" ", "_") + ".txt");
+      file.delete();
+      // remove the name from list view
+      lstvPlayers.getItems().remove(lstvPlayers.getSelectionModel().getSelectedIndex());
 
-        // check if the main user is not in the list, if deleted, disable cancel btn
-        if (!lstvPlayers.getItems().contains(SceneManager.getMainUser())) {
-          btnCancel.setDisable(true);
-        }
+      // check if the main user is not in the list, if deleted, disable cancel btn
+      if (!lstvPlayers.getItems().contains(SceneManager.getMainUser())) {
+        btnCancel.setDisable(true);
+      }
     }
   }
 
