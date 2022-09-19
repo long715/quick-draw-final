@@ -72,6 +72,8 @@ public class CanvasController {
   private Timeline timeline = new Timeline();
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
 
+  private int timePlayed;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -235,9 +237,10 @@ public class CanvasController {
             if (taskPredict.get()) { // returns true if user has won
               lblWinOrLose.setText("WIN");
               currentUser.addWin();
-              if ((60 - Integer.parseInt(lblTime.getText())) < currentUser.getBestTime()) {
+              timePlayed = 60 - Integer.parseInt(lblTime.getText());
+              if (timePlayed < currentUser.getBestTime()) {
                 currentUser.setBestWord(currentWord);
-                currentUser.setBestTime(60 - Integer.parseInt(lblTime.getText()));
+                currentUser.setBestTime(timePlayed);
               }
 
               // create a task for the winning text-to-speech message
