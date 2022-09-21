@@ -48,17 +48,18 @@ public class App extends Application {
     final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER), 640, 480);
     stage.setScene(scene);
     stage.show();
-    
-    // have an event handler to when the user closes the app 
-    // should close the threads 
-    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-    	@Override 
-    	public void handle(WindowEvent event) {
-    		// calls the application stop method
-    		Platform.exit();
-    		// terminates any running programs aka threads
-    		System.exit(0);
-    	}
-    });
+
+    // have an event handler to when the user closes the app
+    // should close the threads
+    stage.setOnCloseRequest(
+        new EventHandler<WindowEvent>() {
+          @Override
+          public void handle(WindowEvent event) {
+            // calls the application stop method
+            Platform.exit();
+            // terminates any running programs aka threads
+            System.exit(0);
+          }
+        });
   }
 }

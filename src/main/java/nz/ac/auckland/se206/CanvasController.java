@@ -360,7 +360,7 @@ public class CanvasController {
    */
   private boolean isWin(List<Classification> classifications, int topPredictions) {
     for (int i = 0; i < topPredictions; i++) {
-    	// format the category name from ML the same way as current word 
+      // format the category name from ML the same way as current word
       if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
         return true;
       }
