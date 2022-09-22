@@ -16,7 +16,7 @@
       </Label>
       <Button id="btnAdd" fx:id="btnCreatePlayer" alignment="CENTER" layoutX="42.0" layoutY="837.0" mnemonicParsing="false" onAction="#onCreate" prefHeight="99.0" prefWidth="114.0" stylesheets="@../css/chooseplayer.css" text="+" />
       <Button id="btnDelete" fx:id="btnDelete" alignment="CENTER" layoutX="174.0" layoutY="837.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="99.0" prefWidth="113.0" stylesheets="@../css/chooseplayer.css" text="-" />
-      <Button id="btnOk" fx:id="btnOK" layoutX="1143.0" layoutY="840.0" mnemonicParsing="false" onAction="#onChoose" prefHeight="99.0" prefWidth="114.0" stylesheets="@../css/chooseplayer.css" text="✔" />
+      <Button id="btnOk" fx:id="btnOk" layoutX="1143.0" layoutY="840.0" mnemonicParsing="false" onAction="#onChoose" prefHeight="99.0" prefWidth="114.0" stylesheets="@../css/chooseplayer.css" text="✔" />
       <Button id="btnCancel" fx:id="btnCancel" alignment="CENTER" layoutX="-2.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="100.0" prefWidth="112.0" stylesheets="@../css/chooseplayer.css" text="x" />
    </children>
 </Pane>
