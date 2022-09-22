@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+.label{
+    -fx-faint-focus-color: white; 
+}
+
+#lblTitle{
+    -fx-text-fill: #FFDB00; 
+    -fx-font-size: 25px;
+}
+
+#playerList{
+    -fx-background-radius: 4; 
+    -fx-background-color: white; 
+}
+
+.list-cell{
+    -fx-background-radius: 2;
+    -fx-font-size: 15px;
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:selected{
+    -fx-background-color: #efe287;
+}
