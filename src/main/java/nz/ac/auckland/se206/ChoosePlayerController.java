@@ -12,15 +12,16 @@ import javafx.stage.Stage;
 
 public class ChoosePlayerController {
 
+  
+  // used to access the name to be added to the list in other controllers
+  private static String name = ""; // default an empty string
+  
   @FXML private Button btnCreatePlayer;
   @FXML private Button btnOK;
   @FXML private Button btnCancel;
   @FXML private Button btnDelete;
   @FXML private ListView<String> lstvPlayers;
-
-  // used to access the name to be added to the list in other controllers
-  private static String name = ""; // default an empty string
-
+  
   @FXML
   private void initialize() throws NumberFormatException, IOException {
 
