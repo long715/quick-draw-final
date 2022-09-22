@@ -12,10 +12,9 @@ import javafx.stage.Stage;
 
 public class ChoosePlayerController {
 
-  
   // used to access the name to be added to the list in other controllers
   private static String name = ""; // default an empty string
-  
+
   @FXML private Button btnCreatePlayer;
   @FXML private Button btnOk;
   @FXML private Button btnCancel;

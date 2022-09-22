@@ -73,6 +73,7 @@ public class CanvasController {
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
 
   private int timePlayed;
+  private boolean isPredictionStarted = false;
 
   // mouse coordinates
   private double currentX;
@@ -153,134 +154,6 @@ public class CanvasController {
     // Start the timer
 
     startTimer();
-
-    // create the task for the DL predictions
-    Task<Boolean> taskPredict =
-        new Task<Boolean>() {
-          protected Boolean call()
-              throws TranslateException, InterruptedException, ExecutionException {
-            // get the current time and create a temp time
-            long time = System.currentTimeMillis();
-            long temp = time;
-
-            // run loop when time difference is less than or equals to 60 seconds = 60 000ms
-            // should follow timer task
-            while ((System.currentTimeMillis() - time) <= 60000) {
-
-              // when a second has passed, run the DL predictor
-              if ((int) Math.floor((double) (System.currentTimeMillis() - temp) / 1000) >= 1) {
-                // create a future task for getting the prediction string
-                // required for accessing the variable from outside platform run later
-                FutureTask<StringBuilder> predict =
-                    new FutureTask<StringBuilder>(
-                        new Callable<StringBuilder>() {
-                          public StringBuilder call() throws TranslateException {
-
-                            // get the list of the top 10 classifications and format the list into
-                            // stringbuilder
-                            return DoodlePrediction.getPredictionString(
-                                model.getPredictions(getCurrentSnapshot(), 10));
-                          }
-                        });
-                // create a fitire task for checking wins
-                FutureTask<Boolean> winOrLose =
-                    new FutureTask<Boolean>(
-                        new Callable<Boolean>() {
-                          public Boolean call() throws TranslateException {
-                            return isWin(model.getPredictions(getCurrentSnapshot(), 10), 3);
-                          }
-                        });
-
-                // get the top 10 list and check if the current word is within the top 3 (EASY)
-                Platform.runLater(predict);
-                Platform.runLater(winOrLose);
-                updateTitle(predict.get().toString().replace("_", " ")); // remove the underscores
-
-                // set the temp time
-                temp = System.currentTimeMillis();
-
-                // check if the user won
-                if (winOrLose.get()) {
-                  timeline.pause();
-                  return true;
-                }
-              }
-            }
-
-            return false;
-          }
-        };
-
-    // bind the title property to the guesses label
-    lblGuesses.textProperty().bind(taskPredict.titleProperty());
-
-    // create the bg thread for the dl task
-    Thread bgPredict = new Thread(taskPredict);
-    bgPredict.start();
-
-    taskPredict.setOnSucceeded(
-        event -> {
-          // once the game has ended (timer runs out or if they won), we want the following UX:
-          canvas.setDisable(true); // user should not be able to draw on the canvas
-          btnToMenu.setDisable(
-              false); // user can go back to the main menu to load the previous game or create a new
-          // game
-          clearButton.setDisable(true); // user can't alter or reset the drawing in any way
-
-          // allow user to save the current drawing and write on the text fields for
-          // custom directory and file name inputs
-          btnSaveDrawing.setDisable(false);
-
-          // update the winOrLose label and use the text to speech to tell the user if the they have
-          // won or lost
-          try {
-            if (taskPredict.get()) { // returns true if user has won
-              lblWinOrLose.setText("WIN");
-              currentUser.addWin();
-              timePlayed = 60 - Integer.parseInt(lblTime.getText());
-              if (timePlayed < currentUser.getBestTime()) {
-                currentUser.setBestWord(currentWord);
-                currentUser.setBestTime(timePlayed);
-              }
-
-              // create a task for the winning text-to-speech message
-              Task<Void> taskWin =
-                  new Task<Void>() {
-                    protected Void call() {
-                      speech.speak("Congratulations! You won!");
-                      return null;
-                    }
-                  };
-              // run the bg thread for the task
-              Thread bgWinSpeech = new Thread(taskWin);
-              bgWinSpeech.start();
-
-            } else {
-              lblWinOrLose.setText("LOSE");
-              currentUser.addLoss();
-
-              // create a task for the losing text-to-speech message
-              Task<Void> taskLose =
-                  new Task<Void>() {
-                    protected Void call() {
-                      speech.speak("Sorry! You lost!");
-                      return null;
-                    }
-                  };
-              // run the bg thread for the task
-              Thread bgLoseSpeech = new Thread(taskLose);
-              bgLoseSpeech.start();
-            }
-            SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
-            currentUser.writeData(
-                new File(
-                    "src/main/resources/data/users",
-                    SceneManager.getMainUser().replace(" ", "_") + ".txt"));
-
-          } catch (InterruptedException | ExecutionException | IOException e) {
-            e.printStackTrace();
-          }
-        });
   }
 
   /** This method is called when the "Clear" button is pressed. */
@@ -410,5 +283,141 @@ public class CanvasController {
     // time line plays once only
     timeline.setCycleCount(1);
     timeline.playFromStart();
+  }
+
+  @FXML
+  private void startPrediction() {
+
+    if (!isPredictionStarted) {
+      isPredictionStarted = true;
+      // create the task for the DL predictions
+      Task<Boolean> taskPredict =
+          new Task<Boolean>() {
+            protected Boolean call()
+                throws TranslateException, InterruptedException, ExecutionException {
+              // get the current time and create a temp time
+              long time = System.currentTimeMillis();
+              long temp = time;
+
+              // run loop when time difference is less than or equals to 60 seconds = 60 000ms
+              // should follow timer task
+              while ((System.currentTimeMillis() - time) <= 60000) {
+
+                // when a second has passed, run the DL predictor
+                if ((int) Math.floor((double) (System.currentTimeMillis() - temp) / 1000) >= 1) {
+                  // create a future task for getting the prediction string
+                  // required for accessing the variable from outside platform run later
+                  FutureTask<StringBuilder> predict =
+                      new FutureTask<StringBuilder>(
+                          new Callable<StringBuilder>() {
+                            public StringBuilder call() throws TranslateException {
+
+                              // get the list of the top 10 classifications and format the list into
+                              // stringbuilder
+                              return DoodlePrediction.getPredictionString(
+                                  model.getPredictions(getCurrentSnapshot(), 10));
+                            }
+                          });
+                  // create a fitire task for checking wins
+                  FutureTask<Boolean> winOrLose =
+                      new FutureTask<Boolean>(
+                          new Callable<Boolean>() {
+                            public Boolean call() throws TranslateException {
+                              return isWin(model.getPredictions(getCurrentSnapshot(), 10), 3);
+                            }
+                          });
+
+                  // get the top 10 list and check if the current word is within the top 3 (EASY)
+                  Platform.runLater(predict);
+                  Platform.runLater(winOrLose);
+                  updateTitle(predict.get().toString().replace("_", " ")); // remove the underscores
+
+                  // set the temp time
+                  temp = System.currentTimeMillis();
+
+                  // check if the user won
+                  if (winOrLose.get()) {
+                    timeline.pause();
+                    return true;
+                  }
+                }
+              }
+
+              return false;
+            }
+          };
+      // create the bg thread for the dl task
+      Thread bgPredict = new Thread(taskPredict);
+      bgPredict.start();
+
+      // bind the title property to the guesses label
+      lblGuesses.textProperty().bind(taskPredict.titleProperty());
+
+      taskPredict.setOnSucceeded(
+          event -> {
+            // once the game has ended (timer runs out or if they won), we want the following UX:
+            canvas.setDisable(true); // user should not be able to draw on the canvas
+            btnToMenu.setDisable(
+                false); // user can go back to the main menu to load the previous game or create a
+            // new
+            // game
+            clearButton.setDisable(true); // user can't alter or reset the drawing in any way
+
+            // allow user to save the current drawing and write on the text fields for
+            // custom directory and file name inputs
+            btnSaveDrawing.setDisable(false);
+
+            // update the winOrLose label and use the text to speech to tell the user if the they
+            // have
+            // won or lost
+            try {
+              if (taskPredict.get()) { // returns true if user has won
+                lblWinOrLose.setText("WIN");
+                currentUser.addWin();
+                timePlayed = 60 - Integer.parseInt(lblTime.getText());
+                if (timePlayed < currentUser.getBestTime()) {
+                  currentUser.setBestWord(currentWord);
+                  currentUser.setBestTime(timePlayed);
+                }
+
+                // create a task for the winning text-to-speech message
+                Task<Void> taskWin =
+                    new Task<Void>() {
+                      protected Void call() {
+                        speech.speak("Congratulations! You won!");
+                        return null;
+                      }
+                    };
+                // run the bg thread for the task
+                Thread bgWinSpeech = new Thread(taskWin);
+                bgWinSpeech.start();
+
+              } else {
+                lblWinOrLose.setText("LOSE");
+                currentUser.addLoss();
+
+                // create a task for the losing text-to-speech message
+                Task<Void> taskLose =
+                    new Task<Void>() {
+                      protected Void call() {
+                        speech.speak("Sorry! You lost!");
+                        return null;
+                      }
+                    };
+                // run the bg thread for the task
+                Thread bgLoseSpeech = new Thread(taskLose);
+                bgLoseSpeech.start();
+              }
+              SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+              currentUser.writeData(
+                  new File(
+                      "src/main/resources/data/users",
+                      SceneManager.getMainUser().replace(" ", "_") + ".txt"));
+
+            } catch (InterruptedException | ExecutionException | IOException e) {
+              e.printStackTrace();
+            }
+          });
+    }
   }
 }
