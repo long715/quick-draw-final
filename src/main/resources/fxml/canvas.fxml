@@ -53,7 +53,7 @@
                   </Label>
                </children>
             </VBox>
-          <Canvas fx:id="canvas" height="271.0" width="456.0">
+          <Canvas fx:id="canvas" height="271.0" onDragDetected="#startPrediction" width="456.0">
             <cursor>
               <Cursor fx:constant="HAND" />
             </cursor>
