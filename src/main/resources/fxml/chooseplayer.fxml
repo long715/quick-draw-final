@@ -8,15 +8,15 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="960.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/chooseplayer.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChoosePlayerController">
    <children>
-      <ListView id="playerList" fx:id="lstvPlayers" layoutX="101.0" layoutY="139.0" prefHeight="599.0" prefWidth="1081.0" stylesheets="@../css/chooseplayer.css" />
-      <Label id="lblTitle" alignment="CENTER" layoutX="419.0" layoutY="38.0" prefHeight="30.0" prefWidth="433.0" stylesheets="@../css/chooseplayer.css" text="PLAYERS" textAlignment="CENTER">
+      <ListView id="playerList" fx:id="lstvPlayers" layoutX="102.0" layoutY="168.0" prefHeight="599.0" prefWidth="1081.0" stylesheets="@../css/chooseplayer.css" />
+      <Label id="lblTitle" alignment="CENTER" layoutX="424.0" layoutY="76.0" prefHeight="30.0" prefWidth="433.0" stylesheets="@../css/chooseplayer.css" text="PLAYERS" textAlignment="CENTER">
          <font>
             <Font name="System Font" size="61.0" />
          </font>
       </Label>
-      <Button fx:id="btnCreatePlayer" layoutX="47.0" layoutY="866.0" mnemonicParsing="false" onAction="#onCreate" prefHeight="50.0" prefWidth="186.0" stylesheets="@../css/chooseplayer.css" text="Create Player" />
-      <Button fx:id="btnDelete" layoutX="255.0" layoutY="864.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="57.0" prefWidth="220.0" text="Delete Player" />
-      <Button fx:id="btnOK" layoutX="1043.0" layoutY="861.0" mnemonicParsing="false" onAction="#onChoose" prefHeight="63.0" prefWidth="217.0" text="OK" />
-      <Button fx:id="btnCancel" layoutX="813.0" layoutY="861.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="61.0" prefWidth="212.0" text="Cancel" />
+      <Button id="btnAdd" fx:id="btnCreatePlayer" alignment="CENTER" layoutX="42.0" layoutY="837.0" mnemonicParsing="false" onAction="#onCreate" prefHeight="99.0" prefWidth="114.0" stylesheets="@../css/chooseplayer.css" text="+" />
+      <Button id="btnDelete" fx:id="btnDelete" alignment="CENTER" layoutX="174.0" layoutY="837.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="99.0" prefWidth="113.0" stylesheets="@../css/chooseplayer.css" text="-" />
+      <Button id="btnOk" fx:id="btnOK" layoutX="1143.0" layoutY="840.0" mnemonicParsing="false" onAction="#onChoose" prefHeight="99.0" prefWidth="114.0" stylesheets="@../css/chooseplayer.css" text="✔" />
+      <Button id="btnCancel" fx:id="btnCancel" alignment="CENTER" layoutX="-2.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="100.0" prefWidth="112.0" stylesheets="@../css/chooseplayer.css" text="x" />
    </children>
 </Pane>

@@ -30,3 +30,32 @@
     -fx-border-color: #A4C2F4; 
     -fx-border-width: 4px; 
 }
+
+.button{
+    -fx-text-fill: white;
+    -fx-font-size: 50px;
+}
+
+#btnAdd, #btnDelete{
+    -fx-background-color: #81a6e6; 
+}
+
+#btnCancel{
+    -fx-background-color: #E43326; 
+}
+
+#btnOk{
+    -fx-background-color: #70E425;
+}
+
+#btnAdd:hover, #btnDelete:hover{
+    -fx-background-color: #A4C2F4; 
+}
+
+#btnCancel:hover{
+    -fx-background-color: #de5f56; 
+}
+
+#btnOk:hover{
+    -fx-background-color: #89d557;
+}
