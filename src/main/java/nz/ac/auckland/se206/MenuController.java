@@ -55,7 +55,7 @@ public class MenuController {
   }
 
   @FXML
-  private void onStatistics() {
+  private void onClickStatistics() {
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS));
   }
