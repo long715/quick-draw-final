@@ -5,6 +5,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+
 public class StatisticsController {
 
   @FXML private Label lblBestTime;
@@ -16,16 +17,16 @@ public class StatisticsController {
   @FXML
   private void initialize() {
 
-    //set the labels to show the relevant information for the current user
+    // set the labels to show the relevant information for the current user
     UserProfile user = SceneManager.getProfile(SceneManager.getMainUser());
     if (!(user == null)) {
       lblBestTime.setText(String.valueOf(user.getBestTime()) + "s");
       lblBestWord.setText(user.getBestWord());
 
-      //display word history
+      // display word history
       lstvWordHistory.getItems().addAll(user.getWords());
 
-      //add and display wins and losses on the piechart
+      // add and display wins and losses on the piechart
       PieChart.Data slice1 = new PieChart.Data("Wins: " + user.getWins(), user.getWins());
       PieChart.Data slice2 = new PieChart.Data("Losses: " + user.getLosses(), user.getLosses());
 
@@ -34,8 +35,8 @@ public class StatisticsController {
     }
   }
 
-  @FXML 
+  @FXML
   private void onBack() {
-    btnBack.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU)); //returns to menu
+    btnBack.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU)); // returns to menu
   }
 }

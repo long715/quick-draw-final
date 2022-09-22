@@ -16,8 +16,8 @@ public class UserProfile {
   private int wins;
   private int loss;
   private ArrayList<String> words;
-  private String best_name;
-  private int best_time;
+  private String bestName;
+  private int bestTime;
 
   public UserProfile(String name) {
     // add underscore to names with spaces
@@ -25,8 +25,8 @@ public class UserProfile {
     this.wins = 0;
     this.loss = 0;
     this.words = new ArrayList<String>();
-    this.best_name = "NIL";
-    this.best_time = 60;
+    this.bestName = "NIL";
+    this.bestTime = 60;
   }
 
   public void saveData() throws IOException {
@@ -52,8 +52,8 @@ public class UserProfile {
     writer.write(wins + "\n");
     writer.write(loss + "\n");
     writer.write(words.toString() + "\n");
-    writer.write(best_name + "\n");
-    writer.write(best_time + "\n");
+    writer.write(bestName + "\n");
+    writer.write(bestTime + "\n");
 
     writer.close();
   }
@@ -72,8 +72,8 @@ public class UserProfile {
         new ArrayList<String>(
             Arrays.asList(
                 reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
-    this.best_name = reader.readLine();
-    this.best_time = Integer.valueOf(reader.readLine());
+    this.bestName = reader.readLine();
+    this.bestTime = Integer.valueOf(reader.readLine());
     reader.close();
   }
 
@@ -95,19 +95,19 @@ public class UserProfile {
   }
 
   public int getBestTime() {
-    return this.best_time;
+    return this.bestTime;
   }
 
   public String getBestWord() {
-    return this.best_name;
+    return this.bestName;
   }
 
   public void setBestTime(int time) {
-    this.best_time = time;
+    this.bestTime = time;
   }
 
   public void setBestWord(String word) {
-    this.best_name = word;
+    this.bestName = word;
   }
 
   public int getWins() {
