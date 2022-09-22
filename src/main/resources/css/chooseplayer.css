@@ -5,26 +5,28 @@
     -fx-font-family: 'Press Start 2P', cursive;
 }
 
-.label{
-    -fx-faint-focus-color: white; 
-}
-
 #lblTitle{
-    -fx-text-fill: #FFDB00; 
-    -fx-font-size: 25px;
+    -fx-text-fill: #83A9F2; 
+    -fx-font-size: 50px;
 }
 
 #playerList{
-    -fx-background-radius: 4; 
-    -fx-background-color: white; 
+    -fx-background-color: transparent; 
 }
 
 .list-cell{
-    -fx-background-radius: 2;
-    -fx-font-size: 15px;
+    -fx-font-size: 25px;
     -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.list-cell:hover{
+    -fx-text-fill: #A4C2F4;
 }
 
 .list-cell:filled:selected{
-    -fx-background-color: #efe287;
+    -fx-text-fill: #A4C2F4;
+    -fx-background-color: transparent;
+    -fx-border-color: #A4C2F4; 
+    -fx-border-width: 4px; 
 }
