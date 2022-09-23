@@ -109,7 +109,7 @@ public class CanvasController {
           currentX = e.getX();
           currentY = e.getY();
         });
-    onDraw();
+    onDrawBlue();
 
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
@@ -163,10 +163,33 @@ public class CanvasController {
   }
 
   @FXML
-  private void onDraw() {
+  private void onDrawBlue() {
 
     // This is the colour of the brush.
-    graphic.setStroke(Color.BLACK);
+    graphic.setStroke(Color.BLUE);
+    setStrokeProperties(10);
+  }
+
+  @FXML
+  private void onDrawGreen() {
+
+    // This is the colour of the brush.
+    graphic.setStroke(Color.GREEN);
+    setStrokeProperties(10);
+  }
+
+  @FXML
+  private void onDrawYellow() {
+
+    // This is the colour of the brush.
+    graphic.setStroke(Color.YELLOW);
+    setStrokeProperties(10);
+  }
+
+  @FXML
+  private void onDrawOrange() {
+    // This is the colour of the brush.
+    graphic.setStroke(Color.ORANGERED);
     setStrokeProperties(10);
   }
 

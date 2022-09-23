@@ -9,6 +9,7 @@
 .button{
     -fx-text-fill: white;
     -fx-font-size: 25px;
+    -fx-background-radius: 0;
 }
 
 #btnCross{
@@ -19,8 +20,25 @@
     -fx-background-color: #de5f56; 
 }
 
+#btnBlue{
+    -fx-background-color: #0624B6;
+}
+
+#btnGreen{
+    -fx-background-color: #09B519;
+}
+
+#btnYellow{
+    -fx-background-color: #CCAB02;
+}
+
+#btnOrange{
+    -fx-background-color: #EB571A;
+}
+
 .label{
     -fx-font-size: 30px;
+    -fx-text-fill:white;
 }
 
 #lblWord{
@@ -32,5 +50,17 @@
 }
 
 #lblGuesses{
-    -fx-font-size: 10px;
+    -fx-font-size: 20px;
+}
+
+#lblResults{
+    -fx-font-size: 20px; 
+}
+
+#rightVBox{
+    -fx-background-color: black; 
+}
+
+#middleHBox{
+    -fx-background-color: white; 
 }

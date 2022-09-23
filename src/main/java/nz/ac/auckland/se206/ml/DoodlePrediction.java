@@ -74,12 +74,8 @@ public class DoodlePrediction {
     // for each classification, append to the string its placement, name and the
     // prediction probability or confidence statistic of the category
     for (final Classifications.Classification classification : predictions) {
-      sb.append("TOP ")
-          .append(i)
-          .append(" : ")
-          .append(classification.getClassName())
-          .append(" : ")
-          .append(String.format("%.2f%%", 100 * classification.getProbability()))
+      sb.append(classification.getClassName())
+          .append(System.lineSeparator())
           .append(System.lineSeparator());
 
       i++;
