@@ -167,14 +167,14 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.BLACK);
-    setStrokeProperties(6);
+    setStrokeProperties(10);
   }
 
   @FXML
   private void onErase() {
 
     graphic.setStroke(Color.WHITE);
-    setStrokeProperties(8);
+    setStrokeProperties(12);
   }
 
   /**

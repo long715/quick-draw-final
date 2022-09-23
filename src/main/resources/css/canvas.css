@@ -3,9 +3,34 @@
 .root{
     -fx-background-color: black;
     -fx-font-family: 'Press Start 2P', cursive;
-    -fx-padding: -11 0 -11 0;
+    -fx-padding: -5 0 -5 0;
 }
 
-#topPane{
+.button{
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+}
 
+#btnCross{
+    -fx-background-color: #E43326;
+}
+
+#btnCross:hover{
+    -fx-background-color: #de5f56; 
+}
+
+.label{
+    -fx-font-size: 30px;
+}
+
+#lblWord{
+    -fx-text-fill: #4185F4;
+}
+
+#lblTime{
+    -fx-text-fill: #E43326;
+}
+
+#lblGuesses{
+    -fx-font-size: 10px;
 }
