@@ -49,9 +49,9 @@
           </Canvas>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
+                  <Button id="btnPurple" mnemonicParsing="false" onAction="#onDrawPurple" prefHeight="117.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnBlue" mnemonicParsing="false" onAction="#onDrawBlue" prefHeight="111.0" prefWidth="98.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnGreen" mnemonicParsing="false" onAction="#onDrawGreen" prefHeight="117.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
-                  <Button id="btnYellow" mnemonicParsing="false" onAction="#onDrawYellow" prefHeight="117.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnOrange" mnemonicParsing="false" onAction="#onDrawOrange" prefHeight="120.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnEraser" mnemonicParsing="false" onAction="#onErase" prefHeight="110.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
               <Button id="btnTrash" fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="110.0" prefWidth="98.0" stylesheets="@../css/canvas.css" />

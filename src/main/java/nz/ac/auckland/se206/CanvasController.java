@@ -179,10 +179,10 @@ public class CanvasController {
   }
 
   @FXML
-  private void onDrawYellow() {
+  private void onDrawPurple() {
 
     // This is the colour of the brush.
-    graphic.setStroke(Color.YELLOW);
+    graphic.setStroke(Color.PURPLE);
     setStrokeProperties(10);
   }
 
