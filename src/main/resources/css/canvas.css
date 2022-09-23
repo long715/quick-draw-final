@@ -47,6 +47,24 @@
     -fx-graphic: url(../images/icons8-trash-64.png);
 }
 
+#btnReady{
+    -fx-background-color: #70E325;
+    -fx-background-radius: 5;
+}
+
+#btnReady:hover{
+    -fx-background-color: #89d557;
+}
+
+#btnSave{
+    -fx-background-color: #FF02FF;
+    -fx-background-radius: 5;
+}
+
+#btnSave:hover{
+    -fx-background-color: #f862f8;
+}
+
 .label{
     -fx-font-size: 30px;
     -fx-text-fill:black;

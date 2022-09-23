@@ -35,7 +35,7 @@
                      <font>
                         <Font size="32.0" />
                      </font></Label>
-                  <Label id="lblResults" fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="260.0" stylesheets="@../css/canvas.css" text="RESULTS " textAlignment="CENTER" wrapText="true">
+                  <Label id="lblResults" fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="260.0" stylesheets="@../css/canvas.css" text="RESULTS " wrapText="true">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -61,8 +61,8 @@
       </HBox>
       <Pane prefHeight="120.0" prefWidth="1280.0">
          <children>
-            <Button fx:id="btnReady" layoutX="106.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStartGame" style="-fx-background-color: lightgreen;" text="Ready!" />
-            <Button fx:id="btnSaveDrawing" layoutX="1036.0" layoutY="3.0" mnemonicParsing="false" onAction="#onSave" text="Save" />
+            <Button id="btnReady" fx:id="btnReady" layoutX="106.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStartGame" stylesheets="@../css/canvas.css" text="READY" />
+            <Button id="btnSave" fx:id="btnSaveDrawing" layoutX="1038.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSave" stylesheets="@../css/canvas.css" text="SAVE" />
          </children>
       </Pane>
 
