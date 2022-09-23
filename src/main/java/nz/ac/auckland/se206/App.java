@@ -45,7 +45,7 @@ public class App extends Application {
 
     // starting scene should be the choose player root -> forces the user to choose a player
     // or create one before any game
-    final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER), 640, 480);
+    final Scene scene = new Scene(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER), 1280, 960);
     stage.setScene(scene);
     stage.show();
 

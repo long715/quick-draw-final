@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+#lblTitle{
+    -fx-text-fill: #83A9F2; 
+    -fx-font-size: 50px;
+}
+
+#playerList{
+    -fx-background-color: transparent; 
+}
+
+.list-cell{
+    -fx-font-size: 25px;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.list-cell:hover{
+    -fx-text-fill: #A4C2F4;
+}
+
+.list-cell:filled:selected{
+    -fx-text-fill: #A4C2F4;
+    -fx-background-color: transparent;
+    -fx-border-color: #A4C2F4; 
+    -fx-border-width: 4px; 
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-font-size: 50px;
+}
+
+#btnAdd, #btnDelete{
+    -fx-background-color: #81a6e6; 
+}
+
+#btnCancel{
+    -fx-background-color: #E43326; 
+}
+
+#btnOk{
+    -fx-background-color: #70E425;
+}
+
+#btnAdd:hover, #btnDelete:hover{
+    -fx-background-color: #A4C2F4; 
+}
+
+#btnCancel:hover{
+    -fx-background-color: #de5f56; 
+}
+
+#btnOk:hover{
+    -fx-background-color: #89d557;
+}
