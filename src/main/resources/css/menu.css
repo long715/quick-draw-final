@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+.button {
+
+    -fx-text-fill: white;
+    -fx-font-size: 50px;
+    -fx-background-color: #81a6e6; 
+
+}
+
+.label{
+    -fx-text-fill: #83A9F2; 
+    -fx-font-size: 50px;
+}
+
+.button:hover{
+    -fx-background-color:#A4C2F4;
+}
+
+#btnChoosePlayer{
+    -fx-background-image: url(../images/users.png);
+    -fx-background-size: 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 50%;
+}
+#btnStatistics{
+    -fx-background-image: url(../images/pie-graph.png);
+    -fx-background-size: 80%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 50%;
+}
