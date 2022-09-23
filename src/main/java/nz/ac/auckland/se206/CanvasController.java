@@ -395,6 +395,7 @@ public class CanvasController {
             // won or lost
             try {
               if (taskPredict.get()) { // returns true if user has won
+                lblWinOrLose.setTextFill(Color.GREEN);
                 lblWinOrLose.setText("WIN");
                 currentUser.addWin();
                 timePlayed = 60 - Integer.parseInt(lblTime.getText());
@@ -416,6 +417,7 @@ public class CanvasController {
                 bgWinSpeech.start();
 
               } else {
+                lblWinOrLose.setTextFill(Color.RED);
                 lblWinOrLose.setText("LOSE");
                 currentUser.addLoss();
 

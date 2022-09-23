@@ -31,11 +31,11 @@
          <children>
             <VBox id="rightVBox" prefHeight="650.0" prefWidth="248.0" stylesheets="@../css/canvas.css">
                <children>
-                  <Label id="lblGuesses" fx:id="lblGuesses" alignment="CENTER" prefHeight="563.0" prefWidth="246.0" stylesheets="@../css/canvas.css" text="START &#10;DRAWING" textAlignment="CENTER" wrapText="true">
+                  <Label id="lblGuesses" fx:id="lblGuesses" alignment="CENTER" prefHeight="563.0" prefWidth="246.0" stylesheets="@../css/canvas.css" text="START &#10;&#10;DRAWING!" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="32.0" />
                      </font></Label>
-                  <Label id="lblResults" fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="260.0" stylesheets="@../css/canvas.css" text="RESULTS " wrapText="true">
+                  <Label id="lblResults" fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="260.0" stylesheets="@../css/canvas.css" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="32.0" />
                      </font>
