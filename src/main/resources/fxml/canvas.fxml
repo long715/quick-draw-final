@@ -31,11 +31,11 @@
          <children>
             <VBox id="rightVBox" prefHeight="650.0" prefWidth="248.0" stylesheets="@../css/canvas.css">
                <children>
-                  <Label id="lblGuesses" fx:id="lblGuesses" alignment="CENTER" prefHeight="578.0" prefWidth="240.0" stylesheets="@../css/canvas.css" text="GUESSES" wrapText="true">
+                  <Label id="lblGuesses" fx:id="lblGuesses" alignment="CENTER" prefHeight="563.0" prefWidth="246.0" stylesheets="@../css/canvas.css" text="START &#10;DRAWING" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="32.0" />
                      </font></Label>
-                  <Label id="lblResults" fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="133.0" prefWidth="240.0" stylesheets="@../css/canvas.css" text="RESULTS " wrapText="true">
+                  <Label id="lblResults" fx:id="lblWinOrLose" alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" prefWidth="260.0" stylesheets="@../css/canvas.css" text="RESULTS " textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -49,12 +49,12 @@
           </Canvas>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button id="btnBlue" mnemonicParsing="false" onAction="#onDrawBlue" prefHeight="116.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
+                  <Button id="btnBlue" mnemonicParsing="false" onAction="#onDrawBlue" prefHeight="111.0" prefWidth="98.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnGreen" mnemonicParsing="false" onAction="#onDrawGreen" prefHeight="117.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnYellow" mnemonicParsing="false" onAction="#onDrawYellow" prefHeight="117.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
                   <Button id="btnOrange" mnemonicParsing="false" onAction="#onDrawOrange" prefHeight="120.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
-                  <Button mnemonicParsing="false" onAction="#onErase" prefHeight="110.0" prefWidth="100.0" />
-              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="111.0" prefWidth="100.0" />
+                  <Button id="btnEraser" mnemonicParsing="false" onAction="#onErase" prefHeight="110.0" prefWidth="100.0" stylesheets="@../css/canvas.css" />
+              <Button id="btnTrash" fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="110.0" prefWidth="98.0" stylesheets="@../css/canvas.css" />
                </children>
             </VBox>
          </children>

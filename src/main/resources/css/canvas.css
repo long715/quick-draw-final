@@ -36,9 +36,20 @@
     -fx-background-color: #EB571A;
 }
 
+/*ALL ICONS ARE FROM: https://icons8.com/ */
+#btnEraser{
+    -fx-background-color:white; 
+    -fx-graphic: url(../images/icons8-eraser-50.png);
+}
+
+#btnTrash{
+    -fx-background-color:white; 
+    -fx-graphic: url(../images/icons8-trash-64.png);
+}
+
 .label{
     -fx-font-size: 30px;
-    -fx-text-fill:white;
+    -fx-text-fill:black;
 }
 
 #lblWord{
@@ -54,11 +65,11 @@
 }
 
 #lblResults{
-    -fx-font-size: 20px; 
+    -fx-font-size: 30px; 
 }
 
 #rightVBox{
-    -fx-background-color: black; 
+    -fx-background-color: white; 
 }
 
 #middleHBox{
