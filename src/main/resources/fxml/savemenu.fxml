@@ -34,6 +34,6 @@
          </children>
       </GridPane>
       <Button fx:id="btnSave" alignment="CENTER" layoutX="77.0" layoutY="258.0" mnemonicParsing="false" onAction="#onSave" prefHeight="84.0" prefWidth="206.0" text="Save" />
-      <Button fx:id="btnCancel" cancelButton="true" layoutX="378.0" layoutY="258.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="84.0" prefWidth="206.0" text="Cancel" />
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="401.0" layoutY="258.0" mnemonicParsing="false" onAction="#onCancel" prefHeight="84.0" prefWidth="206.0" text="Cancel" />
    </children>
 </AnchorPane>
