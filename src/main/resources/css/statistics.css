@@ -1,43 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-
-.root{
-    -fx-background-color: black;
-    -fx-font-family: 'Press Start 2P', cursive;
+.root {
+  -fx-background-color: black;
+  -fx-font-family: "Press Start 2P", cursive;
 }
 
 .button {
-
-    -fx-text-fill: white;
-    -fx-font-size: 50px;
-    -fx-background-color: #81a6e6; 
-
+  -fx-text-fill: white;
+  -fx-font-size: 50px;
+  -fx-background-color: #81a6e6;
 }
 
 .label {
-    -fx-text-fill:white;
-    -fx-font-size: 25px;
+  -fx-text-fill: white;
+  -fx-font-size: 25px;
 }
 
 .largeLabel {
-    -fx-font-size: 50px;
+  -fx-font-size: 50px;
+  -fx-text-fill: #FFF01F;
 }
 
-
-#wordHistoryList{
-    -fx-background-color: transparent; 
+.list-cell {
+  -fx-font-size: 30px;
+  -fx-background-color: transparent;
+  -fx-text-fill: #FFF01F;
+  -fx-alignment: center;
 }
 
-.list-cell{
-    -fx-font-size: 25px;
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
+.list-cell:hover {
+  -fx-text-fill: #a4c2f4;
 }
 
-.list-cell:hover{
-    -fx-text-fill: #A4C2F4;
+.button:hover {
+  -fx-background-color: #a4c2f4;
 }
 
-.button:hover{
-    -fx-background-color:#A4C2F4;
+.default-color0.chart-pie {
+  -fx-pie-color: #ff0cff;
+}
+.default-color1.chart-pie {
+  -fx-pie-color: #00ffff;
+}
+
+.chart-pie-label-line {
+  -fx-stroke: white;
+  -fx-fill: white;
+}
+
+.chart-pie-label {
+  -fx-fill: white;
+  -fx-font-size: 2em;
+}
+
+#wordHistoryList {
+  -fx-background-color: transparent;
+}
+
+#title {
+  -fx-font-size: 75px;
+  -fx-text-fill: #83A9F2; 
+}
+
+#btnBack {
+  -fx-background-color: #e43326;
 }
