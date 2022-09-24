@@ -149,4 +149,8 @@ public class DoodlePrediction {
 
     return getPredictions(ImageIO.read(image), k);
   }
+
+  public void closeManager() {
+    model.getNDManager().close();
+  }
 }

@@ -394,6 +394,9 @@ public class CanvasController {
             // custom directory and file name inputs
             btnSaveDrawing.setDisable(false);
 
+            // close the ML Manager
+            model.closeManager();
+
             // update the winOrLose label and use the text to speech to tell the user if the they
             // have
             // won or lost
