@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.ml;
 
-
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.BufferedImageFactory;

@@ -6,20 +6,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="txtName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CreatePlayerController">
+<Pane fx:id="txtName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="550.0" stylesheets="@../css/createplayer.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CreatePlayerController">
    <children>
-      <Label layoutX="149.0" layoutY="69.0" text="Create New Player:">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="64.0" text="Hi, new player!" textAlignment="CENTER">
          <font>
             <Font size="38.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPlayerName" layoutX="91.0" layoutY="141.0" prefHeight="47.0" prefWidth="419.0" promptText="what's your name?" />
-      <Button fx:id="btnOk" layoutX="456.0" layoutY="247.0" mnemonicParsing="false" onAction="#onClose" text="OK">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button layoutX="91.0" layoutY="247.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel">
+      <TextField fx:id="txtPlayerName" layoutX="58.0" layoutY="125.0" prefHeight="47.0" prefWidth="435.0" promptText="Enter your name..." />
+      <Button fx:id="btnOk" layoutX="333.0" layoutY="210.0" mnemonicParsing="false" onAction="#onClose" prefHeight="39.0" prefWidth="163.0" stylesheets="@../css/createplayer.css" text="Join">
          <font>
             <Font size="20.0" />
          </font>
