@@ -8,43 +8,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.StatisticsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0" stylesheets="@../css/statistics.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.StatisticsController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="674.0" text="STATISTICS">
+      <Button id="btnBack" fx:id="btnBack" mnemonicParsing="false" onAction="#onBack" stylesheets="@../css/statistics.css" text="X" />
+      <Label id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="272.0" prefWidth="1437.0" text="STATISTICS">
          <font>
             <Font size="39.0" />
          </font>
       </Label>
-      <HBox prefHeight="306.0" prefWidth="600.0">
+      <HBox prefHeight="513.0" prefWidth="1280.0" stylesheets="@../css/statistics.css">
          <children>
-            <PieChart fx:id="pieChart" legendVisible="false" prefHeight="347.0" prefWidth="299.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="347.0" prefWidth="303.0">
+            <VBox prefHeight="362.0" prefWidth="646.0">
                <children>
-                  <Label prefHeight="62.0" prefWidth="235.0" text="YOUR BEST WORD WAS">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblBestWord" alignment="CENTER" prefHeight="132.0" prefWidth="302.0" text="Label" textOverrun="CLIP" wrapText="true">
-                     <font>
-                        <Font size="51.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="60.0" prefWidth="134.0" text="with a time of">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblBestTime" alignment="CENTER" prefHeight="97.0" prefWidth="331.0" text="Label">
-                     <font>
-                        <Font size="51.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="TOP_CENTER" prefHeight="347.0" prefWidth="303.0" stylesheets="@../css/statistics.css">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="36.0" prefWidth="692.0" stylesheets="@../css/statistics.css" text="YOUR BEST WORD WAS">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblBestWord" alignment="CENTER" prefHeight="107.0" prefWidth="734.0" styleClass="largeLabel" stylesheets="@../css/statistics.css" text="Label" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="773.0" stylesheets="@../css/statistics.css" text="with a time of">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblBestTime" alignment="CENTER" prefHeight="84.0" prefWidth="754.0" stylesheets="@../css/statistics.css" text="Label">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <PieChart fx:id="pieChart" legendVisible="false" prefHeight="360.0" prefWidth="646.0" />
                </children>
             </VBox>
-            <ListView fx:id="lstvWordHistory" prefHeight="200.0" prefWidth="200.0" />
+            <VBox prefHeight="513.0" prefWidth="616.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="625.0" text="WORDS PLAYED" />
+                  <ListView id="wordHistoryList" fx:id="lstvWordHistory" prefHeight="496.0" prefWidth="620.0" stylesheets="@../css/statistics.css" />
+               </children>
+            </VBox>
          </children>
       </HBox>
-      <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onBack" text="Back" />
    </children>
 </VBox>
