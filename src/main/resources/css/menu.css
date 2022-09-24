@@ -30,7 +30,7 @@
     -fx-background-position: 50%;
 }
 #btnStatistics{
-    -fx-background-image: url(../images/pie-graph.png);
+    -fx-background-image: url(../images/pixel-pie.png);
     -fx-background-size: 80%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 50%;
