@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.ml;
 
-
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.BufferedImageFactory;
@@ -149,5 +148,9 @@ public class DoodlePrediction {
     }
 
     return getPredictions(ImageIO.read(image), k);
+  }
+
+  public void closeManager() {
+    model.getNDManager().close();
   }
 }
