@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+.button {
+
+    -fx-text-fill: white;
+    -fx-font-size: 50px;
+    -fx-background-color: #81a6e6; 
+
+}
+
+.label {
+    -fx-text-fill:white;
+    -fx-font-size: 25px;
+}
+
+.largeLabel {
+    -fx-font-size: 50px;
+}
+
+
+#wordHistoryList{
+    -fx-background-color: transparent; 
+}
+
+.list-cell{
+    -fx-font-size: 25px;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.list-cell:hover{
+    -fx-text-fill: #A4C2F4;
+}
+
+.button:hover{
+    -fx-background-color:#A4C2F4;
+}
