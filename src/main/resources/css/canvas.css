@@ -21,19 +21,19 @@
 }
 
 #btnBlue{
-    -fx-background-color: #0624B6;
+    -fx-background-color: #0164EE;
 }
 
-#btnGreen{
-    -fx-background-color: #09B519;
+#btnCyan{
+    -fx-background-color: #13E5E0;
 }
 
 #btnPurple{
-    -fx-background-color: #9900FF;
+    -fx-background-color: #9B4DAD;
 }
 
-#btnOrange{
-    -fx-background-color: #EB571A;
+#btnMagenta{
+    -fx-background-color: #DD0375;
 }
 
 /*ALL ICONS ARE FROM: https://icons8.com/ */
@@ -67,7 +67,7 @@
 
 .label{
     -fx-font-size: 30px;
-    -fx-text-fill:black;
+    -fx-text-fill:white;
 }
 
 #lblWord{
@@ -87,9 +87,12 @@
 }
 
 #rightVBox{
-    -fx-background-color: white; 
+    -fx-background-color: black; 
 }
 
 #middleHBox{
-    -fx-background-color: white; 
+    -fx-background-color: black; 
+    -fx-border-style: solid none solid none;
+    -fx-border-color:white;
+    -fx-border-width: 3;
 }

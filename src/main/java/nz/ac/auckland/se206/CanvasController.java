@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -166,15 +167,15 @@ public class CanvasController {
   private void onDrawBlue() {
 
     // This is the colour of the brush.
-    graphic.setStroke(Color.BLUE);
+    graphic.setStroke(Color.DODGERBLUE);
     setStrokeProperties(10);
   }
 
   @FXML
-  private void onDrawGreen() {
+  private void onDrawCyan() {
 
     // This is the colour of the brush.
-    graphic.setStroke(Color.GREEN);
+    graphic.setStroke(Color.CYAN);
     setStrokeProperties(10);
   }
 
@@ -182,21 +183,20 @@ public class CanvasController {
   private void onDrawPurple() {
 
     // This is the colour of the brush.
-    graphic.setStroke(Color.PURPLE);
+    graphic.setStroke(Color.DARKORCHID);
     setStrokeProperties(10);
   }
 
   @FXML
-  private void onDrawOrange() {
+  private void onDrawMagenta() {
     // This is the colour of the brush.
-    graphic.setStroke(Color.ORANGERED);
+    graphic.setStroke(Color.DEEPPINK);
     setStrokeProperties(10);
   }
 
   @FXML
   private void onErase() {
-
-    graphic.setStroke(Color.WHITE);
+    graphic.setStroke(Color.BLACK);
     setStrokeProperties(12);
   }
 
@@ -271,12 +271,16 @@ public class CanvasController {
    * @return The BufferedImage corresponding to the current canvas content.
    */
   private BufferedImage getCurrentSnapshot() {
-    final Image snapshot = canvas.snapshot(null, null);
+    // this changes the snapshot backgorund to black
+    SnapshotParameters params = new SnapshotParameters();
+    params.setFill(Color.BLACK);
+
+    final Image snapshot = canvas.snapshot(params, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
     // Convert into a binary image.
     final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 
     final Graphics2D graphics = imageBinary.createGraphics();
 

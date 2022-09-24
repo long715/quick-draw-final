@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.ml;
 
-import static nz.ac.auckland.se206.util.ImageUtils.invertBlackAndWhite;
 
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
@@ -122,8 +121,6 @@ public class DoodlePrediction {
    */
   public List<Classifications.Classification> getPredictions(BufferedImage bufImg, final int k)
       throws TranslateException {
-    // The model requires a black background and white foreground.
-    bufImg = invertBlackAndWhite(bufImg);
 
     // The model requires the image to be 65x65 pixels.
     bufImg =
