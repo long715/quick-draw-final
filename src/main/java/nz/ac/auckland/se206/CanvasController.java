@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -71,7 +70,7 @@ public class CanvasController {
   private String currentWord;
   private TextToSpeech speech;
 
-  private IntegerProperty seconds = new SimpleIntegerProperty(60);
+  private volatile IntegerProperty seconds = new SimpleIntegerProperty(60);
   private Timeline timeline = new Timeline();
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
 
@@ -324,15 +323,15 @@ public class CanvasController {
           new Task<Boolean>() {
             protected Boolean call()
                 throws TranslateException, InterruptedException, ExecutionException {
-              // get the current time and create a temp time
-              long time = System.currentTimeMillis();
-              long temp = time;
+              // get the current time
+              int temp = seconds.intValue();
 
               // run loop while timer is active
               while (timeline.getStatus() != Status.STOPPED) {
 
                 // when a second has passed, run the DL predictor
-                if ((int) Math.floor((double) (System.currentTimeMillis() - temp) / 1000) >= 1) {
+                if (temp - seconds.intValue() >= 1) {
+
                   // create a future task for getting the prediction string
                   // required for accessing the variable from outside platform run later
                   FutureTask<StringBuilder> predict =
@@ -346,7 +345,7 @@ public class CanvasController {
                                   model.getPredictions(getCurrentSnapshot(), 10));
                             }
                           });
-                  // create a fitire task for checking wins
+                  // create a future task for checking wins
                   FutureTask<Boolean> winOrLose =
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
@@ -361,7 +360,7 @@ public class CanvasController {
                   updateTitle(predict.get().toString().replace("_", " ")); // remove the underscores
 
                   // set the temp time
-                  temp = System.currentTimeMillis();
+                  temp = seconds.intValue();
 
                   // check if the user won
                   if (winOrLose.get()) {
@@ -451,5 +450,3 @@ public class CanvasController {
     }
   }
 }
-
-
