@@ -20,8 +20,7 @@ public class MenuController {
     lblUser.setText("Hi, " + SceneManager.getMainUser());
 
     // load the statistics screen
-    SceneManager.storeUi(
-        SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+    SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
   }
 
   @FXML
