@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -326,9 +328,8 @@ public class CanvasController {
               long time = System.currentTimeMillis();
               long temp = time;
 
-              // run loop when time difference is less than or equals to 60 seconds = 60 000ms
-              // should follow timer task
-              while ((System.currentTimeMillis() - time) <= 60000) {
+              // run loop while timer is active
+              while (timeline.getStatus() != Status.STOPPED) {
 
                 // when a second has passed, run the DL predictor
                 if ((int) Math.floor((double) (System.currentTimeMillis() - temp) / 1000) >= 1) {
@@ -450,3 +451,5 @@ public class CanvasController {
     }
   }
 }
+
+
