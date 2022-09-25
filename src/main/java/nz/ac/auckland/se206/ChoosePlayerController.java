@@ -26,6 +26,9 @@ public class ChoosePlayerController {
 
     // load the list of players by firstly getting the list of files
     File folder = new File("src/main/resources/data/users");
+    if (!folder.exists()) {
+      folder.mkdir();
+    }
     File[] files = folder.listFiles();
 
     // for each file name, add it into the list
