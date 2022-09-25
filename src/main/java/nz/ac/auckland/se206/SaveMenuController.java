@@ -73,7 +73,6 @@ public class SaveMenuController {
     this.stage.close();
   }
 
-
   /**
    * Save the current snapshot on a bitmap file.
    *
