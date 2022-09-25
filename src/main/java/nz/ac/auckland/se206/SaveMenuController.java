@@ -10,22 +10,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import javax.swing.filechooser.FileSystemView;
 
 public class SaveMenuController {
 
-  @FXML private TextField txtFileName;
-
-  @FXML private TextField txtDirectory;
-
   @FXML private Button btnSave;
+  @FXML private Label lblDir;
 
   private BufferedImage image;
-
   private Stage stage;
+  private String pathName;
 
   public void setImage(BufferedImage image) {
     this.image = image;
@@ -36,21 +33,18 @@ public class SaveMenuController {
   }
 
   @FXML
+  private void onChooseFile() {
+    // get the directory from the chooser and set the label to
+    // show the user the chosen directory
+    FileChooser fc = new FileChooser();
+    lblDir.setText(fc.showSaveDialog(stage).getAbsolutePath());
+
+    // get the name from the text area
+    pathName = lblDir.getText();
+  }
+
+  @FXML
   private void onSave() throws IOException {
-
-    // set the default values for the directory and name, use desktop as the default
-    // directory
-    String directory = FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
-    String name = "default" + System.currentTimeMillis();
-
-    // check if any of the text fields are filled up, if filled up, overwrite the
-    // default values
-    if (!txtDirectory.getText().equalsIgnoreCase("")) {
-      directory = txtDirectory.getText();
-    }
-    if (!txtFileName.getText().equalsIgnoreCase("")) {
-      name = txtFileName.getText();
-    }
 
     // create a file for the canvas drawing
     File createdFile = saveCurrentSnapshotOnFile();
@@ -62,11 +56,11 @@ public class SaveMenuController {
     fis.close();
 
     // create the file path for the saved canvas drawing
-    Path newFilePath = Paths.get(directory + "/" + name + ".bmp");
+    Path newFilePath = Paths.get(pathName);
     Files.createFile(newFilePath); // create a file in this file path
 
     // initialise the output stream and write on the created file
-    FileOutputStream fos = new FileOutputStream(directory + "/" + name + ".bmp");
+    FileOutputStream fos = new FileOutputStream(pathName);
     fos.write(arr);
     fos.close();
 
