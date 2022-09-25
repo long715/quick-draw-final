@@ -47,11 +47,6 @@ public class CreatePlayerController {
     this.stage.close();
   }
 
-  @FXML
-  private void onCancel() {
-    this.stage.close();
-  }
-
   public void setStage(Stage stage) {
     this.stage = stage;
   }
