@@ -33,6 +33,11 @@ public class SaveMenuController {
   }
 
   @FXML
+  private void initialize() {
+    btnSave.setDisable(true);
+  }
+
+  @FXML
   private void onChooseFile() {
     // get the directory from the chooser and set the label to
     // show the user the chosen directory
@@ -41,6 +46,9 @@ public class SaveMenuController {
 
     // get the name from the text area
     pathName = lblDir.getText();
+
+    // enable the save button
+    btnSave.setDisable(false);
   }
 
   @FXML

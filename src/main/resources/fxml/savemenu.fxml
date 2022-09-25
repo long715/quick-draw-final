@@ -4,10 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="420.0" prefWidth="700.0" stylesheets="@../css/savemenu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.SaveMenuController">
+<AnchorPane prefHeight="250.0" prefWidth="550.0" stylesheets="@../css/savemenu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.SaveMenuController">
    <children>
-      <Button fx:id="btnSave" alignment="CENTER" layoutX="249.0" layoutY="304.0" mnemonicParsing="false" onAction="#onSave" prefHeight="84.0" prefWidth="206.0" text="Save" />
-      <Button layoutX="286.0" layoutY="79.0" mnemonicParsing="false" onAction="#onChooseFile" text="File Chooser" />
-      <Label fx:id="lblDir" layoutX="156.0" layoutY="149.0" prefHeight="23.0" prefWidth="403.0" text="Directory..." />
+      <Button fx:id="btnSave" alignment="CENTER" layoutX="381.0" layoutY="173.0" mnemonicParsing="false" onAction="#onSave" prefHeight="45.0" prefWidth="136.0" text="Save" />
+      <Button layoutX="33.0" layoutY="176.0" mnemonicParsing="false" onAction="#onChooseFile" prefHeight="39.0" prefWidth="252.0" text="File Chooser" />
+      <Label fx:id="lblDir" alignment="TOP_LEFT" layoutX="33.0" layoutY="33.0" prefHeight="120.0" prefWidth="484.0" text="Your directory will be shown here..." wrapText="true" />
    </children>
 </AnchorPane>
