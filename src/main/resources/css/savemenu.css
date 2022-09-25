@@ -31,12 +31,3 @@
 #btnSave:hover{
     -fx-background-color: #89d557; 
 }
-
-#btnCancel{
-    -fx-background-color: #E43326; 
-
-}
-
-#btnCancel:hover{
-    -fx-background-color: #f0675e;
-}
