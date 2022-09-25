@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+.button {
+
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-background-radius: 15px;
+
+}
+
+.label{
+    -fx-text-fill: #83A9F2; 
+    -fx-font-size: 18px;
+}
+
+.button:hover{
+    -fx-background-color:#A4C2F4;
+}
+
+#btnSave{
+    -fx-background-color: #70E325; 
+    
+}
+
+#btnSave:hover{
+    -fx-background-color: #89d557; 
+}

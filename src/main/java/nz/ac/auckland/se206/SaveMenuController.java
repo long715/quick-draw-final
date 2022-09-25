@@ -23,8 +23,6 @@ public class SaveMenuController {
 
   @FXML private Button btnSave;
 
-  @FXML private Button btnCancel;
-
   private BufferedImage image;
 
   private Stage stage;
@@ -75,10 +73,6 @@ public class SaveMenuController {
     this.stage.close();
   }
 
-  @FXML
-  private void onCancel() {
-    this.stage.close();
-  }
 
   /**
    * Save the current snapshot on a bitmap file.
