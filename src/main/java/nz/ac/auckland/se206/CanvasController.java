@@ -94,9 +94,19 @@ public class CanvasController {
 
     // implement the category selector and display the category on the lbl
     CategorySelector categorySelector = new CategorySelector();
+
+    // get words current user has played and all words from easy category
     ArrayList<String> playedWords = currentUser.getWords();
+    List<String> allWords = categorySelector.getDifficultyList(Difficulty.E);
 
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+
+    // check if the player has played all the words 
+    if (playedWords.containsAll(allWords)){
+      currentUser.newRound();
+    }
+
+    // generate word that user has not played yet in current round
     while (playedWords.contains(randomWord)) {
       randomWord = categorySelector.getRandomCategory(Difficulty.E);
     }
