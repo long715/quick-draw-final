@@ -18,6 +18,7 @@ public class UserProfile {
   private ArrayList<String> words;
   private String bestName;
   private int bestTime;
+  private int rounds;
 
   public UserProfile(String name) {
     // add underscore to names with spaces
@@ -27,6 +28,7 @@ public class UserProfile {
     this.words = new ArrayList<String>();
     this.bestName = "NIL";
     this.bestTime = 60;
+    this.rounds = 0;
   }
 
   public void saveData() throws IOException {
@@ -54,6 +56,7 @@ public class UserProfile {
     writer.write(words.toString() + "\n");
     writer.write(bestName + "\n");
     writer.write(bestTime + "\n");
+    writer.write(rounds + "\n");
 
     writer.close();
   }
@@ -74,6 +77,7 @@ public class UserProfile {
                 reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
     this.bestName = reader.readLine();
     this.bestTime = Integer.valueOf(reader.readLine());
+    this.rounds = Integer.valueOf(reader.readLine());
     reader.close();
   }
 
@@ -117,4 +121,13 @@ public class UserProfile {
   public int getLosses() {
     return this.loss;
   }
+
+  public void addRound() {
+    this.rounds++;
+  }
+  public void newRound() {
+    this.words = new ArrayList<String>();
+    addRound();
+  }
+  
 }
