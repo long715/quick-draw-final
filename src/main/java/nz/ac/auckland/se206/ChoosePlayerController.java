@@ -15,6 +15,14 @@ public class ChoosePlayerController {
   // used to access the name to be added to the list in other controllers
   private static String name = ""; // default an empty string
 
+  public static void setName(String playerName) {
+    name = playerName;
+  }
+
+  public static String getName() {
+    return name;
+  }
+
   @FXML private Button btnCreatePlayer;
   @FXML private Button btnOk;
   @FXML private Button btnCancel;
@@ -125,13 +133,5 @@ public class ChoosePlayerController {
   @FXML
   private void onCancel() {
     btnCancel.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
-  }
-
-  public static void setName(String playerName) {
-    name = playerName;
-  }
-
-  public static String getName() {
-    return name;
   }
 }
