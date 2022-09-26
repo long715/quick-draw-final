@@ -125,9 +125,9 @@ public class UserProfile {
   public void addRound() {
     this.rounds++;
   }
+
   public void newRound() {
     this.words = new ArrayList<String>();
     addRound();
   }
-  
 }
