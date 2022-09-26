@@ -16,7 +16,19 @@
 
 .label{
     -fx-text-fill: rgb(24, 189, 189); 
-    -fx-font-size: 15px;
+    -fx-font-size: 25px;
+}
+
+#lblWarning{
+    -fx-font-size: 10px;
+    -fx-text-fill: #E43326;
+}
+
+.text-field{
+    -fx-background-color: black;
+    -fx-prompt-text-fill: rgb(24, 189, 189); 
+    -fx-text-fill: rgb(24, 189, 189); 
+    -fx-border-color:rgb(24, 189, 189);
 }
 
 .button:hover{

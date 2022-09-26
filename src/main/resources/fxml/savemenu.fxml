@@ -2,12 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="250.0" prefWidth="550.0" stylesheets="@../css/savemenu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.SaveMenuController">
    <children>
       <Button fx:id="btnSave" alignment="CENTER" layoutX="381.0" layoutY="173.0" mnemonicParsing="false" onAction="#onSave" prefHeight="45.0" prefWidth="136.0" text="Save" />
       <Button layoutX="33.0" layoutY="176.0" mnemonicParsing="false" onAction="#onChooseFile" prefHeight="39.0" prefWidth="252.0" text="File Chooser" />
-      <Label fx:id="lblDir" alignment="TOP_LEFT" layoutX="33.0" layoutY="33.0" prefHeight="120.0" prefWidth="484.0" text="Your directory will be shown here..." wrapText="true" />
+      <Label fx:id="lblTitle" alignment="CENTER" layoutX="33.0" layoutY="33.0" prefHeight="39.0" prefWidth="484.0" text="FILE PATH" wrapText="true" />
+      <TextField fx:id="txtDir" layoutX="33.0" layoutY="88.0" prefHeight="45.0" prefWidth="484.0" promptText="Enter the directory..." />
+      <Label id="lblWarning" fx:id="lblWarning" layoutX="33.0" layoutY="140.0" prefHeight="30.0" prefWidth="484.0" stylesheets="@../css/savemenu.css" />
    </children>
 </AnchorPane>

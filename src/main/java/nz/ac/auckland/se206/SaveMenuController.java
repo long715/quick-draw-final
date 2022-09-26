@@ -6,11 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -18,7 +20,9 @@ import javax.imageio.ImageIO;
 public class SaveMenuController {
 
   @FXML private Button btnSave;
-  @FXML private Label lblDir;
+  @FXML private Label lblTitle;
+  @FXML private Label lblWarning;
+  @FXML private TextField txtDir;
 
   private BufferedImage image;
   private Stage stage;
@@ -33,26 +37,22 @@ public class SaveMenuController {
   }
 
   @FXML
-  private void initialize() {
-    btnSave.setDisable(true);
-  }
-
-  @FXML
   private void onChooseFile() {
     // get the directory from the chooser and set the label to
     // show the user the chosen directory
     FileChooser fc = new FileChooser();
-    lblDir.setText(fc.showSaveDialog(stage).getAbsolutePath());
-
-    // get the name from the text area
-    pathName = lblDir.getText();
-
-    // enable the save button
-    btnSave.setDisable(false);
+    txtDir.setText(fc.showSaveDialog(stage).getAbsolutePath() + ".bmp");
   }
 
   @FXML
   private void onSave() throws IOException {
+    // if dir doesnt contain the .bmp extension, its considered as
+    // invalid
+    if (!txtDir.getText().contains(".bmp")) {
+      lblWarning.setText("Does not contain .bmp extension");
+      return;
+    }
+    pathName = txtDir.getText();
 
     // create a file for the canvas drawing
     File createdFile = saveCurrentSnapshotOnFile();
@@ -65,7 +65,32 @@ public class SaveMenuController {
 
     // create the file path for the saved canvas drawing
     Path newFilePath = Paths.get(pathName);
-    Files.createFile(newFilePath); // create a file in this file path
+
+    /** CHECKING FOR WARNINGS */
+    File file = new File(pathName);
+
+    // check if file name is invalid
+    if (file.getName().equalsIgnoreCase(".bmp")) {
+      lblWarning.setText("Invalid file name");
+      return;
+    }
+    // check if there's no parent directory, prevents default dir
+    if (file.getParent() == null) {
+      lblWarning.setText("No parent directory provided");
+      return;
+    }
+    // check if file exists
+    if (file.exists()) {
+      lblWarning.setText("File name already exists");
+      return;
+    }
+
+    try {
+      Files.createFile(newFilePath); // create a file in this file path
+    } catch (NoSuchFileException e) {
+      lblWarning.setText("Invalid path provided");
+      return;
+    }
 
     // initialise the output stream and write on the created file
     FileOutputStream fos = new FileOutputStream(pathName);
