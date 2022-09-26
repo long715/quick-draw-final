@@ -6,26 +6,27 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import javax.swing.filechooser.FileSystemView;
 
 public class SaveMenuController {
 
-  @FXML private TextField txtFileName;
-
-  @FXML private TextField txtDirectory;
-
   @FXML private Button btnSave;
+  @FXML private Label lblTitle;
+  @FXML private Label lblWarning;
+  @FXML private TextField txtDir;
 
   private BufferedImage image;
-
   private Stage stage;
+  private String pathName;
 
   public void setImage(BufferedImage image) {
     this.image = image;
@@ -36,21 +37,22 @@ public class SaveMenuController {
   }
 
   @FXML
+  private void onChooseFile() {
+    // get the directory from the chooser and set the label to
+    // show the user the chosen directory
+    FileChooser fc = new FileChooser();
+    txtDir.setText(fc.showSaveDialog(stage).getAbsolutePath() + ".bmp");
+  }
+
+  @FXML
   private void onSave() throws IOException {
-
-    // set the default values for the directory and name, use desktop as the default
-    // directory
-    String directory = FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
-    String name = "default" + System.currentTimeMillis();
-
-    // check if any of the text fields are filled up, if filled up, overwrite the
-    // default values
-    if (!txtDirectory.getText().equalsIgnoreCase("")) {
-      directory = txtDirectory.getText();
+    // if dir doesnt contain the .bmp extension, its considered as
+    // invalid
+    if (!txtDir.getText().contains(".bmp")) {
+      lblWarning.setText("Does not contain .bmp extension");
+      return;
     }
-    if (!txtFileName.getText().equalsIgnoreCase("")) {
-      name = txtFileName.getText();
-    }
+    pathName = txtDir.getText();
 
     // create a file for the canvas drawing
     File createdFile = saveCurrentSnapshotOnFile();
@@ -62,11 +64,36 @@ public class SaveMenuController {
     fis.close();
 
     // create the file path for the saved canvas drawing
-    Path newFilePath = Paths.get(directory + "/" + name + ".bmp");
-    Files.createFile(newFilePath); // create a file in this file path
+    Path newFilePath = Paths.get(pathName);
+
+    /** CHECKING FOR WARNINGS */
+    File file = new File(pathName);
+
+    // check if file name is invalid
+    if (file.getName().equalsIgnoreCase(".bmp")) {
+      lblWarning.setText("Invalid file name");
+      return;
+    }
+    // check if there's no parent directory, prevents default dir
+    if (file.getParent() == null) {
+      lblWarning.setText("No parent directory provided");
+      return;
+    }
+    // check if file exists
+    if (file.exists()) {
+      lblWarning.setText("File name already exists");
+      return;
+    }
+
+    try {
+      Files.createFile(newFilePath); // create a file in this file path
+    } catch (NoSuchFileException e) {
+      lblWarning.setText("Invalid path provided");
+      return;
+    }
 
     // initialise the output stream and write on the created file
-    FileOutputStream fos = new FileOutputStream(directory + "/" + name + ".bmp");
+    FileOutputStream fos = new FileOutputStream(pathName);
     fos.write(arr);
     fos.close();
 

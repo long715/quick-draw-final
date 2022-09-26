@@ -7,24 +7,37 @@
 }
 
 .button {
-
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
-    -fx-background-radius: 15px;
-
+    -fx-background-color: rgb(24, 189, 189);
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-border-color: #493BF2;
+    -fx-border-width:2;
 }
 
 .label{
-    -fx-text-fill: #83A9F2; 
-    -fx-font-size: 18px;
+    -fx-text-fill: rgb(24, 189, 189); 
+    -fx-font-size: 25px;
+}
+
+#lblWarning{
+    -fx-font-size: 10px;
+    -fx-text-fill: #E43326;
+}
+
+.text-field{
+    -fx-background-color: black;
+    -fx-prompt-text-fill: rgb(24, 189, 189); 
+    -fx-text-fill: rgb(24, 189, 189); 
+    -fx-border-color:rgb(24, 189, 189);
 }
 
 .button:hover{
-    -fx-background-color:#A4C2F4;
+    -fx-background-color:rgb(26, 146, 146);
 }
 
 #btnSave{
     -fx-background-color: #70E325; 
+    -fx-border-color: green; 
     
 }
 
