@@ -72,11 +72,11 @@ public class CategorySelector {
 
   /**
    * This method returns the entire list of words of a given difficulty
-   * 
+   *
    * @param difficulty
    * @return
    */
-  public List<String> getDifficultyList(Difficulty difficulty){
+  public List<String> getDifficultyList(Difficulty difficulty) {
     return difficulty2categories.get(difficulty);
   }
 }

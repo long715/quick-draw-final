@@ -101,8 +101,8 @@ public class CanvasController {
 
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
 
-    // check if the player has played all the words 
-    if (playedWords.containsAll(allWords)){
+    // check if the player has played all the words
+    if (playedWords.containsAll(allWords)) {
       currentUser.newRound();
     }
 
