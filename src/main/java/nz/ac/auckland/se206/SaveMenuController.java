@@ -41,7 +41,10 @@ public class SaveMenuController {
     // get the directory from the chooser and set the label to
     // show the user the chosen directory
     FileChooser fc = new FileChooser();
-    txtDir.setText(fc.showSaveDialog(stage).getAbsolutePath() + ".bmp");
+    File selectedDir = fc.showSaveDialog(stage);
+    if (selectedDir != null) {
+      txtDir.setText(selectedDir.getAbsolutePath() + ".bmp");
+    }
   }
 
   @FXML
