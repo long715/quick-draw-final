@@ -39,7 +39,6 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
-import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -98,18 +97,17 @@ public class CanvasController {
 
     // get words current user has played and all words from easy category
     ArrayList<String> playedWords = currentUser.getWords();
-    List<String> allWords = categorySelector.getDifficultyList(Difficulty.E);
-
-    String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
 
     // check if the player has played all the words
     if (playedWords.containsAll(allWords)) {
       currentUser.newRound();
     }
 
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
     // generate word that user has not played yet in current round
     while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
     }
 
     currentUser.addWord(randomWord);

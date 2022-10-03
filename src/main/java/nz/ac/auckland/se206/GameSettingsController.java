@@ -11,6 +11,10 @@ public class GameSettingsController {
   @FXML private ToggleButton tbtnAccuracyE;
   @FXML private ToggleButton tbtnAccuracyM;
   @FXML private ToggleButton tbtnAccuracyH;
+  @FXML private ToggleButton tbtnWordsE;
+  @FXML private ToggleButton tbtnWordsM;
+  @FXML private ToggleButton tbtnWordsH;
+  @FXML private ToggleButton tbtnWordsMA;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
   ;
@@ -26,6 +30,17 @@ public class GameSettingsController {
       tbtnAccuracyM.setSelected(true);
     } else {
       tbtnAccuracyH.setSelected(true);
+    }
+
+    // looks thru the previous settings for WORDS
+    if (currentUser.getWordsSettings() == 3) {
+      tbtnWordsE.setSelected(true);
+    } else if (currentUser.getWordsSettings() == 2) {
+      tbtnWordsM.setSelected(true);
+    } else if (currentUser.getWordsSettings() == 1) {
+      tbtnWordsH.setSelected(true);
+    } else {
+      tbtnWordsMA.setSelected(true);
     }
   }
 
@@ -51,6 +66,30 @@ public class GameSettingsController {
   @FXML
   private void onSetAccuracyHard() throws IOException {
     currentUser.setAccuracy(1);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetWordsEasy() throws IOException {
+    currentUser.setWordsSettings(3);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetWordsMedium() throws IOException {
+    currentUser.setWordsSettings(2);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetWordsHard() throws IOException {
+    currentUser.setWordsSettings(1);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetWordsMaster() throws IOException {
+    currentUser.setWordsSettings(0);
     currentUser.saveData();
   }
 }

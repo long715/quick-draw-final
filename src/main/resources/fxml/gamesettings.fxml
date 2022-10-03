@@ -50,26 +50,14 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="EASY">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="MEDIUM">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="HARD">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="MASTER">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
+                  <ToggleButton fx:id="tbtnWordsE" mnemonicParsing="false" onAction="#onSetWordsEasy" prefHeight="50.0" prefWidth="94.0" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG2" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" prefHeight="50.0" prefWidth="96.0" text="MEDIUM" toggleGroup="$TG2" />
+                  <ToggleButton fx:id="tbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" prefHeight="51.0" prefWidth="98.0" text="HARD" toggleGroup="$TG2" />
+                  <ToggleButton fx:id="tbtnWordsMA" mnemonicParsing="false" onAction="#onSetWordsMaster" prefHeight="51.0" prefWidth="102.0" text="MASTER" toggleGroup="$TG2" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
