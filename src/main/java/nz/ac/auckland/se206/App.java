@@ -41,7 +41,6 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
     // we'll always have only one chooseplayer and menu instances
     SceneManager.storeUi(SceneManager.AppUi.CHOOSEPLAYER, loadFxml("chooseplayer"));
-    SceneManager.storeUi(SceneManager.AppUi.MENU, loadFxml("menu"));
 
     // starting scene should be the choose player root -> forces the user to choose a player
     // or create one before any game

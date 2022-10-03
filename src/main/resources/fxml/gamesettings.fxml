@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -32,21 +34,13 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#onSetAccuracyEasy" prefHeight="50.0" prefWidth="90.0" text="EASY">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onSetAccuracyMedium" prefHeight="50.0" prefWidth="153.0" text="MEDIUM">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onSetAccuracyHard" prefHeight="50.0" prefWidth="119.0" text="HARD">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
+                  <ToggleButton fx:id="tbtnAccuracyE" mnemonicParsing="false" onAction="#onSetAccuracyEasy" prefHeight="50.0" prefWidth="86.0" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG1" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbtnAccuracyM" mnemonicParsing="false" onAction="#onSetAccuracyMedium" prefHeight="50.0" prefWidth="86.0" text="MEDIUM" toggleGroup="$TG1" />
+                  <ToggleButton fx:id="tbtnAccuracyH" mnemonicParsing="false" onAction="#onSetAccuracyHard" prefHeight="50.0" prefWidth="86.0" text="HARD" toggleGroup="$TG1" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">

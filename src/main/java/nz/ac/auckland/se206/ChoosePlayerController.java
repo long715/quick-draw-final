@@ -122,9 +122,9 @@ public class ChoosePlayerController {
       if (!SceneManager.getMainUser().equalsIgnoreCase(userName)) {
         // if they are not the same user, remove the CANVAS key from the sceneMap
         // and reset the menu
-        SceneManager.deleteCanvas();
+        SceneManager.deleteCanvas(); // we cannot load others players canvas
         SceneManager.setMainUser(userName); // set user befpre initialising menu
-        SceneManager.replaceUi(SceneManager.AppUi.MENU, App.loadFxml("menu"));
+        SceneManager.storeUi(SceneManager.AppUi.MENU, App.loadFxml("menu"));
       }
 
       btnCancel.setDisable(false);
