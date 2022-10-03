@@ -19,8 +19,9 @@ public class MenuController {
     btnLoadGame.setDisable(true); // no game to load at initialisation
     lblUser.setText("Hi, " + SceneManager.getMainUser());
 
-    // load the statistics screen
+    // load the statistics screen and the game settings
     SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+    SceneManager.storeUi(SceneManager.AppUi.GAMESETTINGS, App.loadFxml("gamesettings"));
   }
 
   @FXML
@@ -59,5 +60,11 @@ public class MenuController {
   private void onClickStatistics() {
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS));
+  }
+
+  @FXML
+  private void onSwitchToGameSettings() {
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.GAMESETTINGS));
   }
 }

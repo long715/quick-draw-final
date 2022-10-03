@@ -20,7 +20,8 @@ public class SceneManager {
     MENU,
     CANVAS,
     CHOOSEPLAYER,
-    STATISTICS
+    STATISTICS,
+    GAMESETTINGS
   }
 
   private static String mainUser = "";
