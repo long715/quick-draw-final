@@ -361,7 +361,9 @@ public class CanvasController {
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
-                              return isWin(model.getPredictions(getCurrentSnapshot(), 10), 3);
+                              return isWin(
+                                  model.getPredictions(getCurrentSnapshot(), 10),
+                                  currentUser.getAccuracy());
                             }
                           });
 

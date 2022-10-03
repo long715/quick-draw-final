@@ -32,17 +32,17 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="MEDIUM">
+                  <Button mnemonicParsing="false" onAction="#onSetAccuracyEasy" prefHeight="50.0" prefWidth="90.0" text="EASY">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="EASY">
+                  <Button mnemonicParsing="false" onAction="#onSetAccuracyMedium" prefHeight="50.0" prefWidth="153.0" text="MEDIUM">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="HARD">
+                  <Button mnemonicParsing="false" onAction="#onSetAccuracyHard" prefHeight="50.0" prefWidth="119.0" text="HARD">
                      <font>
                         <Font size="22.0" />
                      </font>
