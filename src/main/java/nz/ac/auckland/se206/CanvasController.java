@@ -184,7 +184,7 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.DODGERBLUE);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
@@ -192,7 +192,7 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.CYAN);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
@@ -200,20 +200,20 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.DARKORCHID);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
   private void onDrawMagenta() {
     // This is the colour of the brush.
     graphic.setStroke(Color.DEEPPINK);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
   private void onErase() {
     graphic.setStroke(Color.BLACK);
-    setStrokeProperties(12);
+    setStrokeProperties(14);
   }
 
   /**
