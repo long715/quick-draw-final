@@ -25,6 +25,8 @@ public class UserProfile {
   private int wordsSettings;
   // possible values: 60-easy, 45-medium, 30-hard, 15-master
   private int timeSettings;
+  // possible values: 1-easy, 10-medium, 25-hard, 50-master
+  private int confidence;
 
   public UserProfile(String name) {
     // add underscore to names with spaces
@@ -41,6 +43,7 @@ public class UserProfile {
     this.accuracy = 3;
     this.wordsSettings = 3;
     this.timeSettings = 60;
+    this.confidence = 1;
   }
 
   public void saveData() throws IOException {
@@ -72,6 +75,7 @@ public class UserProfile {
     writer.write(accuracy + "\n");
     writer.write(wordsSettings + "\n");
     writer.write(timeSettings + "\n");
+    writer.write(confidence + "\n");
 
     writer.close();
   }
@@ -96,6 +100,7 @@ public class UserProfile {
     this.accuracy = Integer.valueOf(reader.readLine());
     this.wordsSettings = Integer.valueOf(reader.readLine());
     this.timeSettings = Integer.valueOf(reader.readLine());
+    this.confidence = Integer.valueOf(reader.readLine());
 
     reader.close();
   }
@@ -162,6 +167,10 @@ public class UserProfile {
     return this.timeSettings;
   }
 
+  public int getConfidence() {
+    return this.confidence;
+  }
+
   public void setAccuracy(int accuracy) {
     this.accuracy = accuracy;
   }
@@ -172,5 +181,9 @@ public class UserProfile {
 
   public void setTimeSettings(int timeSettings) {
     this.timeSettings = timeSettings;
+  }
+
+  public void setConfidence(int confidence) {
+    this.confidence = confidence;
   }
 }

@@ -274,7 +274,8 @@ public class CanvasController {
     for (int i = 0; i < topPredictions; i++) {
       // format the category name from ML the same way as current word
       if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
-        return true;
+        // extra condition: user must meet confidence requirements for user to win
+        return model.isAboveProbability(classifications.get(i), currentUser.getConfidence());
       }
     }
 

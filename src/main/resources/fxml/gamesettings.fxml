@@ -84,26 +84,14 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="EASY">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="MEDIUM">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="HARD">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="MASTER">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
+                  <ToggleButton fx:id="tbtnConfidenceE" mnemonicParsing="false" onAction="#onSetConfidenceEasy" prefHeight="50.0" prefWidth="94.0" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG4" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" prefHeight="50.0" prefWidth="94.0" text="MEDIUM" toggleGroup="$TG4" />
+                  <ToggleButton fx:id="tbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" prefHeight="50.0" prefWidth="94.0" text="HARD" toggleGroup="$TG4" />
+                  <ToggleButton fx:id="tbtnConfidenceMA" mnemonicParsing="false" onAction="#onSetConfidenceMaster" prefHeight="50.0" prefWidth="94.0" text="MASTER" toggleGroup="$TG4" />
                </children>
             </HBox>
          </children>

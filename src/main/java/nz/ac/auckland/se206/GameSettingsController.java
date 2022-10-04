@@ -19,6 +19,10 @@ public class GameSettingsController {
   @FXML private ToggleButton tbtnTimeM;
   @FXML private ToggleButton tbtnTimeH;
   @FXML private ToggleButton tbtnTimeMA;
+  @FXML private ToggleButton tbtnConfidenceE;
+  @FXML private ToggleButton tbtnConfidenceM;
+  @FXML private ToggleButton tbtnConfidenceH;
+  @FXML private ToggleButton tbtnConfidenceMA;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
   ;
@@ -56,6 +60,17 @@ public class GameSettingsController {
       tbtnTimeH.setSelected(true);
     } else {
       tbtnTimeMA.setSelected(true);
+    }
+
+    // look thru previous settings for CONFIDENCE
+    if (currentUser.getConfidence() == 1) {
+      tbtnConfidenceE.setSelected(true);
+    } else if (currentUser.getConfidence() == 10) {
+      tbtnConfidenceM.setSelected(true);
+    } else if (currentUser.getConfidence() == 25) {
+      tbtnConfidenceH.setSelected(true);
+    } else {
+      tbtnConfidenceMA.setSelected(true);
     }
   }
 
@@ -129,6 +144,30 @@ public class GameSettingsController {
   @FXML
   private void onSetTimeMaster() throws IOException {
     currentUser.setTimeSettings(15);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetConfidenceEasy() throws IOException {
+    currentUser.setConfidence(1);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetConfidenceMedium() throws IOException {
+    currentUser.setConfidence(10);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetConfidenceHard() throws IOException {
+    currentUser.setConfidence(25);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetConfidenceMaster() throws IOException {
+    currentUser.setConfidence(50);
     currentUser.saveData();
   }
 }
