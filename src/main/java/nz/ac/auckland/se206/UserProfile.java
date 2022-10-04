@@ -33,7 +33,8 @@ public class UserProfile {
     this.loss = 0;
     this.words = new ArrayList<String>();
     this.bestName = "NIL";
-    this.bestTime = 60;
+    // default best time is -1 which is recognised as no best time
+    this.bestTime = -1;
     this.rounds = 0;
 
     // default should be easy
