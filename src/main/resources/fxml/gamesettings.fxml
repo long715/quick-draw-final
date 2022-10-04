@@ -67,26 +67,14 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="EASY">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="MEDIUM">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="HARD">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="MASTER">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
+                  <ToggleButton fx:id="tbtnTimeE" mnemonicParsing="false" onAction="#onSetTimeEasy" prefHeight="49.0" prefWidth="91.0" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG3" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" prefHeight="49.0" prefWidth="91.0" text="MEDIUM" toggleGroup="$TG3" />
+                  <ToggleButton fx:id="tbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" prefHeight="49.0" prefWidth="91.0" text="HARD" toggleGroup="$TG3" />
+                  <ToggleButton fx:id="tbtnTimeMA" mnemonicParsing="false" onAction="#onSetTimeMaster" prefHeight="49.0" prefWidth="91.0" text="MASTER" toggleGroup="$TG3" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">

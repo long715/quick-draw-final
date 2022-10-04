@@ -15,6 +15,10 @@ public class GameSettingsController {
   @FXML private ToggleButton tbtnWordsM;
   @FXML private ToggleButton tbtnWordsH;
   @FXML private ToggleButton tbtnWordsMA;
+  @FXML private ToggleButton tbtnTimeE;
+  @FXML private ToggleButton tbtnTimeM;
+  @FXML private ToggleButton tbtnTimeH;
+  @FXML private ToggleButton tbtnTimeMA;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
   ;
@@ -41,6 +45,17 @@ public class GameSettingsController {
       tbtnWordsH.setSelected(true);
     } else {
       tbtnWordsMA.setSelected(true);
+    }
+
+    // look thru previous settings for TIME
+    if (currentUser.getTimeSettings() == 60) {
+      tbtnTimeE.setSelected(true);
+    } else if (currentUser.getTimeSettings() == 45) {
+      tbtnTimeM.setSelected(true);
+    } else if (currentUser.getTimeSettings() == 30) {
+      tbtnTimeH.setSelected(true);
+    } else {
+      tbtnTimeMA.setSelected(true);
     }
   }
 
@@ -90,6 +105,30 @@ public class GameSettingsController {
   @FXML
   private void onSetWordsMaster() throws IOException {
     currentUser.setWordsSettings(0);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetTimeEasy() throws IOException {
+    currentUser.setTimeSettings(60);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetTimeMedium() throws IOException {
+    currentUser.setTimeSettings(45);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetTimeHard() throws IOException {
+    currentUser.setTimeSettings(30);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetTimeMaster() throws IOException {
+    currentUser.setTimeSettings(15);
     currentUser.saveData();
   }
 }
