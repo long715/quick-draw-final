@@ -23,6 +23,8 @@ public class UserProfile {
   // fields for game settings; possible values 3-easy, 2-medium, 1-hard, 0-master
   private int accuracy;
   private int wordsSettings;
+  // possible values: 60-easy, 45-medium, 30-hard, 15-master
+  private int timeSettings;
 
   public UserProfile(String name) {
     // add underscore to names with spaces
@@ -37,6 +39,7 @@ public class UserProfile {
     // default should be easy
     this.accuracy = 3;
     this.wordsSettings = 3;
+    this.timeSettings = 60; 
   }
 
   public void saveData() throws IOException {
@@ -67,6 +70,7 @@ public class UserProfile {
     writer.write(rounds + "\n");
     writer.write(accuracy + "\n");
     writer.write(wordsSettings + "\n");
+    writer.write(timeSettings + "\n");
 
     writer.close();
   }
@@ -90,6 +94,7 @@ public class UserProfile {
     this.rounds = Integer.valueOf(reader.readLine());
     this.accuracy = Integer.valueOf(reader.readLine());
     this.wordsSettings = Integer.valueOf(reader.readLine());
+    this.timeSettings = Integer.valueOf(reader.readLine());
 
     reader.close();
   }
@@ -152,11 +157,19 @@ public class UserProfile {
     return this.wordsSettings;
   }
 
+  public int getTimeSettings(){
+    return this.timeSettings;
+  }
+
   public void setAccuracy(int accuracy) {
     this.accuracy = accuracy;
   }
 
   public void setWordsSettings(int wordsSettings) {
     this.wordsSettings = wordsSettings;
+  }
+
+  public void setTimeSettings(int timeSettings){
+    this.timeSettings = timeSettings;
   }
 }

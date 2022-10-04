@@ -20,7 +20,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label id="lblTime" fx:id="lblTime" alignment="CENTER" contentDisplay="RIGHT" layoutX="1140.0" layoutY="57.0" prefHeight="24.0" prefWidth="85.0" stylesheets="@../css/canvas.css" text="60" textFill="RED">
+            <Label id="lblTime" fx:id="lblTime" alignment="CENTER" contentDisplay="RIGHT" layoutX="1140.0" layoutY="57.0" prefHeight="24.0" prefWidth="85.0" stylesheets="@../css/canvas.css" textFill="RED">
                <font>
                   <Font size="19.0" />
                </font>

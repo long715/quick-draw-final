@@ -69,9 +69,10 @@ public class CanvasController {
   private String currentWord;
   private TextToSpeech speech;
 
-  private volatile IntegerProperty seconds = new SimpleIntegerProperty(60);
   private Timeline timeline = new Timeline();
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
+  private int timeSettings = currentUser.getTimeSettings(); 
+  private volatile IntegerProperty seconds = new SimpleIntegerProperty(timeSettings);
 
   private int timePlayed;
   private boolean isPredictionStarted = false;
@@ -114,6 +115,9 @@ public class CanvasController {
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
+    // set the initial time for the timer 
+    lblTime.setText(String.valueOf(timeSettings));
+
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -138,7 +142,7 @@ public class CanvasController {
           protected Void call() {
             // tell the player the word and instructions on how to start the game
             speech.speak(
-                "You got 60 seconds to draw "
+                "You got "+ timeSettings+ " seconds to draw "
                     + currentWord
                     + ", press the ready button whenever you are ready!");
 
@@ -311,9 +315,9 @@ public class CanvasController {
   private void startTimer() {
 
     // creates new timeline for the countdown timer
-    seconds.set(60);
+    seconds.set(timeSettings);
     timeline = new Timeline();
-    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(60), new KeyValue(seconds, 0)));
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(timeSettings), new KeyValue(seconds, 0)));
 
     // binds the timer label to the timeline
     lblTime.textProperty().bind(seconds.asString());
@@ -416,7 +420,7 @@ public class CanvasController {
                 lblWinOrLose.setTextFill(Color.GREEN);
                 lblWinOrLose.setText("WIN");
                 currentUser.addWin();
-                timePlayed = 60 - Integer.parseInt(lblTime.getText());
+                timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
                 if (timePlayed < currentUser.getBestTime()) {
                   currentUser.setBestWord(currentWord);
                   currentUser.setBestTime(timePlayed);
