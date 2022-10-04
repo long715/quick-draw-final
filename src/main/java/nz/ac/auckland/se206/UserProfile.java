@@ -40,7 +40,7 @@ public class UserProfile {
     // default should be easy
     this.accuracy = 3;
     this.wordsSettings = 3;
-    this.timeSettings = 60; 
+    this.timeSettings = 60;
   }
 
   public void saveData() throws IOException {
@@ -158,7 +158,7 @@ public class UserProfile {
     return this.wordsSettings;
   }
 
-  public int getTimeSettings(){
+  public int getTimeSettings() {
     return this.timeSettings;
   }
 
@@ -170,7 +170,7 @@ public class UserProfile {
     this.wordsSettings = wordsSettings;
   }
 
-  public void setTimeSettings(int timeSettings){
+  public void setTimeSettings(int timeSettings) {
     this.timeSettings = timeSettings;
   }
 }

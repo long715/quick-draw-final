@@ -71,7 +71,7 @@ public class CanvasController {
 
   private Timeline timeline = new Timeline();
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
-  private int timeSettings = currentUser.getTimeSettings(); 
+  private int timeSettings = currentUser.getTimeSettings();
   private volatile IntegerProperty seconds = new SimpleIntegerProperty(timeSettings);
 
   private int timePlayed;
@@ -115,7 +115,7 @@ public class CanvasController {
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
-    // set the initial time for the timer 
+    // set the initial time for the timer
     lblTime.setText(String.valueOf(timeSettings));
 
     // save coordinates when mouse is pressed on the canvas
@@ -142,7 +142,9 @@ public class CanvasController {
           protected Void call() {
             // tell the player the word and instructions on how to start the game
             speech.speak(
-                "You got "+ timeSettings+ " seconds to draw "
+                "You got "
+                    + timeSettings
+                    + " seconds to draw "
                     + currentWord
                     + ", press the ready button whenever you are ready!");
 
@@ -317,7 +319,9 @@ public class CanvasController {
     // creates new timeline for the countdown timer
     seconds.set(timeSettings);
     timeline = new Timeline();
-    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(timeSettings), new KeyValue(seconds, 0)));
+    timeline
+        .getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(timeSettings), new KeyValue(seconds, 0)));
 
     // binds the timer label to the timeline
     lblTime.textProperty().bind(seconds.asString());
@@ -421,7 +425,11 @@ public class CanvasController {
                 lblWinOrLose.setText("WIN");
                 currentUser.addWin();
                 timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
-                if (timePlayed < currentUser.getBestTime()) {
+
+                // since the default best time is -1, og condition will not work
+                // therefore I added an alternative condition to check if best time
+                // is the default value, in which it should be updated
+                if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
                   currentUser.setBestWord(currentWord);
                   currentUser.setBestTime(timePlayed);
                 }

@@ -20,10 +20,10 @@ public class StatisticsController {
     // set the labels to show the relevant information for the current user
     UserProfile user = SceneManager.getProfile(SceneManager.getMainUser());
     if (!(user == null)) {
-      if(user.getBestTime() == -1){
+      if (user.getBestTime() == -1) {
         // if no best time, show no time
         lblBestTime.setText("-");
-      }else{
+      } else {
         lblBestTime.setText(String.valueOf(user.getBestTime()) + "s");
       }
       lblBestWord.setText(user.getBestWord());
