@@ -8,21 +8,21 @@ import javafx.scene.control.ToggleButton;
 
 public class GameSettingsController {
   @FXML private Button btnMenu;
-  @FXML private ToggleButton tbtnAccuracyE;
-  @FXML private ToggleButton tbtnAccuracyM;
-  @FXML private ToggleButton tbtnAccuracyH;
-  @FXML private ToggleButton tbtnWordsE;
-  @FXML private ToggleButton tbtnWordsM;
-  @FXML private ToggleButton tbtnWordsH;
-  @FXML private ToggleButton tbtnWordsMA;
-  @FXML private ToggleButton tbtnTimeE;
-  @FXML private ToggleButton tbtnTimeM;
-  @FXML private ToggleButton tbtnTimeH;
-  @FXML private ToggleButton tbtnTimeMA;
-  @FXML private ToggleButton tbtnConfidenceE;
-  @FXML private ToggleButton tbtnConfidenceM;
-  @FXML private ToggleButton tbtnConfidenceH;
-  @FXML private ToggleButton tbtnConfidenceMA;
+  @FXML private ToggleButton rbtnAccuracyE;
+  @FXML private ToggleButton rbtnAccuracyM;
+  @FXML private ToggleButton rbtnAccuracyH;
+  @FXML private ToggleButton rbtnWordsE;
+  @FXML private ToggleButton rbtnWordsM;
+  @FXML private ToggleButton rbtnWordsH;
+  @FXML private ToggleButton rbtnWordsMA;
+  @FXML private ToggleButton rbtnTimeE;
+  @FXML private ToggleButton rbtnTimeM;
+  @FXML private ToggleButton rbtnTimeH;
+  @FXML private ToggleButton rbtnTimeMA;
+  @FXML private ToggleButton rbtnConfidenceE;
+  @FXML private ToggleButton rbtnConfidenceM;
+  @FXML private ToggleButton rbtnConfidenceH;
+  @FXML private ToggleButton rbtnConfidenceMA;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
   ;
@@ -33,44 +33,44 @@ public class GameSettingsController {
     // look thru the previously selected ACCURACY settings and
     // set the settings on the new page
     if (currentUser.getAccuracy() == 3) {
-      tbtnAccuracyE.setSelected(true);
+      rbtnAccuracyE.setSelected(true);
     } else if (currentUser.getAccuracy() == 2) {
-      tbtnAccuracyM.setSelected(true);
+      rbtnAccuracyM.setSelected(true);
     } else {
-      tbtnAccuracyH.setSelected(true);
+      rbtnAccuracyH.setSelected(true);
     }
 
     // looks thru the previous settings for WORDS
     if (currentUser.getWordsSettings() == 3) {
-      tbtnWordsE.setSelected(true);
+      rbtnWordsE.setSelected(true);
     } else if (currentUser.getWordsSettings() == 2) {
-      tbtnWordsM.setSelected(true);
+      rbtnWordsM.setSelected(true);
     } else if (currentUser.getWordsSettings() == 1) {
-      tbtnWordsH.setSelected(true);
+      rbtnWordsH.setSelected(true);
     } else {
-      tbtnWordsMA.setSelected(true);
+      rbtnWordsMA.setSelected(true);
     }
 
     // look thru previous settings for TIME
     if (currentUser.getTimeSettings() == 60) {
-      tbtnTimeE.setSelected(true);
+      rbtnTimeE.setSelected(true);
     } else if (currentUser.getTimeSettings() == 45) {
-      tbtnTimeM.setSelected(true);
+      rbtnTimeM.setSelected(true);
     } else if (currentUser.getTimeSettings() == 30) {
-      tbtnTimeH.setSelected(true);
+      rbtnTimeH.setSelected(true);
     } else {
-      tbtnTimeMA.setSelected(true);
+      rbtnTimeMA.setSelected(true);
     }
 
     // look thru previous settings for CONFIDENCE
     if (currentUser.getConfidence() == 1) {
-      tbtnConfidenceE.setSelected(true);
+      rbtnConfidenceE.setSelected(true);
     } else if (currentUser.getConfidence() == 10) {
-      tbtnConfidenceM.setSelected(true);
+      rbtnConfidenceM.setSelected(true);
     } else if (currentUser.getConfidence() == 25) {
-      tbtnConfidenceH.setSelected(true);
+      rbtnConfidenceH.setSelected(true);
     } else {
-      tbtnConfidenceMA.setSelected(true);
+      rbtnConfidenceMA.setSelected(true);
     }
   }
 
