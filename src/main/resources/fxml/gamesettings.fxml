@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameSettingsController">
+   <children>
+      <VBox prefHeight="968.0" prefWidth="1287.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#onSwitchToMenu" text="Back To Menu">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <Label text="GAME SETTINGS">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Accuracy">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="rbtnAccuracyE" mnemonicParsing="false" onAction="#onSetAccuracyEasy" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG1" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbtnAccuracyM" mnemonicParsing="false" onAction="#onSetAccuracyMedium" text="MEDIUM" toggleGroup="$TG1" />
+                  <RadioButton fx:id="rbtnAccuracyH" mnemonicParsing="false" onAction="#onSetAccuracyHard" text="HARD" toggleGroup="$TG1" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Words">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="rbtnWordsE" mnemonicParsing="false" onAction="#onSetWordsEasy" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG2" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" text="MEDIUM" toggleGroup="$TG2" />
+                  <RadioButton fx:id="rbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" text="HARD" toggleGroup="$TG2" />
+                  <RadioButton fx:id="rbtnWordsMA" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Time">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="rbtnTimeE" mnemonicParsing="false" onAction="#onSetTimeEasy" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG3" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" text="MEDIUM" toggleGroup="$TG3" />
+                  <RadioButton fx:id="rbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" text="HARD" toggleGroup="$TG3" />
+                  <RadioButton fx:id="rbtnTimeMA" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Confidence">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="rbtnConfidenceE" mnemonicParsing="false" onAction="#onSetConfidenceEasy" text="EASY">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="TG4" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" text="MEDIUM" toggleGroup="$TG4" />
+                  <RadioButton fx:id="rbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" text="HARD" toggleGroup="$TG4" />
+                  <RadioButton fx:id="rbtnConfidenceMA" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>

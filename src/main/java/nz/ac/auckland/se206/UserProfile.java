@@ -20,6 +20,14 @@ public class UserProfile {
   private int bestTime;
   private int rounds;
 
+  // fields for game settings; possible values 3-easy, 2-medium, 1-hard, 0-master
+  private int accuracy;
+  private int wordsSettings;
+  // possible values: 60-easy, 45-medium, 30-hard, 15-master
+  private int timeSettings;
+  // possible values: 1-easy, 10-medium, 25-hard, 50-master
+  private int confidence;
+
   public UserProfile(String name) {
     // add underscore to names with spaces
     this.name = name.replace(" ", "_");
@@ -27,8 +35,15 @@ public class UserProfile {
     this.loss = 0;
     this.words = new ArrayList<String>();
     this.bestName = "NIL";
-    this.bestTime = 60;
+    // default best time is -1 which is recognised as no best time
+    this.bestTime = -1;
     this.rounds = 0;
+
+    // default should be easy
+    this.accuracy = 3;
+    this.wordsSettings = 3;
+    this.timeSettings = 60;
+    this.confidence = 1;
   }
 
   public void saveData() throws IOException {
@@ -57,6 +72,10 @@ public class UserProfile {
     writer.write(bestName + "\n");
     writer.write(bestTime + "\n");
     writer.write(rounds + "\n");
+    writer.write(accuracy + "\n");
+    writer.write(wordsSettings + "\n");
+    writer.write(timeSettings + "\n");
+    writer.write(confidence + "\n");
 
     writer.close();
   }
@@ -78,6 +97,11 @@ public class UserProfile {
     this.bestName = reader.readLine();
     this.bestTime = Integer.valueOf(reader.readLine());
     this.rounds = Integer.valueOf(reader.readLine());
+    this.accuracy = Integer.valueOf(reader.readLine());
+    this.wordsSettings = Integer.valueOf(reader.readLine());
+    this.timeSettings = Integer.valueOf(reader.readLine());
+    this.confidence = Integer.valueOf(reader.readLine());
+
     reader.close();
   }
 
@@ -129,5 +153,37 @@ public class UserProfile {
   public void newRound() {
     this.words = new ArrayList<String>();
     addRound();
+  }
+
+  public int getAccuracy() {
+    return this.accuracy;
+  }
+
+  public int getWordsSettings() {
+    return this.wordsSettings;
+  }
+
+  public int getTimeSettings() {
+    return this.timeSettings;
+  }
+
+  public int getConfidence() {
+    return this.confidence;
+  }
+
+  public void setAccuracy(int accuracy) {
+    this.accuracy = accuracy;
+  }
+
+  public void setWordsSettings(int wordsSettings) {
+    this.wordsSettings = wordsSettings;
+  }
+
+  public void setTimeSettings(int timeSettings) {
+    this.timeSettings = timeSettings;
+  }
+
+  public void setConfidence(int confidence) {
+    this.confidence = confidence;
   }
 }

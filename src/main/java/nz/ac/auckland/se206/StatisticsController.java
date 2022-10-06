@@ -20,7 +20,12 @@ public class StatisticsController {
     // set the labels to show the relevant information for the current user
     UserProfile user = SceneManager.getProfile(SceneManager.getMainUser());
     if (!(user == null)) {
-      lblBestTime.setText(String.valueOf(user.getBestTime()) + "s");
+      if (user.getBestTime() == -1) {
+        // if no best time, show no time
+        lblBestTime.setText("-");
+      } else {
+        lblBestTime.setText(String.valueOf(user.getBestTime()) + "s");
+      }
       lblBestWord.setText(user.getBestWord());
 
       // display word history

@@ -150,6 +150,18 @@ public class DoodlePrediction {
     return getPredictions(ImageIO.read(image), k);
   }
 
+  /**
+   * This method checks if the following classification is equal to or more than the predictor
+   * provided.
+   *
+   * @param classification The word probability we are checking
+   * @param predictor The percentage that the probability should reach
+   * @return if word reaches the required probability
+   */
+  public boolean isAboveProbability(Classifications.Classification classification, int predictor) {
+    return classification.getProbability() * 100 >= predictor;
+  }
+
   public void closeManager() {
     model.getNDManager().close();
   }

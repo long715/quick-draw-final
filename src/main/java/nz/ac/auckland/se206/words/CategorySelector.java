@@ -62,12 +62,12 @@ public class CategorySelector {
    * @param difficulty difficulty of the game
    * @return a category from the specified difficulty
    */
-  public String getRandomCategory(Difficulty difficulty) {
+  public String getRandomCategory(int wordsSettings) {
     // gets the list of categories and calculates a random int from 0 to the size of
     // the list, to index the list of categories and return the resulting category
-    return difficulty2categories
-        .get(difficulty)
-        .get(new Random().nextInt(difficulty2categories.get(difficulty).size()));
+    List<String> listOfWords = getDifficultyList(wordsSettings);
+
+    return listOfWords.get(new Random().nextInt(listOfWords.size()));
   }
 
   /**
@@ -76,7 +76,25 @@ public class CategorySelector {
    * @param difficulty
    * @return
    */
-  public List<String> getDifficultyList(Difficulty difficulty) {
-    return difficulty2categories.get(difficulty);
+  public List<String> getDifficultyList(int wordsSettings) {
+    List<String> listOfWords = new ArrayList<String>();
+    if (wordsSettings == 3) {
+      // EASY category only
+      listOfWords.addAll(difficulty2categories.get(Difficulty.E));
+    } else if (wordsSettings == 2) {
+      // EASY and MEDIUM words
+      listOfWords.addAll(difficulty2categories.get(Difficulty.E));
+      listOfWords.addAll(difficulty2categories.get(Difficulty.M));
+    } else if (wordsSettings == 1) {
+      // EASY, MEDIUM and HARD words
+      listOfWords.addAll(difficulty2categories.get(Difficulty.E));
+      listOfWords.addAll(difficulty2categories.get(Difficulty.M));
+      listOfWords.addAll(difficulty2categories.get(Difficulty.H));
+    } else {
+      // MASTER mode which is only HARD words
+      listOfWords.addAll(difficulty2categories.get(Difficulty.H));
+    }
+
+    return listOfWords;
   }
 }

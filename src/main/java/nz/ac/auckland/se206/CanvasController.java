@@ -39,7 +39,6 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
-import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -70,9 +69,10 @@ public class CanvasController {
   private String currentWord;
   private TextToSpeech speech;
 
-  private volatile IntegerProperty seconds = new SimpleIntegerProperty(60);
   private Timeline timeline = new Timeline();
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
+  private int timeSettings = currentUser.getTimeSettings();
+  private volatile IntegerProperty seconds = new SimpleIntegerProperty(timeSettings);
 
   private int timePlayed;
   private boolean isPredictionStarted = false;
@@ -80,7 +80,7 @@ public class CanvasController {
   // mouse coordinates
   private double currentX;
   private double currentY;
-  
+
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
    * the drawing, and we load the ML model.
@@ -98,23 +98,25 @@ public class CanvasController {
 
     // get words current user has played and all words from easy category
     ArrayList<String> playedWords = currentUser.getWords();
-    List<String> allWords = categorySelector.getDifficultyList(Difficulty.E);
-
-    String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
 
     // check if the player has played all the words
     if (playedWords.containsAll(allWords)) {
       currentUser.newRound();
     }
 
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
     // generate word that user has not played yet in current round
     while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
     }
 
     currentUser.addWord(randomWord);
     lblCategory.setText(randomWord);
     currentWord = randomWord;
+
+    // set the initial time for the timer
+    lblTime.setText(String.valueOf(timeSettings));
 
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
@@ -140,7 +142,9 @@ public class CanvasController {
           protected Void call() {
             // tell the player the word and instructions on how to start the game
             speech.speak(
-                "You got 60 seconds to draw "
+                "You got "
+                    + timeSettings
+                    + " seconds to draw "
                     + currentWord
                     + ", press the ready button whenever you are ready!");
 
@@ -180,7 +184,7 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.DODGERBLUE);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
@@ -188,7 +192,7 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.CYAN);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
@@ -196,20 +200,20 @@ public class CanvasController {
 
     // This is the colour of the brush.
     graphic.setStroke(Color.DARKORCHID);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
   private void onDrawMagenta() {
     // This is the colour of the brush.
     graphic.setStroke(Color.DEEPPINK);
-    setStrokeProperties(10);
+    setStrokeProperties(12);
   }
 
   @FXML
   private void onErase() {
     graphic.setStroke(Color.BLACK);
-    setStrokeProperties(12);
+    setStrokeProperties(14);
   }
 
   /**
@@ -270,7 +274,8 @@ public class CanvasController {
     for (int i = 0; i < topPredictions; i++) {
       // format the category name from ML the same way as current word
       if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
-        return true;
+        // extra condition: user must meet confidence requirements for user to win
+        return model.isAboveProbability(classifications.get(i), currentUser.getConfidence());
       }
     }
 
@@ -313,9 +318,11 @@ public class CanvasController {
   private void startTimer() {
 
     // creates new timeline for the countdown timer
-    seconds.set(60);
+    seconds.set(timeSettings);
     timeline = new Timeline();
-    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(60), new KeyValue(seconds, 0)));
+    timeline
+        .getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(timeSettings), new KeyValue(seconds, 0)));
 
     // binds the timer label to the timeline
     lblTime.textProperty().bind(seconds.asString());
@@ -361,7 +368,9 @@ public class CanvasController {
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
-                              return isWin(model.getPredictions(getCurrentSnapshot(), 10), 3);
+                              return isWin(
+                                  model.getPredictions(getCurrentSnapshot(), 10),
+                                  currentUser.getAccuracy());
                             }
                           });
 
@@ -416,8 +425,12 @@ public class CanvasController {
                 lblWinOrLose.setTextFill(Color.GREEN);
                 lblWinOrLose.setText("WIN");
                 currentUser.addWin();
-                timePlayed = 60 - Integer.parseInt(lblTime.getText());
-                if (timePlayed < currentUser.getBestTime()) {
+                timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+
+                // since the default best time is -1, og condition will not work
+                // therefore I added an alternative condition to check if best time
+                // is the default value, in which it should be updated
+                if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
                   currentUser.setBestWord(currentWord);
                   currentUser.setBestTime(timePlayed);
                 }
