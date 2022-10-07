@@ -119,6 +119,7 @@ public class CanvasController {
           randomWord = getNewWord(allWords, playedWords, categorySelector);
         }
       }
+      lblCategory.setText(labelText);
 
     } else {
 
@@ -126,6 +127,7 @@ public class CanvasController {
       labelText = randomWord;
     }
 
+    System.out.println(randomWord);
     currentUser.addWord(randomWord);
 
     // set the initial time for the timer
