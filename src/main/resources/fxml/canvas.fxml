@@ -63,6 +63,7 @@
          <children>
             <Button id="btnReady" fx:id="btnReady" layoutX="106.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStartGame" stylesheets="@../css/canvas.css" text="READY" />
             <Button id="btnSave" fx:id="btnSaveDrawing" layoutX="1038.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSave" stylesheets="@../css/canvas.css" text="SAVE" />
+            <Button id="btnHint" fx:id="btnHint" layoutX="353.0" layoutY="13.0" mnemonicParsing="false" onAction="#onHint" stylesheets="@../css/canvas.css" text="GET HINT" />
          </children>
       </Pane>
 

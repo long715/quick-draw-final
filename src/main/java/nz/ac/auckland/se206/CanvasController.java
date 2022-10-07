@@ -63,6 +63,7 @@ public class CanvasController {
   @FXML private Label lblGuesses;
   @FXML private Button btnToMenu;
   @FXML private Button btnReady;
+  @FXML private Button btnHint;
   @FXML private Button clearButton;
   @FXML private Button btnSaveDrawing;
 
@@ -103,6 +104,8 @@ public class CanvasController {
     ArrayList<String> playedWords = currentUser.getWords();
     List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
 
+    btnHint.setDisable(true);
+
     // check if the player has played all the words
     if (playedWords.containsAll(allWords)) {
       currentUser.newRound();
@@ -122,7 +125,6 @@ public class CanvasController {
       lblCategory.setText(labelText);
 
     } else {
-
       lblCategory.setText(randomWord);
       labelText = randomWord;
     }
@@ -178,10 +180,31 @@ public class CanvasController {
   }
 
   @FXML
+  private void onHint() {
+    Task<Void> hintSpeech =
+        new Task<Void>() {
+          protected Void call() {
+            // tell the player the word and instructions on how to start the game
+            speech.speak("The word is " + randomWord.length() + " letters long");
+
+            return null;
+          }
+        };
+
+    Thread bgHintSpeech = new Thread(hintSpeech);
+    bgHintSpeech.start();
+  }
+
+  @FXML
   private void onStartGame() throws InterruptedException, ExecutionException {
     // enable the canvas and disable to ready btn
     canvas.setDisable(false);
     btnReady.setDisable(true);
+    if (currentUser.getHiddenMode()) {
+      btnHint.setDisable(false);
+    } else {
+      btnHint.setDisable(true);
+    }
 
     // Start the timer
 
@@ -429,6 +452,8 @@ public class CanvasController {
             // allow user to save the current drawing and write on the text fields for
             // custom directory and file name inputs
             btnSaveDrawing.setDisable(false);
+
+            btnHint.setDisable(true);
 
             // close the ML Manager
             model.closeManager();
