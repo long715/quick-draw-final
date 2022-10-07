@@ -39,6 +39,8 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
+import nz.ac.auckland.se206.words.DefinitionFetcher;
+import nz.ac.auckland.se206.words.WordNotFoundException;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -66,7 +68,8 @@ public class CanvasController {
 
   private GraphicsContext graphic;
   private DoodlePrediction model;
-  private String currentWord;
+  private String labelText;
+  private String randomWord;
   private TextToSpeech speech;
 
   private Timeline timeline = new Timeline();
@@ -105,15 +108,25 @@ public class CanvasController {
       currentUser.newRound();
     }
 
-    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    randomWord = getNewWord(allWords, playedWords, categorySelector);
+
+    if (currentUser.getHiddenMode()) {
+      while (true) {
+        try {
+          labelText = DefinitionFetcher.getDefinition(randomWord);
+          break;
+        } catch (WordNotFoundException e) {
+          randomWord = getNewWord(allWords, playedWords, categorySelector);
+        }
+      }
+
+    } else {
+
+      lblCategory.setText(randomWord);
+      labelText = randomWord;
     }
 
     currentUser.addWord(randomWord);
-    lblCategory.setText(randomWord);
-    currentWord = randomWord;
 
     // set the initial time for the timer
     lblTime.setText(String.valueOf(timeSettings));
@@ -145,7 +158,7 @@ public class CanvasController {
                 "You got "
                     + timeSettings
                     + " seconds to draw "
-                    + currentWord
+                    + labelText
                     + ", press the ready button whenever you are ready!");
 
             return null;
@@ -273,7 +286,7 @@ public class CanvasController {
   private boolean isWin(List<Classification> classifications, int topPredictions) {
     for (int i = 0; i < topPredictions; i++) {
       // format the category name from ML the same way as current word
-      if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
+      if (classifications.get(i).getClassName().replace("_", " ").equals(randomWord)) {
         // extra condition: user must meet confidence requirements for user to win
         return model.isAboveProbability(classifications.get(i), currentUser.getConfidence());
       }
@@ -402,7 +415,8 @@ public class CanvasController {
 
       taskPredict.setOnSucceeded(
           event -> {
-            // once the game has ended (timer runs out or if they won), we want the following UX:
+            // once the game has ended (timer runs out or if they won), we want the
+            // following UX:
             canvas.setDisable(true); // user should not be able to draw on the canvas
             btnToMenu.setDisable(
                 false); // user can go back to the main menu to load the previous game or create a
@@ -417,7 +431,8 @@ public class CanvasController {
             // close the ML Manager
             model.closeManager();
 
-            // update the winOrLose label and use the text to speech to tell the user if the they
+            // update the winOrLose label and use the text to speech to tell the user if the
+            // they
             // have
             // won or lost
             try {
@@ -431,7 +446,7 @@ public class CanvasController {
                 // therefore I added an alternative condition to check if best time
                 // is the default value, in which it should be updated
                 if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
-                  currentUser.setBestWord(currentWord);
+                  currentUser.setBestWord(randomWord);
                   currentUser.setBestTime(timePlayed);
                 }
 
@@ -475,5 +490,16 @@ public class CanvasController {
             }
           });
     }
+  }
+
+  private String getNewWord(
+      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    // generate word that user has not played yet in current round
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    }
+
+    return randomWord;
   }
 }
