@@ -196,4 +196,8 @@ public class UserProfile {
   public void setHiddenMode(boolean hiddenMode) {
     this.hiddenMode = hiddenMode;
   }
+
+  public boolean getHiddenMode() {
+    return this.hiddenMode;
+  }
 }
