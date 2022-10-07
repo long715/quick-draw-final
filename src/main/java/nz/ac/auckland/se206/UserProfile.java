@@ -28,6 +28,8 @@ public class UserProfile {
   // possible values: 1-easy, 10-medium, 25-hard, 50-master
   private int confidence;
 
+  private boolean hiddenMode;
+
   public UserProfile(String name) {
     // add underscore to names with spaces
     this.name = name.replace(" ", "_");
@@ -44,6 +46,8 @@ public class UserProfile {
     this.wordsSettings = 3;
     this.timeSettings = 60;
     this.confidence = 1;
+
+    this.hiddenMode = false;
   }
 
   public void saveData() throws IOException {
@@ -76,6 +80,7 @@ public class UserProfile {
     writer.write(wordsSettings + "\n");
     writer.write(timeSettings + "\n");
     writer.write(confidence + "\n");
+    writer.write(hiddenMode + "\n");
 
     writer.close();
   }
@@ -101,6 +106,7 @@ public class UserProfile {
     this.wordsSettings = Integer.valueOf(reader.readLine());
     this.timeSettings = Integer.valueOf(reader.readLine());
     this.confidence = Integer.valueOf(reader.readLine());
+    this.hiddenMode = Boolean.parseBoolean(reader.readLine());
 
     reader.close();
   }
@@ -185,5 +191,9 @@ public class UserProfile {
 
   public void setConfidence(int confidence) {
     this.confidence = confidence;
+  }
+
+  public void setHiddenMode(boolean hiddenMode) {
+    this.hiddenMode = hiddenMode;
   }
 }
