@@ -76,6 +76,7 @@ public class CanvasController {
 
   private int timePlayed;
   private boolean isPredictionStarted = false;
+  private boolean isZen = currentUser.isZenMode();
 
   // mouse coordinates
   private double currentX;
@@ -115,9 +116,6 @@ public class CanvasController {
     lblCategory.setText(randomWord);
     currentWord = randomWord;
 
-    // set the initial time for the timer
-    lblTime.setText(String.valueOf(timeSettings));
-
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -128,10 +126,15 @@ public class CanvasController {
 
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
-    btnToMenu.setDisable(
-        true); // user can't go back and create a new game before finishing the current game
-    btnSaveDrawing.setDisable(
-        true); // user can't save an empty canvas, drawing can only be saved after game ends
+
+    if (!isZen) {
+      // user can't go back and create a new game before finishing the current game
+      btnToMenu.setDisable(true);
+      // set the initial time for the timer
+      lblTime.setText(String.valueOf(timeSettings));
+    }
+    // user can't save an empty canvas, drawing can only be saved after game ends
+    btnSaveDrawing.setDisable(true);
 
     model = new DoodlePrediction();
     speech = new TextToSpeech();
@@ -140,13 +143,18 @@ public class CanvasController {
     Task<Void> taskWelcomeSpeech =
         new Task<Void>() {
           protected Void call() {
-            // tell the player the word and instructions on how to start the game
-            speech.speak(
-                "You got "
-                    + timeSettings
-                    + " seconds to draw "
-                    + currentWord
-                    + ", press the ready button whenever you are ready!");
+            if (isZen) {
+              speech.speak("Welcome to Zen Mode! Your word is", currentWord);
+
+            } else {
+              // tell the player the word and instructions on how to start the game
+              speech.speak(
+                  "You got "
+                      + timeSettings
+                      + " seconds to draw "
+                      + currentWord
+                      + ", press the ready button whenever you are ready!");
+            }
 
             return null;
           }
@@ -168,9 +176,12 @@ public class CanvasController {
     canvas.setDisable(false);
     btnReady.setDisable(true);
 
-    // Start the timer
-
-    startTimer();
+    if (isZen) {
+      // user should be able to save drawing anytime
+      btnSaveDrawing.setDisable(false);
+    } else {
+      startTimer();
+    }
   }
 
   /** This method is called when the "Clear" button is pressed. */
@@ -343,6 +354,7 @@ public class CanvasController {
                 throws TranslateException, InterruptedException, ExecutionException {
               // get the current time
               int temp = seconds.intValue();
+              long tempTime = System.currentTimeMillis();
 
               // run loop while timer is active
               while (timeline.getStatus() != Status.STOPPED) {
@@ -387,6 +399,27 @@ public class CanvasController {
                     timeline.pause();
                     return true;
                   }
+                }
+              }
+
+              while (isZen) {
+                if ((int) (System.currentTimeMillis() - tempTime) / 1000 >= 1) {
+                  FutureTask<StringBuilder> predict =
+                      new FutureTask<StringBuilder>(
+                          new Callable<StringBuilder>() {
+                            public StringBuilder call() throws TranslateException {
+
+                              // get the list of the top 10 classifications and format the list into
+                              // stringbuilder
+                              return DoodlePrediction.getPredictionString(
+                                  model.getPredictions(getCurrentSnapshot(), 10));
+                            }
+                          });
+                  Platform.runLater(predict);
+                  updateTitle(predict.get().toString().replace("_", " "));
+                  System.out.println("pls why");
+
+                  tempTime = System.currentTimeMillis();
                 }
               }
 

@@ -82,7 +82,7 @@ public class GameSettingsController {
     setCurrentModeLabel();
     // check if the current mode is Zen, where we disable the visibility of the
     // game settings
-    if (currentUser.getMode() == Mode.ZEN) {
+    if (currentUser.isZenMode()) {
       vboxSettings.setVisible(false);
     }
   }

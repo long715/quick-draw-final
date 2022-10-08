@@ -209,4 +209,14 @@ public class UserProfile {
   public void setMode(Mode mode) {
     this.mode = mode;
   }
+
+  /**
+   * This method returns a boolean if the mode is Zen. Created since Zen Mode will have a big impact
+   * on the Canvas page.
+   *
+   * @return if the current mode is Zen
+   */
+  public boolean isZenMode() {
+    return this.mode == Mode.ZEN;
+  }
 }
