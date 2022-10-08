@@ -47,6 +47,13 @@ public class MenuController {
     // load the game instance
     Scene sceneBtnIsIn = btnNewGame.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CANVAS));
+    // set the stylesheet specifically for zen mode
+    if (SceneManager.getProfile(SceneManager.getMainUser()).isZenMode()) {
+      sceneBtnIsIn
+          .getRoot()
+          .getStylesheets()
+          .add(getClass().getResource("/css/zencanvas.css").toExternalForm());
+    }
   }
 
   @FXML
