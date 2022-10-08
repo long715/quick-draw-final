@@ -361,20 +361,6 @@ public class CanvasController {
 
                 // when a second has passed, run the DL predictor
                 if (temp - seconds.intValue() >= 1) {
-
-                  // create a future task for getting the prediction string
-                  // required for accessing the variable from outside platform run later
-                  FutureTask<StringBuilder> predict =
-                      new FutureTask<StringBuilder>(
-                          new Callable<StringBuilder>() {
-                            public StringBuilder call() throws TranslateException {
-
-                              // get the list of the top 10 classifications and format the list into
-                              // stringbuilder
-                              return DoodlePrediction.getPredictionString(
-                                  model.getPredictions(getCurrentSnapshot(), 10));
-                            }
-                          });
                   // create a future task for checking wins
                   FutureTask<Boolean> winOrLose =
                       new FutureTask<Boolean>(
@@ -387,9 +373,8 @@ public class CanvasController {
                           });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
-                  Platform.runLater(predict);
                   Platform.runLater(winOrLose);
-                  updateTitle(predict.get().toString().replace("_", " ")); // remove the underscores
+                  updateTitle(getTop10Predictions());
 
                   // set the temp time
                   temp = seconds.intValue();
@@ -404,21 +389,7 @@ public class CanvasController {
 
               while (isZen) {
                 if ((int) (System.currentTimeMillis() - tempTime) / 1000 >= 1) {
-                  FutureTask<StringBuilder> predict =
-                      new FutureTask<StringBuilder>(
-                          new Callable<StringBuilder>() {
-                            public StringBuilder call() throws TranslateException {
-
-                              // get the list of the top 10 classifications and format the list into
-                              // stringbuilder
-                              return DoodlePrediction.getPredictionString(
-                                  model.getPredictions(getCurrentSnapshot(), 10));
-                            }
-                          });
-                  Platform.runLater(predict);
-                  updateTitle(predict.get().toString().replace("_", " "));
-                  System.out.println("pls why");
-
+                  updateTitle(getTop10Predictions());
                   tempTime = System.currentTimeMillis();
                 }
               }
@@ -435,67 +406,17 @@ public class CanvasController {
 
       taskPredict.setOnSucceeded(
           event -> {
-            // once the game has ended (timer runs out or if they won), we want the following UX:
-            canvas.setDisable(true); // user should not be able to draw on the canvas
-            btnToMenu.setDisable(
-                false); // user can go back to the main menu to load the previous game or create a
-            // new
-            // game
-            clearButton.setDisable(true); // user can't alter or reset the drawing in any way
-
-            // allow user to save the current drawing and write on the text fields for
-            // custom directory and file name inputs
-            btnSaveDrawing.setDisable(false);
-
-            // close the ML Manager
-            model.closeManager();
+            setCanvas();
 
             // update the winOrLose label and use the text to speech to tell the user if the they
             // have
             // won or lost
             try {
               if (taskPredict.get()) { // returns true if user has won
-                lblWinOrLose.setTextFill(Color.GREEN);
-                lblWinOrLose.setText("WIN");
-                currentUser.addWin();
-                timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
-
-                // since the default best time is -1, og condition will not work
-                // therefore I added an alternative condition to check if best time
-                // is the default value, in which it should be updated
-                if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
-                  currentUser.setBestWord(currentWord);
-                  currentUser.setBestTime(timePlayed);
-                }
-
-                // create a task for the winning text-to-speech message
-                Task<Void> taskWin =
-                    new Task<Void>() {
-                      protected Void call() {
-                        speech.speak("Congratulations! You won!");
-                        return null;
-                      }
-                    };
-                // run the bg thread for the task
-                Thread bgWinSpeech = new Thread(taskWin);
-                bgWinSpeech.start();
+                setCanvasWon();
 
               } else {
-                lblWinOrLose.setTextFill(Color.RED);
-                lblWinOrLose.setText("LOSE");
-                currentUser.addLoss();
-
-                // create a task for the losing text-to-speech message
-                Task<Void> taskLose =
-                    new Task<Void>() {
-                      protected Void call() {
-                        speech.speak("Sorry! You lost!");
-                        return null;
-                      }
-                    };
-                // run the bg thread for the task
-                Thread bgLoseSpeech = new Thread(taskLose);
-                bgLoseSpeech.start();
+                setCanvasLost();
               }
               SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
               currentUser.writeData(
@@ -508,5 +429,102 @@ public class CanvasController {
             }
           });
     }
+  }
+
+  /** This method sets up the canvas page after a game is finished. */
+  private void setCanvas() {
+    // once the game has ended (timer runs out or if they won), we want the following UX:
+    canvas.setDisable(true); // user should not be able to draw on the canvas
+    btnToMenu.setDisable(
+        false); // user can go back to the main menu to load the previous game or create a
+    // new
+    // game
+    clearButton.setDisable(true); // user can't alter or reset the drawing in any way
+
+    // allow user to save the current drawing and write on the text fields for
+    // custom directory and file name inputs
+    btnSaveDrawing.setDisable(false);
+
+    // close the ML Manager
+    model.closeManager();
+  }
+
+  /**
+   * This method sets up the winning state of Canvas and runs a text-to-speech to inform the player
+   * that they have won.
+   */
+  private void setCanvasWon() {
+    lblWinOrLose.setTextFill(Color.GREEN);
+    lblWinOrLose.setText("WIN");
+    currentUser.addWin();
+    timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+
+    // since the default best time is -1, og condition will not work
+    // therefore I added an alternative condition to check if best time
+    // is the default value, in which it should be updated
+    if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
+      currentUser.setBestWord(currentWord);
+      currentUser.setBestTime(timePlayed);
+    }
+
+    // create a task for the winning text-to-speech message
+    Task<Void> taskWin =
+        new Task<Void>() {
+          protected Void call() {
+            speech.speak("Congratulations! You won!");
+            return null;
+          }
+        };
+    // run the bg thread for the task
+    Thread bgWinSpeech = new Thread(taskWin);
+    bgWinSpeech.start();
+  }
+
+  /**
+   * This method sets up the losing state of Canvas and tells the user that they lost via
+   * text-to-speech
+   */
+  private void setCanvasLost() {
+    lblWinOrLose.setTextFill(Color.RED);
+    lblWinOrLose.setText("LOSE");
+    currentUser.addLoss();
+
+    // create a task for the losing text-to-speech message
+    Task<Void> taskLose =
+        new Task<Void>() {
+          protected Void call() {
+            speech.speak("Sorry! You lost!");
+            return null;
+          }
+        };
+    // run the bg thread for the task
+    Thread bgLoseSpeech = new Thread(taskLose);
+    bgLoseSpeech.start();
+  }
+
+  /**
+   * This method runs the top 10 prediction future task and returns the string form of the
+   * predictions
+   *
+   * @return top 10 prediction string
+   * @throws ExecutionException
+   * @throws InterruptedException
+   */
+  private String getTop10Predictions() throws InterruptedException, ExecutionException {
+    // create a future task for getting the prediction string
+    // required for accessing the variable from outside platform run later
+    FutureTask<StringBuilder> predict =
+        new FutureTask<StringBuilder>(
+            new Callable<StringBuilder>() {
+              public StringBuilder call() throws TranslateException {
+
+                // get the list of the top 10 classifications and format the list into
+                // stringbuilder
+                return DoodlePrediction.getPredictionString(
+                    model.getPredictions(getCurrentSnapshot(), 10));
+              }
+            });
+    Platform.runLater(predict);
+    return predict.get().toString().replace("_", " ");
   }
 }
