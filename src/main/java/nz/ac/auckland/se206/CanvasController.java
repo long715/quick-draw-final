@@ -93,28 +93,7 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, URISyntaxException, CsvException {
     graphic = canvas.getGraphicsContext2D();
-
-    // implement the category selector and display the category on the lbl
-    CategorySelector categorySelector = new CategorySelector();
-
-    // get words current user has played and all words from easy category
-    ArrayList<String> playedWords = currentUser.getWords();
-    List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
-
-    // check if the player has played all the words
-    if (playedWords.containsAll(allWords)) {
-      currentUser.newRound();
-    }
-
-    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    }
-
-    currentUser.addWord(randomWord);
-    lblCategory.setText(randomWord);
-    currentWord = randomWord;
+    chooseWord();
 
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
@@ -162,6 +141,38 @@ public class CanvasController {
 
     Thread bgWelcomeSpeech = new Thread(taskWelcomeSpeech);
     bgWelcomeSpeech.start();
+  }
+
+  /**
+   * This method chooses the word for this canvas game instance. This will be based on game
+   * settings, if in ZEN mode, the choices is always from ALL categories.
+   *
+   * @throws CsvException
+   * @throws IOException
+   * @throws URISyntaxException
+   */
+  private void chooseWord() throws URISyntaxException, IOException, CsvException {
+    // implement the category selector and display the category on the lbl
+    CategorySelector categorySelector = new CategorySelector();
+
+    // get words current user has played and all words from easy category
+    ArrayList<String> playedWords = currentUser.getWords();
+    List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
+
+    // check if the player has played all the words
+    if (playedWords.containsAll(allWords)) {
+      currentUser.newRound();
+    }
+
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    // generate word that user has not played yet in current round
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    }
+
+    currentUser.addWord(randomWord);
+    lblCategory.setText(randomWord);
+    currentWord = randomWord;
   }
 
   @FXML
