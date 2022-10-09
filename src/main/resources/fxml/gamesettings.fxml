@@ -20,7 +20,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Label text="GAME SETTINGS">
+                  <Label fx:id="lblCurrentMode" text="Current Game: ">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -29,71 +29,81 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Accuracy">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="rbtnAccuracyE" mnemonicParsing="false" onAction="#onSetAccuracyEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG1" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnAccuracyM" mnemonicParsing="false" onAction="#onSetAccuracyMedium" text="MEDIUM" toggleGroup="$TG1" />
-                  <RadioButton fx:id="rbtnAccuracyH" mnemonicParsing="false" onAction="#onSetAccuracyHard" text="HARD" toggleGroup="$TG1" />
+                  <Button mnemonicParsing="false" onAction="#onSetModeToZen" prefHeight="47.0" prefWidth="111.0" text="Zen" />
+                  <Button mnemonicParsing="false" onAction="#onSetToNormal" prefHeight="47.0" prefWidth="119.0" text="Normal" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox fx:id="vboxSettings" prefHeight="271.0" prefWidth="1287.0">
                <children>
-                  <Label text="Words">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="rbtnWordsE" mnemonicParsing="false" onAction="#onSetWordsEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG2" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" text="MEDIUM" toggleGroup="$TG2" />
-                  <RadioButton fx:id="rbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" text="HARD" toggleGroup="$TG2" />
-                  <RadioButton fx:id="rbtnWordsMA" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
+                  <HBox prefHeight="90.0" prefWidth="1287.0">
+                     <children>
+                        <Label text="Accuracy">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnAccuracyE" mnemonicParsing="false" onAction="#onSetAccuracyEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG1" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnAccuracyM" mnemonicParsing="false" onAction="#onSetAccuracyMedium" text="MEDIUM" toggleGroup="$TG1" />
+                        <RadioButton fx:id="rbtnAccuracyH" mnemonicParsing="false" onAction="#onSetAccuracyHard" text="HARD" toggleGroup="$TG1" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Words">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnWordsE" mnemonicParsing="false" onAction="#onSetWordsEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG2" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" text="MEDIUM" toggleGroup="$TG2" />
+                        <RadioButton fx:id="rbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" text="HARD" toggleGroup="$TG2" />
+                        <RadioButton fx:id="rbtnWordsMA" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Time">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnTimeE" mnemonicParsing="false" onAction="#onSetTimeEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG3" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" text="MEDIUM" toggleGroup="$TG3" />
+                        <RadioButton fx:id="rbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" text="HARD" toggleGroup="$TG3" />
+                        <RadioButton fx:id="rbtnTimeMA" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Confidence">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnConfidenceE" mnemonicParsing="false" onAction="#onSetConfidenceEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG4" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" text="MEDIUM" toggleGroup="$TG4" />
+                        <RadioButton fx:id="rbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" text="HARD" toggleGroup="$TG4" />
+                        <RadioButton fx:id="rbtnConfidenceMA" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Time">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="rbtnTimeE" mnemonicParsing="false" onAction="#onSetTimeEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG3" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" text="MEDIUM" toggleGroup="$TG3" />
-                  <RadioButton fx:id="rbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" text="HARD" toggleGroup="$TG3" />
-                  <RadioButton fx:id="rbtnTimeMA" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Confidence">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="rbtnConfidenceE" mnemonicParsing="false" onAction="#onSetConfidenceEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG4" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" text="MEDIUM" toggleGroup="$TG4" />
-                  <RadioButton fx:id="rbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" text="HARD" toggleGroup="$TG4" />
-                  <RadioButton fx:id="rbtnConfidenceMA" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
-               </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </children>
