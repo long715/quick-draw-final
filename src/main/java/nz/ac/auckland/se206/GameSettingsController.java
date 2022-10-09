@@ -4,7 +4,10 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.VBox;
+import nz.ac.auckland.se206.UserProfile.Mode;
 
 public class GameSettingsController {
   @FXML private Button btnMenu;
@@ -23,9 +26,11 @@ public class GameSettingsController {
   @FXML private ToggleButton rbtnConfidenceM;
   @FXML private ToggleButton rbtnConfidenceH;
   @FXML private ToggleButton rbtnConfidenceMA;
-  @FXML private ToggleButton btnHiddenWord;
+  @FXML private Label lblCurrentMode;
+  @FXML private VBox vboxSettings;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
+  ;
 
   @FXML
   private void initialize() {
@@ -73,8 +78,12 @@ public class GameSettingsController {
       rbtnConfidenceMA.setSelected(true);
     }
 
-    if (currentUser.getHiddenMode() == true) {
-      btnHiddenWord.setSelected(true);
+    // get the previous node and update the current mode label
+    setCurrentModeLabel();
+    // check if the current mode is Zen, where we disable the visibility of the
+    // game settings
+    if (currentUser.isZenMode()) {
+      vboxSettings.setVisible(false);
     }
   }
 
@@ -176,11 +185,35 @@ public class GameSettingsController {
   }
 
   @FXML
-  private void onToggleHiddenWord() {
-    if (currentUser.getHiddenMode() == false) {
-      currentUser.setHiddenMode(true);
-    } else {
-      currentUser.setHiddenMode(false);
-    }
+  private void onSetModeToZen() throws IOException {
+    currentUser.setMode(Mode.ZEN);
+    // set the current mode label to zen
+    setCurrentModeLabel();
+    vboxSettings.setVisible(false);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetToHidden() throws IOException {
+    currentUser.setMode(Mode.HIDDENWORD);
+    // set the current mode label to zen
+    setCurrentModeLabel();
+    vboxSettings.setVisible(false);
+    currentUser.saveData();
+  }
+
+  @FXML
+  private void onSetToNormal() throws IOException {
+    currentUser.setMode(Mode.NORMAL);
+    // set the current mode label to normal
+    setCurrentModeLabel();
+    // enable the visibilty of the settings
+    vboxSettings.setVisible(true);
+    currentUser.saveData();
+  }
+
+  private void setCurrentModeLabel() {
+    // get the previous node and update the current mode label
+    lblCurrentMode.setText("Current Mode: " + currentUser.getMode());
   }
 }
