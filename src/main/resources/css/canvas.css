@@ -81,6 +81,7 @@
 
 #lblWord{
     -fx-text-fill: #4185F4;
+    -fx-font-size: 20px;
 }
 
 #lblTime{
