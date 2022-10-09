@@ -23,9 +23,9 @@ public class GameSettingsController {
   @FXML private ToggleButton rbtnConfidenceM;
   @FXML private ToggleButton rbtnConfidenceH;
   @FXML private ToggleButton rbtnConfidenceMA;
+  @FXML private ToggleButton btnHiddenWord;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
-  ;
 
   @FXML
   private void initialize() {
@@ -71,6 +71,10 @@ public class GameSettingsController {
       rbtnConfidenceH.setSelected(true);
     } else {
       rbtnConfidenceMA.setSelected(true);
+    }
+
+    if (currentUser.getHiddenMode() == true) {
+      btnHiddenWord.setSelected(true);
     }
   }
 
@@ -169,5 +173,14 @@ public class GameSettingsController {
   private void onSetConfidenceMaster() throws IOException {
     currentUser.setConfidence(50);
     currentUser.saveData();
+  }
+
+  @FXML
+  private void onToggleHiddenWord() {
+    if (currentUser.getHiddenMode() == false) {
+      currentUser.setHiddenMode(true);
+    } else {
+      currentUser.setHiddenMode(false);
+    }
   }
 }
