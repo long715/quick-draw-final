@@ -154,23 +154,38 @@ public class CanvasController {
   private void chooseWord() throws URISyntaxException, IOException, CsvException {
     // implement the category selector and display the category on the lbl
     CategorySelector categorySelector = new CategorySelector();
+    int wordsSettings = currentUser.getWordsSettings();
 
-    // get words current user has played and all words from easy category
+    // get words current user has played and all words from words settings
     ArrayList<String> playedWords = currentUser.getWords();
-    List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
+    List<String> allWords = categorySelector.getDifficultyList(wordsSettings);
+
+    if (isZen) {
+      playedWords = currentUser.getZenWords();
+      wordsSettings = 1;
+      allWords = categorySelector.getDifficultyList(wordsSettings); // ALL words from all categories
+    }
 
     // check if the player has played all the words
     if (playedWords.containsAll(allWords)) {
-      currentUser.newRound();
+      if (isZen) {
+        currentUser.newZenRound();
+      } else {
+        currentUser.newRound();
+      }
     }
 
-    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    String randomWord = categorySelector.getRandomCategory(wordsSettings);
     // generate word that user has not played yet in current round
     while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+      randomWord = categorySelector.getRandomCategory(wordsSettings);
     }
 
-    currentUser.addWord(randomWord);
+    if (isZen) {
+      currentUser.addZenWords(randomWord);
+    } else {
+      currentUser.addWord(randomWord);
+    }
     lblCategory.setText(randomWord);
     currentWord = randomWord;
   }
@@ -182,7 +197,7 @@ public class CanvasController {
   }
 
   @FXML
-  private void onStartGame() throws InterruptedException, ExecutionException {
+  private void onStartGame() throws InterruptedException, ExecutionException, IOException {
     // enable the canvas and disable to ready btn
     canvas.setDisable(false);
     btnReady.setDisable(true);
@@ -190,6 +205,11 @@ public class CanvasController {
     if (isZen) {
       // user should be able to save drawing anytime
       btnSaveDrawing.setDisable(false);
+      // since zen mode game doesn't end, zen word data must be written on start
+      currentUser.writeData(
+          new File(
+              "src/main/resources/data/users",
+              SceneManager.getMainUser().replace(" ", "_") + ".txt"));
     } else {
       startTimer();
     }
