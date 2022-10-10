@@ -65,12 +65,23 @@
     -fx-background-color: #f862f8;
 }
 
+#btnHint{
+    -fx-background-color: #b4ac32;
+    -fx-background-radius: 5;
+
+}
+
+#btnHint:hover {
+    -fx-background-color: #e9da07;
+}
+
 .label{
     -fx-font-size: 30px;
 }
 
 #lblWord{
     -fx-text-fill: #4185F4;
+    -fx-font-size: 20px;
 }
 
 #lblTime{

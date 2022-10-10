@@ -194,6 +194,15 @@ public class GameSettingsController {
   }
 
   @FXML
+  private void onSetToHidden() throws IOException {
+    currentUser.setMode(Mode.HIDDENWORD);
+    // set the current mode label to zen
+    setCurrentModeLabel();
+    vboxSettings.setVisible(true);
+    currentUser.saveData();
+  }
+
+  @FXML
   private void onSetToNormal() throws IOException {
     currentUser.setMode(Mode.NORMAL);
     // set the current mode label to normal

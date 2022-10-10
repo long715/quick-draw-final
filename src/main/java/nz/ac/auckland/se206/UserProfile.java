@@ -235,6 +235,10 @@ public class UserProfile {
     return this.mode == Mode.ZEN;
   }
 
+  public boolean isHiddenMode() {
+    return this.mode == Mode.HIDDENWORD;
+  }
+
   public ArrayList<String> getZenWords() {
     return this.zenWords;
   }

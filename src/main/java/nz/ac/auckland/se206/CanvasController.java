@@ -39,6 +39,9 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
+import nz.ac.auckland.se206.words.DefinitionFetcher;
+import nz.ac.auckland.se206.words.WordNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -63,6 +66,7 @@ public class CanvasController {
   @FXML private Button btnReady;
   @FXML private Button clearButton;
   @FXML private Button btnSaveDrawing;
+  @FXML private Button btnHint;
 
   private GraphicsContext graphic;
   private DoodlePrediction model;
@@ -77,6 +81,10 @@ public class CanvasController {
   private int timePlayed;
   private boolean isPredictionStarted = false;
   private boolean isZen = currentUser.isZenMode();
+  private boolean isHidden = currentUser.isHiddenMode();
+  private String labelText;
+  private String randomWord, textToSpeechString;
+  private int hintCounter = 0;
 
   // mouse coordinates
   private double currentX;
@@ -106,11 +114,18 @@ public class CanvasController {
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
 
+    btnHint.setVisible(false);
+
     if (!isZen) {
       // user can't go back and create a new game before finishing the current game
       btnToMenu.setDisable(true);
       // set the initial time for the timer
       lblTime.setText(String.valueOf(timeSettings));
+
+      if (isHidden) {
+        btnHint.setVisible(true);
+        btnHint.setDisable(true);
+      }
     }
     // user can't save an empty canvas, drawing can only be saved after game ends
     btnSaveDrawing.setDisable(true);
@@ -131,7 +146,7 @@ public class CanvasController {
                   "You got "
                       + timeSettings
                       + " seconds to draw "
-                      + currentWord
+                      + textToSpeechString
                       + ", press the ready button whenever you are ready!");
             }
 
@@ -175,18 +190,29 @@ public class CanvasController {
       }
     }
 
-    String randomWord = categorySelector.getRandomCategory(wordsSettings);
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(wordsSettings);
-    }
+    randomWord = getNewWord(allWords, playedWords, categorySelector);
 
     if (isZen) {
       currentUser.addZenWords(randomWord);
+      lblCategory.setText(randomWord);
+    } else if (isHidden) {
+      btnHint.setDisable(false);
+      while (true) {
+        try {
+          textToSpeechString = DefinitionFetcher.getDefinition(randomWord);
+          labelText = StringUtils.repeat("_", randomWord.length());
+          break;
+        } catch (WordNotFoundException e) {
+          randomWord = getNewWord(allWords, playedWords, categorySelector);
+        }
+      }
+      lblCategory.setText(StringUtils.repeat("_", randomWord.length()));
+
     } else {
       currentUser.addWord(randomWord);
+      lblCategory.setText(randomWord);
+      textToSpeechString = randomWord;
     }
-    lblCategory.setText(randomWord);
     currentWord = randomWord;
   }
 
@@ -210,6 +236,9 @@ public class CanvasController {
           new File(
               "src/main/resources/data/users",
               SceneManager.getMainUser().replace(" ", "_") + ".txt"));
+    } else if (isHidden) {
+      btnHint.setDisable(false);
+      startTimer();
     } else {
       startTimer();
     }
@@ -439,9 +468,8 @@ public class CanvasController {
           event -> {
             setCanvas();
 
-            // update the winOrLose label and use the text to speech to tell the user if the they
-            // have
-            // won or lost
+            // update the winOrLose label and use the text to speech to tell the user if the
+            // they have won or lost
             try {
               if (taskPredict.get()) { // returns true if user has won
                 setCanvasWon();
@@ -464,7 +492,9 @@ public class CanvasController {
 
   /** This method sets up the canvas page after a game is finished. */
   private void setCanvas() {
-    // once the game has ended (timer runs out or if they won), we want the following UX:
+
+    // once the game has ended (timer runs out or if they won), we want the
+    // following UX:
     canvas.setDisable(true); // user should not be able to draw on the canvas
     btnToMenu.setDisable(
         false); // user can go back to the main menu to load the previous game or create a
@@ -476,6 +506,8 @@ public class CanvasController {
     // custom directory and file name inputs
     btnSaveDrawing.setDisable(false);
 
+    // player shouldn't be able to get hints after the game is over
+    btnHint.setDisable(true);
     // close the ML Manager
     model.closeManager();
   }
@@ -557,5 +589,27 @@ public class CanvasController {
             });
     Platform.runLater(predict);
     return predict.get().toString().replace("_", " ");
+  }
+
+  private String getNewWord(
+      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    // generate word that user has not played yet in current round
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    }
+
+    return randomWord;
+  }
+
+  @FXML
+  private void onHint() {
+    if (hintCounter < randomWord.length()) {
+      StringBuilder sb = new StringBuilder(labelText);
+      sb.setCharAt(hintCounter, randomWord.charAt(hintCounter));
+      hintCounter++;
+      labelText = sb.toString();
+      lblCategory.setText(labelText);
+    }
   }
 }

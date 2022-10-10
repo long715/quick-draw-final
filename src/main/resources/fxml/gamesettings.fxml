@@ -31,6 +31,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onSetModeToZen" prefHeight="47.0" prefWidth="111.0" text="Zen" />
                   <Button mnemonicParsing="false" onAction="#onSetToNormal" prefHeight="47.0" prefWidth="119.0" text="Normal" />
+                  <Button mnemonicParsing="false" onAction="#onSetToHidden" prefHeight="47.0" prefWidth="119.0" text="Hidden" />
                </children>
             </HBox>
             <VBox fx:id="vboxSettings" prefHeight="271.0" prefWidth="1287.0">
