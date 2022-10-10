@@ -461,9 +461,7 @@ public class CanvasController {
             setCanvas();
 
             // update the winOrLose label and use the text to speech to tell the user if the
-            // they
-            // have
-            // won or lost
+            // they have won or lost
             try {
               if (taskPredict.get()) { // returns true if user has won
                 setCanvasWon();
@@ -486,6 +484,7 @@ public class CanvasController {
 
   /** This method sets up the canvas page after a game is finished. */
   private void setCanvas() {
+
     // once the game has ended (timer runs out or if they won), we want the
     // following UX:
     canvas.setDisable(true); // user should not be able to draw on the canvas
@@ -501,7 +500,6 @@ public class CanvasController {
 
     // player shouldn't be able to get hints after the game is over
     btnHint.setDisable(true);
-
     // close the ML Manager
     model.closeManager();
   }
