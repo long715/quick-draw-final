@@ -83,7 +83,7 @@ public class CanvasController {
   private boolean isZen = currentUser.isZenMode();
   private boolean isHidden = currentUser.isHiddenMode();
   private String labelText;
-  private String randomWord, wordDefinition;
+  private String randomWord, textToSpeechString;
   private int hintCounter = 0;
 
   // mouse coordinates
@@ -114,15 +114,21 @@ public class CanvasController {
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
 
+    btnHint.setVisible(false);
+
     if (!isZen) {
       // user can't go back and create a new game before finishing the current game
       btnToMenu.setDisable(true);
       // set the initial time for the timer
       lblTime.setText(String.valueOf(timeSettings));
+
+      if (isHidden) {
+        btnHint.setVisible(true);
+        btnHint.setDisable(true);
+      }
     }
     // user can't save an empty canvas, drawing can only be saved after game ends
     btnSaveDrawing.setDisable(true);
-    btnHint.setVisible(true);
 
     model = new DoodlePrediction();
     speech = new TextToSpeech();
@@ -140,7 +146,7 @@ public class CanvasController {
                   "You got "
                       + timeSettings
                       + " seconds to draw "
-                      + wordDefinition
+                      + textToSpeechString
                       + ", press the ready button whenever you are ready!");
             }
 
@@ -185,6 +191,7 @@ public class CanvasController {
     }
 
     randomWord = getNewWord(allWords, playedWords, categorySelector);
+
     if (isZen) {
       currentUser.addZenWords(randomWord);
       lblCategory.setText(randomWord);
@@ -192,7 +199,7 @@ public class CanvasController {
       btnHint.setDisable(false);
       while (true) {
         try {
-          wordDefinition = DefinitionFetcher.getDefinition(randomWord);
+          textToSpeechString = DefinitionFetcher.getDefinition(randomWord);
           labelText = StringUtils.repeat("_", randomWord.length());
           break;
         } catch (WordNotFoundException e) {
@@ -204,6 +211,7 @@ public class CanvasController {
     } else {
       currentUser.addWord(randomWord);
       lblCategory.setText(randomWord);
+      textToSpeechString = randomWord;
     }
     currentWord = randomWord;
   }
