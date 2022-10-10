@@ -198,7 +198,7 @@ public class GameSettingsController {
     currentUser.setMode(Mode.HIDDENWORD);
     // set the current mode label to zen
     setCurrentModeLabel();
-    vboxSettings.setVisible(false);
+    vboxSettings.setVisible(true);
     currentUser.saveData();
   }
 

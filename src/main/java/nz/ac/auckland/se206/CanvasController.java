@@ -122,7 +122,7 @@ public class CanvasController {
     }
     // user can't save an empty canvas, drawing can only be saved after game ends
     btnSaveDrawing.setDisable(true);
-    btnHint.setDisable(true);
+    btnHint.setVisible(true);
 
     model = new DoodlePrediction();
     speech = new TextToSpeech();
@@ -185,11 +185,6 @@ public class CanvasController {
     }
 
     randomWord = getNewWord(allWords, playedWords, categorySelector);
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(wordsSettings);
-    }
-
     if (isZen) {
       currentUser.addZenWords(randomWord);
       lblCategory.setText(randomWord);
