@@ -39,6 +39,21 @@ public class GameSettingsController {
   @FXML
   private void initialize() {
 
+    setAccuracySettings();
+    setWordsSettings();
+    setTimeSettings();
+    setConfidenceSettings();
+
+    // get the previous node and update the current mode label
+    setCurrentModeLabel();
+    // check if the current mode is Zen, where we disable the visibility of the
+    // game settings
+    if (currentUser.isZenMode()) {
+      vboxSettings.setVisible(false);
+    }
+  }
+
+  private void setAccuracySettings() {
     // look thru the previously selected ACCURACY settings and
     // set the settings on the new page
     if (currentUser.getAccuracy() == 3) {
@@ -51,7 +66,9 @@ public class GameSettingsController {
       rbtnAccuracyH.setSelected(true);
       lblAccuracyDesc.setText("*your word must be the top word");
     }
+  }
 
+  private void setWordsSettings() {
     // looks thru the previous settings for WORDS
     if (currentUser.getWordsSettings() == 3) {
       rbtnWordsE.setSelected(true);
@@ -66,7 +83,9 @@ public class GameSettingsController {
       rbtnWordsMA.setSelected(true);
       lblWordsDesc.setText("*true masters play hard words only");
     }
+  }
 
+  private void setTimeSettings() {
     // look thru previous settings for TIME
     if (currentUser.getTimeSettings() == 60) {
       rbtnTimeE.setSelected(true);
@@ -81,7 +100,9 @@ public class GameSettingsController {
       rbtnTimeMA.setSelected(true);
       lblTimeDesc.setText("*you have 15 seconds to draw");
     }
+  }
 
+  private void setConfidenceSettings() {
     // look thru previous settings for CONFIDENCE
     if (currentUser.getConfidence() == 1) {
       rbtnConfidenceE.setSelected(true);
@@ -96,14 +117,6 @@ public class GameSettingsController {
       rbtnConfidenceMA.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is an artwork!");
     }
-
-    // get the previous node and update the current mode label
-    setCurrentModeLabel();
-    // check if the current mode is Zen, where we disable the visibility of the
-    // game settings
-    if (currentUser.isZenMode()) {
-      vboxSettings.setVisible(false);
-    }
   }
 
   @FXML
@@ -115,107 +128,107 @@ public class GameSettingsController {
   @FXML
   private void onSetAccuracyEasy() throws IOException {
     currentUser.setAccuracy(3);
-    lblAccuracyDesc.setText("*your word must be in the top 3");
     // update the file
     currentUser.saveData();
+    setAccuracySettings();
   }
 
   @FXML
   private void onSetAccuracyMedium() throws IOException {
     currentUser.setAccuracy(2);
-    lblAccuracyDesc.setText("*your word must be in the top 2");
     currentUser.saveData();
+    setAccuracySettings();
   }
 
   @FXML
   private void onSetAccuracyHard() throws IOException {
     currentUser.setAccuracy(1);
-    lblAccuracyDesc.setText("*your word must be the top word");
     currentUser.saveData();
+    setAccuracySettings();
   }
 
   @FXML
   private void onSetWordsEasy() throws IOException {
     currentUser.setWordsSettings(3);
-    lblWordsDesc.setText("*you will get a word from the easy category");
     currentUser.saveData();
+    setWordsSettings();
   }
 
   @FXML
   private void onSetWordsMedium() throws IOException {
     currentUser.setWordsSettings(2);
-    lblWordsDesc.setText("*you will get a word from the easy and medium category");
     currentUser.saveData();
+    setWordsSettings();
   }
 
   @FXML
   private void onSetWordsHard() throws IOException {
     currentUser.setWordsSettings(1);
-    lblWordsDesc.setText("*you will get a word from the easy, medium and hard category");
     currentUser.saveData();
+    setWordsSettings();
   }
 
   @FXML
   private void onSetWordsMaster() throws IOException {
     currentUser.setWordsSettings(0);
-    lblWordsDesc.setText("*true masters play hard words only");
     currentUser.saveData();
+    setWordsSettings();
   }
 
   @FXML
   private void onSetTimeEasy() throws IOException {
     currentUser.setTimeSettings(60);
-    lblTimeDesc.setText("*you have 60 seconds to draw");
     currentUser.saveData();
+    setTimeSettings();
   }
 
   @FXML
   private void onSetTimeMedium() throws IOException {
     currentUser.setTimeSettings(45);
-    lblTimeDesc.setText("*you have 45 seconds to draw");
     currentUser.saveData();
+    setTimeSettings();
   }
 
   @FXML
   private void onSetTimeHard() throws IOException {
     currentUser.setTimeSettings(30);
-    lblTimeDesc.setText("*you have 30 seconds to draw");
     currentUser.saveData();
+    setTimeSettings();
   }
 
   @FXML
   private void onSetTimeMaster() throws IOException {
     currentUser.setTimeSettings(15);
-    lblTimeDesc.setText("*you have 15 seconds to draw");
     currentUser.saveData();
+    setTimeSettings();
   }
 
   @FXML
   private void onSetConfidenceEasy() throws IOException {
     currentUser.setConfidence(1);
-    lblConfidenceDesc.setText("*your drawing is at least legible");
     currentUser.saveData();
+    setConfidenceSettings();
   }
 
   @FXML
   private void onSetConfidenceMedium() throws IOException {
     currentUser.setConfidence(10);
-    lblConfidenceDesc.setText("*your drawing is getting better...");
     currentUser.saveData();
+    setConfidenceSettings();
   }
 
   @FXML
   private void onSetConfidenceHard() throws IOException {
     currentUser.setConfidence(25);
-    lblConfidenceDesc.setText("*your drawing is pretty good!");
     currentUser.saveData();
+    setConfidenceSettings();
   }
 
   @FXML
   private void onSetConfidenceMaster() throws IOException {
     currentUser.setConfidence(50);
-    lblConfidenceDesc.setText("*your drawing is an artwork!");
     currentUser.saveData();
+    setConfidenceSettings();
   }
 
   @FXML
