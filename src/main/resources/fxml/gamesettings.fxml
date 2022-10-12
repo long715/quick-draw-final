@@ -55,7 +55,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="vboxSettings" prefHeight="396.0" prefWidth="1287.0">
+            <VBox fx:id="vboxSettings" prefHeight="483.0" prefWidth="1287.0">
                <children>
                   <HBox prefHeight="85.0" prefWidth="1287.0">
                      <children>
@@ -85,6 +85,11 @@
                         <Insets left="100.0" />
                      </padding>
                   </HBox>
+                  <Label id="lblDesc" fx:id="lblAccuracyDesc" prefHeight="53.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </Label>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                      <children>
                         <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Words:     " textAlignment="RIGHT">
@@ -105,6 +110,11 @@
                         <Insets left="100.0" />
                      </padding>
                   </HBox>
+                  <Label id="lblDesc" fx:id="lblWordsDesc" prefHeight="55.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </Label>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                      <children>
                         <Label text="Time:      ">
@@ -125,6 +135,11 @@
                         <Insets left="100.0" />
                      </padding>
                   </HBox>
+                  <Label id="lblDesc" fx:id="lblTimeDesc" prefHeight="59.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </Label>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                      <children>
                         <Label text="Confidence:">
@@ -145,6 +160,11 @@
                         <Insets left="100.0" />
                      </padding>
                   </HBox>
+                  <Label id="lblDesc" fx:id="lblConfidenceDesc" prefHeight="56.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </Label>
                </children>
             </VBox>
          </children>

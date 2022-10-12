@@ -71,3 +71,16 @@
     -fx-font-size: 20px;
     -fx-text-fill: #9900FF;
 }
+
+#lblDesc{
+    -fx-font-size: 15px;
+    -fx-text-fill: #FFF01F;
+}
+
+.radio-button{
+    -fx-text-fill: #4A86E8;
+}
+
+.radio-button:selected{
+    -fx-text-fill: #FFF01F;
+}
