@@ -107,6 +107,10 @@ public class UserProfile {
     this.wordsSettings = Integer.valueOf(reader.readLine());
     this.timeSettings = Integer.valueOf(reader.readLine());
     this.confidence = Integer.valueOf(reader.readLine());
+    this.badgesEarned =
+        new ArrayList<String>(
+            Arrays.asList(
+                reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
 
     reader.close();
   }
