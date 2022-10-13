@@ -33,6 +33,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -63,6 +64,8 @@ public class CanvasController {
   @FXML private Button btnReady;
   @FXML private Button clearButton;
   @FXML private Button btnSaveDrawing;
+  @FXML private Label lblReward;
+  @FXML private ImageView imgBadge;
 
   private GraphicsContext graphic;
   private DoodlePrediction model;
@@ -402,7 +405,8 @@ public class CanvasController {
 
       taskPredict.setOnSucceeded(
           event -> {
-            // once the game has ended (timer runs out or if they won), we want the following UX:
+            // once the game has ended (timer runs out or if they won), we want the
+            // following UX:
             canvas.setDisable(true); // user should not be able to draw on the canvas
             btnToMenu.setDisable(
                 false); // user can go back to the main menu to load the previous game or create a
@@ -417,7 +421,8 @@ public class CanvasController {
             // close the ML Manager
             model.closeManager();
 
-            // update the winOrLose label and use the text to speech to tell the user if the they
+            // update the winOrLose label and use the text to speech to tell the user if the
+            // they
             // have
             // won or lost
             try {
