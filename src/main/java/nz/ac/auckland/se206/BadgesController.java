@@ -25,11 +25,13 @@ public class BadgesController {
     badgeImagePaths = user.getBadgesEarned();
     badgesList = new ArrayList<ImageView>();
 
-    if (!(user == null)) {
+    // image path cannot be empty string
+    badgeImagePaths.removeIf(s -> s == null || "".equals(s));
 
+    if (!(user == null)) {
       // if the user has earned some badges, we display them
-      if ((badgeImagePaths.size() > 1)) {
-        System.out.println(badgeImagePaths.toString());
+      if (!(badgeImagePaths.isEmpty())) {
+        lblHeading.setText("Badges Earned");
 
         // converting badge image paths to images and adding them to the image view list
         for (String badgeURL : (badgeImagePaths)) {
@@ -38,7 +40,7 @@ public class BadgesController {
         lstvBadges.getItems().addAll(badgesList);
 
       } else {
-        // this text is displayed when the user has not earned any badges
+
         lblHeading.setText("Play more to earn badges!");
       }
     }
