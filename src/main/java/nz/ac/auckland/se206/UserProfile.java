@@ -196,4 +196,12 @@ public class UserProfile {
   public void setConfidence(int confidence) {
     this.confidence = confidence;
   }
+
+  public void addBadge(String badgeFileName) {
+    this.badgesEarned.add(badgeFileName);
+  }
+
+  public ArrayList<String> getBadgesEarned() {
+    return this.badgesEarned;
+  }
 }
