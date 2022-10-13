@@ -19,6 +19,9 @@ public class UserProfile {
   private String bestName;
   private int bestTime;
   private int rounds;
+  // storing the badges data as an array list of the image paths represented as
+  // strings
+  private ArrayList<String> badgesEarned;
 
   // fields for game settings; possible values 3-easy, 2-medium, 1-hard, 0-master
   private int accuracy;
@@ -38,6 +41,7 @@ public class UserProfile {
     // default best time is -1 which is recognised as no best time
     this.bestTime = -1;
     this.rounds = 0;
+    this.badgesEarned = new ArrayList<String>();
 
     // default should be easy
     this.accuracy = 3;
@@ -88,7 +92,8 @@ public class UserProfile {
     this.wins = Integer.valueOf(reader.readLine());
     this.loss = Integer.valueOf(reader.readLine());
     // input is parsed so that the remaining string is "A,B,C"
-    // this is then separated via the commas and made into elements of an intermediate array
+    // this is then separated via the commas and made into elements of an
+    // intermediate array
     // convert this array to ArrayList format
     this.words =
         new ArrayList<String>(
