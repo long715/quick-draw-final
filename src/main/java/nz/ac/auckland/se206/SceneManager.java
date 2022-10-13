@@ -21,14 +21,16 @@ public class SceneManager {
     CANVAS,
     CHOOSEPLAYER,
     STATISTICS,
-    GAMESETTINGS
+    GAMESETTINGS,
+    BADGES
   }
 
   private static String mainUser = "";
 
   // use hashmap to store the instances of each root
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
-  // use hashmap to store user profile instances using its name (string) as the key
+  // use hashmap to store user profile instances using its name (string) as the
+  // key
   private static HashMap<String, UserProfile> profileMap = new HashMap<String, UserProfile>();
 
   /**
