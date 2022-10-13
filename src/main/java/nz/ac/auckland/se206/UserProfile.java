@@ -80,6 +80,7 @@ public class UserProfile {
     writer.write(wordsSettings + "\n");
     writer.write(timeSettings + "\n");
     writer.write(confidence + "\n");
+    writer.write(badgesEarned.toString() + "\n");
 
     writer.close();
   }
