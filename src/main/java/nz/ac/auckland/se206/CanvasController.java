@@ -116,18 +116,15 @@ public class CanvasController {
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
 
+    // before ready, we dont want hint button to function
     btnHint.setVisible(false);
+    btnHint.setDisable(true);
 
     if (!isZen) {
       // user can't go back and create a new game before finishing the current game
       btnToMenu.setDisable(true);
       // set the initial time for the timer
       lblTime.setText(String.valueOf(timeSettings));
-
-      if (isHidden) {
-        btnHint.setVisible(true);
-        btnHint.setDisable(true);
-      }
     }
     // user can't save an empty canvas, drawing can only be saved after game ends
     btnSaveDrawing.setDisable(true);
@@ -229,6 +226,7 @@ public class CanvasController {
     // enable the canvas and disable to ready btn
     canvas.setDisable(false);
     btnReady.setDisable(true);
+    btnReady.setVisible(false);
 
     if (isZen) {
       // user should be able to save drawing anytime
@@ -239,6 +237,8 @@ public class CanvasController {
               "src/main/resources/data/users",
               SceneManager.getMainUser().replace(" ", "_") + ".txt"));
     } else if (isHidden) {
+      // when ready is clicked, we should see and use hint button
+      btnHint.setVisible(true);
       btnHint.setDisable(false);
       startTimer();
     } else {
