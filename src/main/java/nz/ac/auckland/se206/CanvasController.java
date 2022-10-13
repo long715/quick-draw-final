@@ -34,6 +34,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
@@ -61,7 +63,7 @@ public class CanvasController {
   @FXML private Label lblCategory;
   @FXML private Label lblTime;
   @FXML private Label lblWinOrLose;
-  @FXML private Label lblGuesses;
+  @FXML private TextFlow txtFlowPrediction;
   @FXML private Button btnToMenu;
   @FXML private Button btnReady;
   @FXML private Button clearButton;
@@ -341,8 +343,8 @@ public class CanvasController {
    * @param classifications The list of the DL predictions
    * @return if current word is included within the boundary which means the player has won
    */
-  private boolean isWin(List<Classification> classifications, int topPredictions) {
-    for (int i = 0; i < topPredictions; i++) {
+  private boolean isWin(List<Classification> classifications) {
+    for (int i = 0; i < classifications.size(); i++) {
       // format the category name from ML the same way as current word
       if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
         // extra condition: user must meet confidence requirements for user to win
@@ -427,14 +429,14 @@ public class CanvasController {
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
                               return isWin(
-                                  model.getPredictions(getCurrentSnapshot(), 10),
-                                  currentUser.getAccuracy());
+                                  model.getPredictions(
+                                      getCurrentSnapshot(), currentUser.getAccuracy()));
                             }
                           });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
                   Platform.runLater(winOrLose);
-                  updateTitle(getTop10Predictions());
+                  getTop10Predictions();
 
                   // set the temp time
                   temp = seconds.intValue();
@@ -449,7 +451,7 @@ public class CanvasController {
 
               while (isZen) {
                 if ((int) (System.currentTimeMillis() - tempTime) / 1000 >= 1) {
-                  updateTitle(getTop10Predictions());
+                  getTop10Predictions();
                   tempTime = System.currentTimeMillis();
                 }
               }
@@ -460,9 +462,6 @@ public class CanvasController {
       // create the bg thread for the dl task
       Thread bgPredict = new Thread(taskPredict);
       bgPredict.start();
-
-      // bind the title property to the guesses label
-      lblGuesses.textProperty().bind(taskPredict.titleProperty());
 
       taskPredict.setOnSucceeded(
           event -> {
@@ -566,29 +565,49 @@ public class CanvasController {
   }
 
   /**
-   * This method runs the top 10 prediction future task and returns the string form of the
-   * predictions
+   * This method runs the top 10 prediction future task and sets the prediction string
    *
-   * @return top 10 prediction string
    * @throws ExecutionException
    * @throws InterruptedException
    */
-  private String getTop10Predictions() throws InterruptedException, ExecutionException {
+  private void getTop10Predictions() throws InterruptedException, ExecutionException {
     // create a future task for getting the prediction string
     // required for accessing the variable from outside platform run later
-    FutureTask<StringBuilder> predict =
-        new FutureTask<StringBuilder>(
-            new Callable<StringBuilder>() {
-              public StringBuilder call() throws TranslateException {
+    FutureTask<List<String>> predict =
+        new FutureTask<List<String>>(
+            new Callable<List<String>>() {
+              public List<String> call() throws TranslateException {
 
                 // get the list of the top 10 classifications and format the list into
                 // stringbuilder
                 return DoodlePrediction.getPredictionString(
-                    model.getPredictions(getCurrentSnapshot(), 10));
+                    model.getPredictions(getCurrentSnapshot(), 10), currentUser.getAccuracy());
               }
             });
     Platform.runLater(predict);
-    return predict.get().toString().replace("_", " ");
+    Platform.runLater(
+        () -> {
+          try {
+            txtFlowPrediction.getChildren().clear();
+            Text topX = new Text(predict.get().get(0));
+            if (topX.getText().contains(randomWord)) {
+              if (isWin(model.getPredictions(getCurrentSnapshot(), currentUser.getAccuracy()))) {
+                topX.setFill(Color.GREEN);
+              } else {
+                topX.setFill(Color.YELLOW);
+              }
+            } else {
+              topX.setFill(Color.RED);
+            }
+            Text xToTen = new Text(predict.get().get(1));
+            xToTen.setFill(Color.WHITE);
+            txtFlowPrediction.getChildren().addAll(topX, xToTen);
+
+          } catch (InterruptedException | ExecutionException | TranslateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+        });
   }
 
   private String getNewWord(

@@ -88,11 +88,6 @@
     -fx-text-fill: #E43326;
 }
 
-#lblGuesses{
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
-}
-
 #lblResults{
     -fx-font-size: 35px; 
 }
@@ -106,4 +101,8 @@
     -fx-border-style: solid none solid none;
     -fx-border-color:white;
     -fx-border-width: 3;
+}
+
+#textFlow{
+    -fx-font-size: 20px; 
 }
