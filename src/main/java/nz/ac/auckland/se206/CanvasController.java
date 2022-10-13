@@ -431,6 +431,13 @@ public class CanvasController {
                 lblWinOrLose.setText("WIN");
                 currentUser.addWin();
                 timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+                if (timePlayed < 10) {
+                  awardBadge("/images/goldenBadge.png");
+                } else if (timePlayed < 20) {
+                  awardBadge("/images/silverBadge.png");
+                } else if (timePlayed < 30) {
+                  awardBadge("/images/bronzeBadge.png");
+                }
 
                 // since the default best time is -1, og condition will not work
                 // therefore I added an alternative condition to check if best time
@@ -479,6 +486,19 @@ public class CanvasController {
               e.printStackTrace();
             }
           });
+    }
+  }
+
+  /**
+   * This method is used to reward the player with a badge
+   *
+   * @param badgeImagePath The string representing the badge image's path.
+   */
+  private void awardBadge(String badgeImagePath) {
+    if (!(currentUser.getBadgesEarned().contains(badgeImagePath))) {
+      currentUser.addBadge(badgeImagePath);
+      imgBadge.setImage(new Image(badgeImagePath));
+      lblReward.setText("New badge earned !");
     }
   }
 }
