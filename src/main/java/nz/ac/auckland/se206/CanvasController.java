@@ -428,14 +428,60 @@ public class CanvasController {
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
+
                               return isWin(
                                   model.getPredictions(
                                       getCurrentSnapshot(), currentUser.getAccuracy()));
                             }
                           });
+                  FutureTask<Void> outsidePrediction =
+                      new FutureTask<Void>(
+                          new Callable<Void>() {
+                            public Void call() throws TranslateException {
+                              List<Classification> classifications =
+                                  model.getPredictions(getCurrentSnapshot(), 40);
+
+                              for (int i = 10; i <= 20; i++) {
+
+                                if (classifications
+                                    .get(i)
+                                    .getClassName()
+                                    .replace("_", " ")
+                                    .equals(randomWord)) {
+                                  lblWinOrLose.setTextFill(Color.YELLOWGREEN);
+                                  lblWinOrLose.setText("TOP 20");
+                                }
+                              }
+                              for (int i = 20; i <= 30; i++) {
+
+                                if (classifications
+                                    .get(i)
+                                    .getClassName()
+                                    .replace("_", " ")
+                                    .equals(randomWord)) {
+                                  lblWinOrLose.setTextFill(Color.YELLOW);
+                                  lblWinOrLose.setText("TOP 30");
+                                }
+                              }
+                              for (int i = 30; i <= 40; i++) {
+
+                                if (classifications
+                                    .get(i)
+                                    .getClassName()
+                                    .replace("_", " ")
+                                    .equals(randomWord)) {
+                                  lblWinOrLose.setTextFill(Color.ORANGE);
+                                  lblWinOrLose.setText("TOP 40");
+                                }
+                              }
+
+                              return null;
+                            }
+                          });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
                   Platform.runLater(winOrLose);
+                  Platform.runLater(outsidePrediction);
                   getTop10Predictions();
 
                   // set the temp time
@@ -584,6 +630,7 @@ public class CanvasController {
                     model.getPredictions(getCurrentSnapshot(), 10), currentUser.getAccuracy());
               }
             });
+
     Platform.runLater(predict);
     Platform.runLater(
         () -> {
