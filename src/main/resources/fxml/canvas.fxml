@@ -64,8 +64,8 @@
          <children>
             <Button id="btnReady" fx:id="btnReady" layoutX="106.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStartGame" stylesheets="@../css/canvas.css" text="READY" />
             <Button id="btnSave" fx:id="btnSaveDrawing" layoutX="1038.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSave" stylesheets="@../css/canvas.css" text="SAVE" />
-            <Label fx:id="lblReward" layoutX="252.0" layoutY="12.0" prefHeight="45.0" prefWidth="382.0" stylesheets="@../css/canvas.css" />
-            <ImageView fx:id="imgBagde" fitHeight="143.0" fitWidth="191.0" layoutX="794.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblReward" layoutX="369.0" layoutY="17.0" prefHeight="45.0" prefWidth="382.0" stylesheets="@../css/canvas.css" underline="true" />
+            <ImageView fx:id="imgBadge" fitHeight="143.0" fitWidth="191.0" layoutX="794.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
 
