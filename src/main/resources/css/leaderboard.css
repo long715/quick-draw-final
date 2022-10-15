@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+#lblTitle{
+    -fx-text-fill: #83A9F2; 
+    -fx-font-size: 50px;
+}
