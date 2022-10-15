@@ -14,6 +14,12 @@ public class MenuController {
   @FXML private Button btnStatistics;
   @FXML private Label lblUser;
 
+  /**
+   * This is the entry method executed when the instance is firstly loaded. It sets up the
+   * statistics and game settings page of the selected user.
+   *
+   * @throws IOException
+   */
   @FXML
   private void initialize() throws IOException {
     btnLoadGame.setDisable(true); // no game to load at initialisation
@@ -24,6 +30,12 @@ public class MenuController {
     SceneManager.storeUi(SceneManager.AppUi.GAMESETTINGS, App.loadFxml("gamesettings"));
   }
 
+  /**
+   * This method is executed when the new game method is clicked. Creates a new instance of the
+   * canvas page and loads that page.
+   *
+   * @throws IOException
+   */
   @FXML
   private void onCreateGame() throws IOException {
 
@@ -42,6 +54,10 @@ public class MenuController {
     btnLoadGame.setDisable(false);
   }
 
+  /**
+   * This method is called by the onCreateGame() method or is executed when the "load game" button
+   * is clicked. This loads the stored canvas page.
+   */
   @FXML
   private void onSwitchToGame() {
     // load the game instance
@@ -56,6 +72,7 @@ public class MenuController {
     }
   }
 
+  /** This method loads the Choose Player instance when the avatar icon is clicked. */
   @FXML
   private void onChoosePlayer() {
     // load the choose player root
@@ -63,12 +80,20 @@ public class MenuController {
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
   }
 
+  /**
+   * This method loads the stored statistics page of the selected user when the piechart icon is
+   * clicked.
+   */
   @FXML
   private void onClickStatistics() {
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS));
   }
 
+  /**
+   * This method loads the stored GAME statistics page of the user when the "game settings" button
+   * is clicked.
+   */
   @FXML
   private void onSwitchToGameSettings() {
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
