@@ -17,29 +17,29 @@
             <Font name="System Font" size="61.0" />
          </font>
       </Label>
-      <HBox layoutX="173.0" layoutY="175.0" prefHeight="690.0" prefWidth="935.0">
+      <HBox layoutX="83.0" layoutY="178.0" prefHeight="690.0" prefWidth="1115.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="690.0" prefWidth="175.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="100.0" styleClass="lstvHeader" text="RANK" />
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="192.0" styleClass="lstvHeader" text="RANK" />
                   <ListView id="playerList" fx:id="lstvRank" mouseTransparent="true" pickOnBounds="false" prefHeight="690.0" prefWidth="215.0" stylesheets="@../css/chooseplayer.css" />
                </children>
             </VBox>
             <VBox prefHeight="690.0" prefWidth="377.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="377.0" styleClass="lstvHeader" text="NAME" />
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="400.0" styleClass="lstvHeader" text="NAME" />
                   <ListView id="playerList" fx:id="lstvName" mouseTransparent="true" prefHeight="690.0" prefWidth="227.0" stylesheets="@../css/chooseplayer.css" />
                </children>
             </VBox>
-            <VBox prefHeight="690.0" prefWidth="353.0">
+            <VBox prefHeight="690.0" prefWidth="447.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="432.0" styleClass="lstvHeader" text="BEST WORD" />
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="481.0" styleClass="lstvHeader" text="BEST WORD" />
                   <ListView id="playerList" fx:id="lstvBestWord" mouseTransparent="true" prefHeight="690.0" prefWidth="230.0" stylesheets="@../css/chooseplayer.css" />
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="690.0" prefWidth="205.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="147.0" styleClass="lstvHeader" text="TIME" />
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" styleClass="lstvHeader" text="TIME" />
                   <ListView id="playerList" fx:id="lstvBestTime" mouseTransparent="true" prefHeight="690.0" prefWidth="265.0" stylesheets="@../css/chooseplayer.css" />
                </children>
             </VBox>

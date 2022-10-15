@@ -35,7 +35,7 @@
          </VBox.margin></Button>
       <HBox alignment="CENTER" prefHeight="249.0" prefWidth="1280.0">
          <children>
-            <Button fx:id="btnLeaderboard" mnemonicParsing="false" onAction="#onClickLeaderboard" prefHeight="200.0" prefWidth="200.0" text="Button">
+            <Button fx:id="btnLeaderboard" mnemonicParsing="false" onAction="#onClickLeaderboard" prefHeight="200.0" prefWidth="200.0">
                <HBox.margin>
                   <Insets right="60.0" top="20.0" />
                </HBox.margin>
