@@ -12,8 +12,12 @@ public class StatisticsController {
   @FXML private Label lblBestWord;
   @FXML private PieChart pieChart;
   @FXML private Button btnBack;
-  @FXML private ListView lstvWordHistory;
+  @FXML private ListView<String> lstvWordHistory;
 
+  /**
+   * This is the entry method executed when the Statistics page is firstly loaded. Updates the
+   * components (labels, list view and piechart) based on the latest statistics of the user.
+   */
   @FXML
   private void initialize() {
 
@@ -40,6 +44,7 @@ public class StatisticsController {
     }
   }
 
+  /** Loads the Menu instance of the user on the scene. */
   @FXML
   private void onBack() {
     btnBack.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU)); // returns to menu
