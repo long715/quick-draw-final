@@ -442,29 +442,31 @@ public class CanvasController {
                             public Void call() throws TranslateException {
                               List<Classification> classifications =
                                   model.getPredictions(getCurrentSnapshot(), 100);
-                              boolean top40 = false;
 
-                              for (int i = 0; i <= 40; i++) {
+                              List<String> predictionString =
+                                  DoodlePrediction.getPredictionString(classifications, 40);
 
-                                if (classifications
-                                    .get(i)
-                                    .getClassName()
-                                    .replace("_", " ")
-                                    .equals(randomWord)) {
-                                  top40 = true;
+                              if (predictionString.get(0).contains(randomWord)) {
+                                for (int i = 0; i <= 40; i++) {
 
-                                  if (i <= 10) {
-                                    lblWinOrLose.setText("TOP 10");
-                                  } else if (i <= 20) {
-                                    lblWinOrLose.setText("TOP 20");
-                                  } else if (i <= 30) {
-                                    lblWinOrLose.setText("TOP 30");
-                                  } else if (i <= 40) {
-                                    lblWinOrLose.setText("TOP 40");
+                                  if (classifications
+                                      .get(i)
+                                      .getClassName()
+                                      .replace("_", " ")
+                                      .equals(randomWord)) {
+
+                                    if (i <= 10) {
+                                      lblWinOrLose.setText("TOP 10");
+                                    } else if (i <= 20) {
+                                      lblWinOrLose.setText("TOP 20");
+                                    } else if (i <= 30) {
+                                      lblWinOrLose.setText("TOP 30");
+                                    } else if (i <= 40) {
+                                      lblWinOrLose.setText("TOP 40");
+                                    }
                                   }
                                 }
-                              }
-                              if (!top40) {
+                              } else {
                                 lblWinOrLose.setText("NOT EVEN CLOSE");
                               }
 
