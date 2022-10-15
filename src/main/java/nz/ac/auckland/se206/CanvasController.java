@@ -138,10 +138,12 @@ public class CanvasController {
         new Task<Void>() {
           protected Void call() {
             if (isZen) {
+              // custom speech for zen mode since it is a non-competitive mode
               speech.speak("Welcome to Zen Mode! Your word is", currentWord);
 
             } else {
-              // tell the player the word and instructions on how to start the game
+              // tell the player instructions on how to start the game,
+              // the time settings and the word/definitions depending on the game mode
               speech.speak(
                   "You got "
                       + timeSettings
@@ -492,15 +494,11 @@ public class CanvasController {
 
   /** This method sets up the canvas page after a game is finished. */
   private void setCanvas() {
+    // user should not be able to draw on the canvas or reset the drawing
+    canvas.setDisable(true);
+    clearButton.setDisable(true);
 
-    // once the game has ended (timer runs out or if they won), we want the
-    // following UX:
-    canvas.setDisable(true); // user should not be able to draw on the canvas
-    btnToMenu.setDisable(
-        false); // user can go back to the main menu to load the previous game or create a
-    // new
-    // game
-    clearButton.setDisable(true); // user can't alter or reset the drawing in any way
+    btnToMenu.setDisable(false);
 
     // allow user to save the current drawing and write on the text fields for
     // custom directory and file name inputs
@@ -508,7 +506,6 @@ public class CanvasController {
 
     // player shouldn't be able to get hints after the game is over
     btnHint.setDisable(true);
-    // close the ML Manager
     model.closeManager();
   }
 
@@ -625,9 +622,14 @@ public class CanvasController {
   @FXML
   private void onHint() {
     if (hintCounter < randomWord.length()) {
+      // set the string builder to the recent state of the label that shows
+      // the characters of the words
       StringBuilder sb = new StringBuilder(labelText);
+      // open up the next character that's not been shown to the user in the
+      // previous state
       sb.setCharAt(hintCounter, randomWord.charAt(hintCounter));
       hintCounter++;
+      // update the label to show the new state
       labelText = sb.toString();
       lblCategory.setText(labelText);
     }

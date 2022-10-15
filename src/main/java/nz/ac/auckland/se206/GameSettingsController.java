@@ -68,52 +68,67 @@ public class GameSettingsController {
   }
 
   private void setWordsSettings() {
-    // looks thru the previous settings for WORDS
+    // looks thru the previous settings for WORDS, set the respective buttons and
+    // describe each setting catgory
     if (currentUser.getWordsSettings() == 3) {
+      // word settings is set to EASY
       rbtnWordsE.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy category");
     } else if (currentUser.getWordsSettings() == 2) {
+      // word settings is set to MEDIUM
       rbtnWordsM.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy and medium category");
     } else if (currentUser.getWordsSettings() == 1) {
+      // word settings is set to HARD
       rbtnWordsH.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy, medium and hard category");
     } else {
+      // word settings is set to MASTER
       rbtnWordsMaster.setSelected(true);
       lblWordsDesc.setText("*true masters play hard words only");
     }
   }
 
   private void setTimeSettings() {
-    // look thru previous settings for TIME
+    // look thru previous settings for TIME, set the buttons and describe each
+    // setting choices
     if (currentUser.getTimeSettings() == 60) {
+      // time is set to EASY
       rbtnTimeE.setSelected(true);
       lblTimeDesc.setText("*you have 60 seconds to draw");
     } else if (currentUser.getTimeSettings() == 45) {
+      // time is set to MEDIUM
       rbtnTimeM.setSelected(true);
       lblTimeDesc.setText("*you have 45 seconds to draw");
     } else if (currentUser.getTimeSettings() == 30) {
+      // time is set to HARD
       rbtnTimeH.setSelected(true);
       lblTimeDesc.setText("*you have 30 seconds to draw");
     } else {
+      // time is set to MASTER
       rbtnTimeMaster.setSelected(true);
       lblTimeDesc.setText("*you have 15 seconds to draw");
     }
   }
 
   private void setConfidenceSettings() {
-    // look thru previous settings for CONFIDENCE
+    // look thru previous settings for CONFIDENCE and select the respective
+    // button. message to user should not contain percentages
     if (currentUser.getConfidence() == 1) {
+      // confidence is set to EASY
       rbtnConfidenceE.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is at least legible");
     } else if (currentUser.getConfidence() == 10) {
+      // confidence is set to MEDIUM
       rbtnConfidenceM.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is getting better...");
     } else if (currentUser.getConfidence() == 25) {
+      // confidence is set to HARD
       rbtnConfidenceH.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is pretty good!");
     } else {
       rbtnConfidenceMaster.setSelected(true);
+      // confidence is set to MASTER
       lblConfidenceDesc.setText("*your drawing is an artwork!");
     }
   }

@@ -30,7 +30,6 @@ public class DefinitionFetcher {
     }
 
     JSONArray jsonArray = (JSONArray) new JSONTokener(jsonString).nextValue();
-    // List<WordEntry> entries = new ArrayList<WordEntry>();
 
     JSONObject jsonEntryObj = jsonArray.getJSONObject(0);
     JSONArray jsonMeanings = jsonEntryObj.getJSONArray("meanings");
