@@ -39,6 +39,7 @@ public class DefinitionFetcher {
       String subMessage = jsonObj.getString("message");
       throw new WordNotFoundException(query, title, subMessage);
     } catch (ClassCastException e) {
+      System.out.println(e);
     }
 
     JSONArray jsonArray = (JSONArray) new JSONTokener(jsonString).nextValue();
