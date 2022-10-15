@@ -104,7 +104,7 @@
                         </RadioButton>
                         <RadioButton fx:id="rbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" text="MEDIUM" toggleGroup="$TG2" />
                         <RadioButton fx:id="rbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" text="HARD" toggleGroup="$TG2" />
-                        <RadioButton fx:id="rbtnWordsMA" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
+                        <RadioButton fx:id="rbtnWordsMaster" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
                      </children>
                      <padding>
                         <Insets left="100.0" />
@@ -129,7 +129,7 @@
                         </RadioButton>
                         <RadioButton fx:id="rbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" text="MEDIUM" toggleGroup="$TG3" />
                         <RadioButton fx:id="rbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" text="HARD" toggleGroup="$TG3" />
-                        <RadioButton fx:id="rbtnTimeMA" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
+                        <RadioButton fx:id="rbtnTimeMaster" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
                      </children>
                      <padding>
                         <Insets left="100.0" />
@@ -154,7 +154,7 @@
                         </RadioButton>
                         <RadioButton fx:id="rbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" text="MEDIUM" toggleGroup="$TG4" />
                         <RadioButton fx:id="rbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" text="HARD" toggleGroup="$TG4" />
-                        <RadioButton fx:id="rbtnConfidenceMA" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
+                        <RadioButton fx:id="rbtnConfidenceMaster" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
                      </children>
                      <padding>
                         <Insets left="100.0" />

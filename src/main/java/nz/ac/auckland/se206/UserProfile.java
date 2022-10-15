@@ -11,6 +11,13 @@ import java.util.Arrays;
 
 public class UserProfile {
 
+  // fields for the different modes
+  public static enum Mode {
+    ZEN,
+    NORMAL,
+    HIDDENWORD
+  }
+
   // fields that define the data stored for each user
   private String name;
   private int wins;
@@ -33,13 +40,6 @@ public class UserProfile {
   private int timeSettings;
   // possible values: 1-easy, 10-medium, 25-hard, 50-master
   private int confidence;
-
-  // fields for the different modes
-  public static enum Mode {
-    ZEN,
-    NORMAL,
-    HIDDENWORD
-  }
 
   private Mode mode;
 
