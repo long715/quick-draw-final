@@ -219,14 +219,14 @@ public class CanvasController {
   }
 
   /**
-   * This method finds a random word from categories depending on the user game settings,
-   * that has not been played by the user before. 
-   * 
+   * This method finds a random word from categories depending on the user game settings, that has
+   * not been played by the user before.
+   *
    * @param allWords The list of words from a set of difficulty categories
-   * @param playedWords The list of words the user has played before 
+   * @param playedWords The list of words the user has played before
    * @param categorySelector The instance of the class that fetches the words from the csv
-   * @return a string of the random word that the user has not played before 
-   **/
+   * @return a string of the random word that the user has not played before
+   */
   private String getNewWord(
       List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
     String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
@@ -676,8 +676,8 @@ public class CanvasController {
 
   /**
    * This method is executed when the Hint button is clicked (available for hidden word mode only)
-   * which updates the label showing the incomplete/hidden characters of the random word chosen.  
-   **/
+   * which updates the label showing the incomplete/hidden characters of the random word chosen.
+   */
   @FXML
   private void onHint() {
     if (hintCounter < randomWord.length()) {
