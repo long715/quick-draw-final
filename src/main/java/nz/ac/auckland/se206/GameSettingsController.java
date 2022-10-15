@@ -17,15 +17,15 @@ public class GameSettingsController {
   @FXML private ToggleButton rbtnWordsE;
   @FXML private ToggleButton rbtnWordsM;
   @FXML private ToggleButton rbtnWordsH;
-  @FXML private ToggleButton rbtnWordsMA;
+  @FXML private ToggleButton rbtnWordsMaster;
   @FXML private ToggleButton rbtnTimeE;
   @FXML private ToggleButton rbtnTimeM;
   @FXML private ToggleButton rbtnTimeH;
-  @FXML private ToggleButton rbtnTimeMA;
+  @FXML private ToggleButton rbtnTimeMaster;
   @FXML private ToggleButton rbtnConfidenceE;
   @FXML private ToggleButton rbtnConfidenceM;
   @FXML private ToggleButton rbtnConfidenceH;
-  @FXML private ToggleButton rbtnConfidenceMA;
+  @FXML private ToggleButton rbtnConfidenceMaster;
   @FXML private Label lblCurrentMode;
   @FXML private Label lblAccuracyDesc;
   @FXML private Label lblWordsDesc;
@@ -34,7 +34,6 @@ public class GameSettingsController {
   @FXML private VBox vboxSettings;
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
-  ;
 
   @FXML
   private void initialize() {
@@ -80,7 +79,7 @@ public class GameSettingsController {
       rbtnWordsH.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy, medium and hard category");
     } else {
-      rbtnWordsMA.setSelected(true);
+      rbtnWordsMaster.setSelected(true);
       lblWordsDesc.setText("*true masters play hard words only");
     }
   }
@@ -97,7 +96,7 @@ public class GameSettingsController {
       rbtnTimeH.setSelected(true);
       lblTimeDesc.setText("*you have 30 seconds to draw");
     } else {
-      rbtnTimeMA.setSelected(true);
+      rbtnTimeMaster.setSelected(true);
       lblTimeDesc.setText("*you have 15 seconds to draw");
     }
   }
@@ -114,7 +113,7 @@ public class GameSettingsController {
       rbtnConfidenceH.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is pretty good!");
     } else {
-      rbtnConfidenceMA.setSelected(true);
+      rbtnConfidenceMaster.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is an artwork!");
     }
   }

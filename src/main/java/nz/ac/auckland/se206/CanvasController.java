@@ -85,7 +85,8 @@ public class CanvasController {
   private boolean isZen = currentUser.isZenMode();
   private boolean isHidden = currentUser.isHiddenMode();
   private String labelText;
-  private String randomWord, textToSpeechString;
+  private String randomWord;
+  private String textToSpeechString;
   private int hintCounter = 0;
 
   // mouse coordinates
@@ -599,9 +600,9 @@ public class CanvasController {
             } else {
               topX.setFill(Color.RED);
             }
-            Text xToTen = new Text(predict.get().get(1));
-            xToTen.setFill(Color.WHITE);
-            txtFlowPrediction.getChildren().addAll(topX, xToTen);
+            Text secondString = new Text(predict.get().get(1));
+            secondString.setFill(Color.WHITE);
+            txtFlowPrediction.getChildren().addAll(topX, secondString);
 
           } catch (InterruptedException | ExecutionException | TranslateException e) {
             // TODO Auto-generated catch block

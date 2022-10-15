@@ -29,10 +29,10 @@ public class DefinitionFetcher {
     } catch (ClassCastException e) {
     }
 
-    JSONArray jArray = (JSONArray) new JSONTokener(jsonString).nextValue();
+    JSONArray jsonArray = (JSONArray) new JSONTokener(jsonString).nextValue();
     // List<WordEntry> entries = new ArrayList<WordEntry>();
 
-    JSONObject jsonEntryObj = jArray.getJSONObject(0);
+    JSONObject jsonEntryObj = jsonArray.getJSONObject(0);
     JSONArray jsonMeanings = jsonEntryObj.getJSONArray("meanings");
 
     JSONObject jsonMeaningObj = jsonMeanings.getJSONObject(0);
