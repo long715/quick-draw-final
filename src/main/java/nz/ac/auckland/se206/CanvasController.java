@@ -255,7 +255,6 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    lblWinOrLose.setText("");
   }
 
   @FXML
@@ -445,30 +444,33 @@ public class CanvasController {
                           new Callable<Void>() {
                             public Void call() throws TranslateException {
                               List<Classification> classifications =
-                                  model.getPredictions(getCurrentSnapshot(), 100);
+                                  model.getPredictions(getCurrentSnapshot(), 40);
 
-                              for (int i = 0; i <= 100; i++) {
+                              List<String> predictionString =
+                                  DoodlePrediction.getPredictionString(classifications, 40);
 
-                                if (classifications
-                                    .get(i)
-                                    .getClassName()
-                                    .replace("_", " ")
-                                    .equals(randomWord)) {
+                              if (predictionString.get(0).contains(randomWord)) {
+                                for (int i = 0; i <= 40; i++) {
 
-                                  if (i <= 10) {
-                                    lblWinOrLose.setText("TOP 10");
-                                  } else if (i <= 20) {
-                                    lblWinOrLose.setText("TOP 20");
-                                  } else if (i <= 30) {
-                                    lblWinOrLose.setText("TOP 30");
-                                  } else if (i <= 40) {
-                                    lblWinOrLose.setText("TOP 40");
-                                  } else {
-                                    lblWinOrLose.setText("NOT EVEN CLOSE");
+                                  if (classifications
+                                      .get(i)
+                                      .getClassName()
+                                      .replace("_", " ")
+                                      .equals(randomWord)) {
+
+                                    if (i <= 10) {
+                                      lblWinOrLose.setText("TOP 10");
+                                    } else if (i <= 20) {
+                                      lblWinOrLose.setText("TOP 20");
+                                    } else if (i <= 30) {
+                                      lblWinOrLose.setText("TOP 30");
+                                    } else if (i <= 40) {
+                                      lblWinOrLose.setText("TOP 40");
+                                    }
                                   }
-
-                                  return null;
                                 }
+                              } else {
+                                lblWinOrLose.setText("NOT EVEN CLOSE");
                               }
 
                               return null;
