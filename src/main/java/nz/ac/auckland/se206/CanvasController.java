@@ -252,7 +252,6 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    lblWinOrLose.setText("");
   }
 
   @FXML
