@@ -441,7 +441,7 @@ public class CanvasController {
                           new Callable<Void>() {
                             public Void call() throws TranslateException {
                               List<Classification> classifications =
-                                  model.getPredictions(getCurrentSnapshot(), 100);
+                                  model.getPredictions(getCurrentSnapshot(), 40);
 
                               List<String> predictionString =
                                   DoodlePrediction.getPredictionString(classifications, 40);
