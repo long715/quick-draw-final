@@ -120,6 +120,8 @@ public class CanvasController {
     btnHint.setVisible(false);
     btnHint.setDisable(true);
 
+    lblWinOrLose.setTextFill(Color.BLUE);
+
     if (!isZen) {
       // user can't go back and create a new game before finishing the current game
       btnToMenu.setDisable(true);
@@ -250,6 +252,7 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    lblWinOrLose.setText("");
   }
 
   @FXML
@@ -428,14 +431,50 @@ public class CanvasController {
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
+
                               return isWin(
                                   model.getPredictions(
                                       getCurrentSnapshot(), currentUser.getAccuracy()));
                             }
                           });
+                  FutureTask<Void> outsidePrediction =
+                      new FutureTask<Void>(
+                          new Callable<Void>() {
+                            public Void call() throws TranslateException {
+                              List<Classification> classifications =
+                                  model.getPredictions(getCurrentSnapshot(), 100);
+
+                              for (int i = 0; i <= 100; i++) {
+
+                                if (classifications
+                                    .get(i)
+                                    .getClassName()
+                                    .replace("_", " ")
+                                    .equals(randomWord)) {
+
+                                  if (i <= 10) {
+                                    lblWinOrLose.setText("TOP 10");
+                                  } else if (i <= 20) {
+                                    lblWinOrLose.setText("TOP 20");
+                                  } else if (i <= 30) {
+                                    lblWinOrLose.setText("TOP 30");
+                                  } else if (i <= 40) {
+                                    lblWinOrLose.setText("TOP 40");
+                                  } else {
+                                    lblWinOrLose.setText("NOT EVEN CLOSE");
+                                  }
+
+                                  return null;
+                                }
+                              }
+
+                              return null;
+                            }
+                          });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
                   Platform.runLater(winOrLose);
+                  Platform.runLater(outsidePrediction);
                   getTop10Predictions();
 
                   // set the temp time
@@ -477,6 +516,7 @@ public class CanvasController {
                 setCanvasLost();
               }
               SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+              SceneManager.replaceUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
               currentUser.writeData(
                   new File(
                       "src/main/resources/data/users",
@@ -584,6 +624,7 @@ public class CanvasController {
                     model.getPredictions(getCurrentSnapshot(), 10), currentUser.getAccuracy());
               }
             });
+
     Platform.runLater(predict);
     Platform.runLater(
         () -> {
