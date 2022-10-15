@@ -51,8 +51,8 @@ public class UserProfile {
     this.words = new ArrayList<String>();
     this.zenWords = new ArrayList<String>();
     this.bestName = "NIL";
-    // default best time is -1 which is recognised as no best time
-    this.bestTime = -1;
+    // default best time is 999 which is recognised as no best time
+    this.bestTime = 999;
     this.rounds = 0;
     this.zenRounds = 0;
 
