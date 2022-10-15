@@ -12,6 +12,7 @@ public class MenuController {
   @FXML private Button btnLoadGame;
   @FXML private Button btnChoosePlayer;
   @FXML private Button btnStatistics;
+  @FXML private Button btnLeaderboard;
   @FXML private Label lblUser;
 
   @FXML
@@ -22,6 +23,7 @@ public class MenuController {
     // load the statistics screen and the game settings
     SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
     SceneManager.storeUi(SceneManager.AppUi.GAMESETTINGS, App.loadFxml("gamesettings"));
+    SceneManager.storeUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
   }
 
   @FXML
@@ -40,6 +42,12 @@ public class MenuController {
     // current game from the menu
     onSwitchToGame();
     btnLoadGame.setDisable(false);
+  }
+
+  @FXML
+  private void onClickLeaderboard() {
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.LEADERBOARD));
   }
 
   @FXML

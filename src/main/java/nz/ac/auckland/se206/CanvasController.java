@@ -516,6 +516,7 @@ public class CanvasController {
                 setCanvasLost();
               }
               SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+              SceneManager.replaceUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
               currentUser.writeData(
                   new File(
                       "src/main/resources/data/users",
