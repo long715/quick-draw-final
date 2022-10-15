@@ -251,4 +251,8 @@ public class UserProfile {
     this.zenWords = new ArrayList<String>();
     this.zenRounds++;
   }
+
+  public String getName() {
+    return this.name;
+  }
 }
