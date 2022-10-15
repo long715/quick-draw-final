@@ -431,12 +431,14 @@ public class CanvasController {
                 lblWinOrLose.setText("WIN");
                 currentUser.addWin();
                 timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+
+                // awarding the badges to players who win under certain time constraints
                 if (timePlayed < 10) {
-                  awardBadge("/images/goldenBadge.png");
+                  awardBadge("/images/Under_10s_win.png");
                 } else if (timePlayed < 20) {
-                  awardBadge("/images/silverBadge.png");
+                  awardBadge("/images/Under_20s_win.png");
                 } else if (timePlayed < 30) {
-                  awardBadge("/images/bronzeBadge.png");
+                  awardBadge("/images/Under_30s_win.png");
                 }
 
                 // since the default best time is -1, og condition will not work
