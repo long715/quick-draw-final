@@ -120,6 +120,8 @@ public class CanvasController {
     btnHint.setVisible(false);
     btnHint.setDisable(true);
 
+    lblWinOrLose.setTextFill(Color.BLUE);
+
     if (!isZen) {
       // user can't go back and create a new game before finishing the current game
       btnToMenu.setDisable(true);
@@ -250,6 +252,7 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    lblWinOrLose.setText("");
   }
 
   @FXML
@@ -439,39 +442,28 @@ public class CanvasController {
                           new Callable<Void>() {
                             public Void call() throws TranslateException {
                               List<Classification> classifications =
-                                  model.getPredictions(getCurrentSnapshot(), 40);
+                                  model.getPredictions(getCurrentSnapshot(), 100);
 
-                              for (int i = 10; i <= 20; i++) {
-
-                                if (classifications
-                                    .get(i)
-                                    .getClassName()
-                                    .replace("_", " ")
-                                    .equals(randomWord)) {
-                                  lblWinOrLose.setTextFill(Color.YELLOWGREEN);
-                                  lblWinOrLose.setText("TOP 20");
-                                }
-                              }
-                              for (int i = 20; i <= 30; i++) {
+                              for (int i = 10; i <= 100; i++) {
 
                                 if (classifications
                                     .get(i)
                                     .getClassName()
                                     .replace("_", " ")
                                     .equals(randomWord)) {
-                                  lblWinOrLose.setTextFill(Color.YELLOW);
-                                  lblWinOrLose.setText("TOP 30");
-                                }
-                              }
-                              for (int i = 30; i <= 40; i++) {
 
-                                if (classifications
-                                    .get(i)
-                                    .getClassName()
-                                    .replace("_", " ")
-                                    .equals(randomWord)) {
-                                  lblWinOrLose.setTextFill(Color.ORANGE);
-                                  lblWinOrLose.setText("TOP 40");
+                                  if (i <= 20) {
+                                    lblWinOrLose.setText("TOP 20");
+                                  } else if (i <= 30) {
+                                    lblWinOrLose.setText("TOP 30");
+
+                                  } else if (i <= 40) {
+                                    lblWinOrLose.setText("TOP 40");
+                                  } else {
+                                    lblWinOrLose.setText("NOT EVEN CLOSE");
+                                  }
+
+                                  return null;
                                 }
                               }
 
