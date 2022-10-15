@@ -12,6 +12,7 @@ public class MenuController {
   @FXML private Button btnLoadGame;
   @FXML private Button btnChoosePlayer;
   @FXML private Button btnStatistics;
+  @FXML private Button btnLeaderboard;
   @FXML private Label lblUser;
 
   @FXML
@@ -22,6 +23,7 @@ public class MenuController {
     // load the statistics screen and the game settings
     SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
     SceneManager.storeUi(SceneManager.AppUi.GAMESETTINGS, App.loadFxml("gamesettings"));
+    SceneManager.storeUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
   }
 
   @FXML
@@ -43,10 +45,23 @@ public class MenuController {
   }
 
   @FXML
+  private void onClickLeaderboard() {
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.LEADERBOARD));
+  }
+
+  @FXML
   private void onSwitchToGame() {
     // load the game instance
     Scene sceneBtnIsIn = btnNewGame.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CANVAS));
+    // set the stylesheet specifically for zen mode
+    if (SceneManager.getProfile(SceneManager.getMainUser()).isZenMode()) {
+      sceneBtnIsIn
+          .getRoot()
+          .getStylesheets()
+          .add(getClass().getResource("/css/zencanvas.css").toExternalForm());
+    }
   }
 
   @FXML

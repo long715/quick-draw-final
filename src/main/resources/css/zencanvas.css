@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .root{
-    -fx-background-color: black;
+    -fx-background-color: white;
     -fx-font-family: 'Press Start 2P', cursive;
     -fx-padding: -5 0 -5 0;
 }
@@ -65,37 +65,25 @@
     -fx-background-color: #f862f8;
 }
 
-#btnHint{
-    -fx-background-color: #b4ac32;
-    -fx-background-radius: 5;
-
-}
-
-#btnHint:hover {
-    -fx-background-color: #e9da07;
-}
-
 .label{
     -fx-font-size: 30px;
 }
 
 #lblWord{
     -fx-text-fill: #4185F4;
-    -fx-font-size: 20px;
 }
 
 #lblTime{
     -fx-text-fill: #E43326;
 }
 
-#lblResults{
-    -fx-font-size: 35px; 
+#lblGuesses{
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
 }
 
-#lblReward{
-	-fx-font-size: 20px; 
-	-fx-text-fill: white;
-	
+#lblResults{
+    -fx-font-size: 35px; 
 }
 
 #rightVBox{
@@ -107,8 +95,4 @@
     -fx-border-style: solid none solid none;
     -fx-border-color:white;
     -fx-border-width: 3;
-}
-
-#textFlow{
-    -fx-font-size: 20px; 
 }

@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.root{
+    -fx-background-color: black;
+    -fx-font-family: 'Press Start 2P', cursive;
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+}
+
+#btnCancel{
+    -fx-font-size: 50px;
+    -fx-background-color: #E43326; 
+}
+
+#btnZen{
+    -fx-background-color: #FF02FF;
+    -fx-background-radius: 5;
+}
+
+#btnZen:hover{
+    -fx-background-color: #f862f8;
+}
+
+#btnNormal{
+    -fx-background-color: #0000FF;
+    -fx-background-radius: 5;
+}
+
+#btnNormal:hover{
+    -fx-background-color: #4747db;
+}
+
+#btnHidden{
+    -fx-background-color: #9900FF; 
+    -fx-background-radius: 5;
+}
+
+#btnHidden:hover{
+    -fx-background-color: #8531bc;
+}
+
+.label{
+    -fx-font-size: 25;
+    -fx-text-fill: #4A86E8;
+}
+
+#lblTitle{
+    -fx-font-size: 35px;
+    -fx-text-fill: #FFF01F;
+}
+
+#lblModes, #lblSettings{
+    -fx-font-size: 35px;
+    -fx-text-fill: #1155CC;
+}
+
+#lblZen{
+    -fx-font-size: 20px;
+    -fx-text-fill: #FF02FF;
+}
+
+#lblNormal{
+    -fx-font-size: 20px;
+    -fx-text-fill: #0000FF;
+}
+
+#lblHidden{
+    -fx-font-size: 20px;
+    -fx-text-fill: #9900FF;
+}
+
+#lblDesc{
+    -fx-font-size: 15px;
+    -fx-text-fill: #f0eba1;
+}
+
+.radio-button{
+    -fx-text-fill: #4A86E8;
+}
+
+.radio-button:selected{
+    -fx-text-fill: #FFF01F;
+}

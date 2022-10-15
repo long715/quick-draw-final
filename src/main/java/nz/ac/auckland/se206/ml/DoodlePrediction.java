@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import org.imgscalr.Scalr;
@@ -49,37 +50,45 @@ public class DoodlePrediction {
    * @param predictions The list of predictions to print.
    */
   public static void printPredictions(final List<Classifications.Classification> predictions) {
-    StringBuilder predictionStrings = getPredictionString(predictions);
+    List<String> predictionStrings = getPredictionString(predictions, 10);
 
     System.out.println(predictionStrings);
   }
 
   /**
-   * Builds and returns a string version of the prediction list
+   * Builds string from the 1st to xth predictions and a string from xth to the size of the
+   * predictions list.
    *
    * @param predictions The list of predictions
-   * @return a multiline string of the prediction list
+   * @param topK separator of the string
+   * @return a list of string consisting of the two strings of the prediction list
    */
-  public static StringBuilder getPredictionString(
-      final List<Classifications.Classification> predictions) {
+  public static List<String> getPredictionString(
+      final List<Classifications.Classification> predictions, int topK) {
 
     // initialise the string variable and the integer representing
     // the placement of the classification in the list
-    final StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
+    List<String> strList = new ArrayList<String>();
 
-    int i = 1;
-
-    // for each classification, append to the string its placement, name and the
-    // prediction probability or confidence statistic of the category
-    for (final Classifications.Classification classification : predictions) {
-      sb.append(classification.getClassName())
+    // for each classification, append to the string its name
+    for (int i = 0; i < topK; i++) {
+      sb.append(predictions.get(i).getClassName().replace("_", " "))
           .append(System.lineSeparator())
           .append(System.lineSeparator());
-
-      i++;
     }
+    strList.add(sb.toString());
+    sb = new StringBuilder();
 
-    return sb;
+    // second list from xth to prediction size
+    for (int i = topK; i < predictions.size(); i++) {
+      sb.append(predictions.get(i).getClassName().replace("_", " "))
+          .append(System.lineSeparator())
+          .append(System.lineSeparator());
+    }
+    strList.add(sb.toString());
+
+    return strList;
   }
 
   private final ZooModel<Image, Classifications> model;

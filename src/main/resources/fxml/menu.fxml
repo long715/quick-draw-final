@@ -35,6 +35,11 @@
          </VBox.margin></Button>
       <HBox alignment="CENTER" prefHeight="249.0" prefWidth="1280.0">
          <children>
+            <Button fx:id="btnLeaderboard" mnemonicParsing="false" onAction="#onClickLeaderboard" prefHeight="200.0" prefWidth="200.0">
+               <HBox.margin>
+                  <Insets right="60.0" top="20.0" />
+               </HBox.margin>
+            </Button>
             <Button id="btnChoosePlayer" fx:id="btnChoosePlayer" mnemonicParsing="false" onAction="#onChoosePlayer" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/menu.css">
                <HBox.margin>
                   <Insets top="20.0" />

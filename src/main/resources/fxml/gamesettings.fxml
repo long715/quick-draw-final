@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -9,91 +10,163 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameSettingsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0" stylesheets="@../css/gamesettings.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameSettingsController">
    <children>
       <VBox prefHeight="968.0" prefWidth="1287.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="122.0" prefWidth="1287.0">
                <children>
-                  <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#onSwitchToMenu" text="Back To Menu">
+                  <Button id="btnCancel" fx:id="btnMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSwitchToMenu" prefHeight="68.0" prefWidth="85.0" stylesheets="@../css/gamesettings.css" text="x">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Label text="GAME SETTINGS">
+                  <Label id="lblTitle" fx:id="lblCurrentMode" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="1093.0" stylesheets="@../css/gamesettings.css" text="Current Mode: ">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox prefHeight="251.0" prefWidth="1287.0">
                <children>
-                  <Label text="Accuracy">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="rbtnAccuracyE" mnemonicParsing="false" onAction="#onSetAccuracyEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG1" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnAccuracyM" mnemonicParsing="false" onAction="#onSetAccuracyMedium" text="MEDIUM" toggleGroup="$TG1" />
-                  <RadioButton fx:id="rbtnAccuracyH" mnemonicParsing="false" onAction="#onSetAccuracyHard" text="HARD" toggleGroup="$TG1" />
+                  <HBox prefHeight="76.0" prefWidth="1287.0">
+                     <children>
+                        <Label id="lblModes" prefHeight="85.0" prefWidth="1280.0" stylesheets="@../css/gamesettings.css" text="Modes: ">
+                           <padding>
+                              <Insets left="100.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="117.0" prefWidth="1287.0" spacing="150.0">
+                     <children>
+                        <Button id="btnZen" mnemonicParsing="false" onAction="#onSetModeToZen" prefHeight="59.0" prefWidth="150.0" stylesheets="@../css/gamesettings.css" text="ZEN" />
+                        <Button id="btnNormal" mnemonicParsing="false" onAction="#onSetToNormal" prefHeight="60.0" prefWidth="203.0" stylesheets="@../css/gamesettings.css" text="NORMAL" />
+                        <Button id="btnHidden" mnemonicParsing="false" onAction="#onSetToHidden" prefHeight="61.0" prefWidth="209.0" stylesheets="@../css/gamesettings.css" text="HIDDEN" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
+                     <children>
+                        <Label id="lblZen" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="239.0" stylesheets="@../css/gamesettings.css" text="no timer no stress" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" />
+                        <Label id="lblNormal" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="271.0" stylesheets="@../css/gamesettings.css" text="speed drawing" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                        <Label id="lblHidden" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="258.0" stylesheets="@../css/gamesettings.css" text="speed drawing with definitions" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            </VBox>
+            <VBox fx:id="vboxSettings" prefHeight="538.0" prefWidth="1287.0">
                <children>
-                  <Label text="Words">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
+                  <HBox prefHeight="85.0" prefWidth="1287.0">
+                     <children>
+                        <Label id="lblSettings" prefHeight="57.0" prefWidth="1281.0" stylesheets="@../css/gamesettings.css" text="Settings:">
+                           <padding>
+                              <Insets left="100.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="1287.0" spacing="100.0">
+                     <children>
+                        <Label prefHeight="43.0" prefWidth="273.0" text="Accuracy: ">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnAccuracyE" mnemonicParsing="false" onAction="#onSetAccuracyEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG1" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnAccuracyM" mnemonicParsing="false" onAction="#onSetAccuracyMedium" text="MEDIUM" toggleGroup="$TG1" />
+                        <RadioButton fx:id="rbtnAccuracyH" mnemonicParsing="false" onAction="#onSetAccuracyHard" text="HARD" toggleGroup="$TG1" />
+                     </children>
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </HBox>
+                  <Label id="lblDesc" fx:id="lblAccuracyDesc" alignment="TOP_LEFT" prefHeight="47.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
                   </Label>
-                  <RadioButton fx:id="rbtnWordsE" mnemonicParsing="false" onAction="#onSetWordsEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG2" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" text="MEDIUM" toggleGroup="$TG2" />
-                  <RadioButton fx:id="rbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" text="HARD" toggleGroup="$TG2" />
-                  <RadioButton fx:id="rbtnWordsMA" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Time">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Words:     " textAlignment="RIGHT">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnWordsE" mnemonicParsing="false" onAction="#onSetWordsEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG2" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnWordsM" mnemonicParsing="false" onAction="#onSetWordsMedium" text="MEDIUM" toggleGroup="$TG2" />
+                        <RadioButton fx:id="rbtnWordsH" mnemonicParsing="false" onAction="#onSetWordsHard" text="HARD" toggleGroup="$TG2" />
+                        <RadioButton fx:id="rbtnWordsMaster" mnemonicParsing="false" onAction="#onSetWordsMaster" text="MASTER" toggleGroup="$TG2" />
+                     </children>
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </HBox>
+                  <Label id="lblDesc" fx:id="lblWordsDesc" alignment="TOP_LEFT" prefHeight="43.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
                   </Label>
-                  <RadioButton fx:id="rbtnTimeE" mnemonicParsing="false" onAction="#onSetTimeEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG3" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" text="MEDIUM" toggleGroup="$TG3" />
-                  <RadioButton fx:id="rbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" text="HARD" toggleGroup="$TG3" />
-                  <RadioButton fx:id="rbtnTimeMA" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Confidence">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                     <children>
+                        <Label text="Time:      ">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnTimeE" mnemonicParsing="false" onAction="#onSetTimeEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG3" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnTimeM" mnemonicParsing="false" onAction="#onSetTimeMedium" text="MEDIUM" toggleGroup="$TG3" />
+                        <RadioButton fx:id="rbtnTimeH" mnemonicParsing="false" onAction="#onSetTimeHard" text="HARD" toggleGroup="$TG3" />
+                        <RadioButton fx:id="rbtnTimeMaster" mnemonicParsing="false" onAction="#onSetTimeMaster" text="MASTER" toggleGroup="$TG3" />
+                     </children>
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </HBox>
+                  <Label id="lblDesc" fx:id="lblTimeDesc" alignment="TOP_LEFT" prefHeight="48.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
                   </Label>
-                  <RadioButton fx:id="rbtnConfidenceE" mnemonicParsing="false" onAction="#onSetConfidenceEasy" text="EASY">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="TG4" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" text="MEDIUM" toggleGroup="$TG4" />
-                  <RadioButton fx:id="rbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" text="HARD" toggleGroup="$TG4" />
-                  <RadioButton fx:id="rbtnConfidenceMA" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                     <children>
+                        <Label text="Confidence:">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbtnConfidenceE" mnemonicParsing="false" onAction="#onSetConfidenceEasy" text="EASY">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TG4" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbtnConfidenceM" mnemonicParsing="false" onAction="#onSetConfidenceMedium" text="MEDIUM" toggleGroup="$TG4" />
+                        <RadioButton fx:id="rbtnConfidenceH" mnemonicParsing="false" onAction="#onSetConfidenceHard" text="HARD" toggleGroup="$TG4" />
+                        <RadioButton fx:id="rbtnConfidenceMaster" mnemonicParsing="false" onAction="#onSetConfidenceMaster" text="MASTER" toggleGroup="$TG4" />
+                     </children>
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </HBox>
+                  <Label id="lblDesc" fx:id="lblConfidenceDesc" alignment="TOP_LEFT" prefHeight="43.0" prefWidth="1197.0" stylesheets="@../css/gamesettings.css" text="*test">
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </Label>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </children>

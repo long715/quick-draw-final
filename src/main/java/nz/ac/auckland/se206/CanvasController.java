@@ -35,11 +35,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
+import nz.ac.auckland.se206.words.DefinitionFetcher;
+import nz.ac.auckland.se206.words.WordNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -59,13 +64,14 @@ public class CanvasController {
   @FXML private Label lblCategory;
   @FXML private Label lblTime;
   @FXML private Label lblWinOrLose;
-  @FXML private Label lblGuesses;
+  @FXML private TextFlow txtFlowPrediction;
   @FXML private Button btnToMenu;
   @FXML private Button btnReady;
   @FXML private Button clearButton;
   @FXML private Button btnSaveDrawing;
   @FXML private Label lblReward;
   @FXML private ImageView imgBadge;
+  @FXML private Button btnHint;
 
   private GraphicsContext graphic;
   private DoodlePrediction model;
@@ -79,6 +85,12 @@ public class CanvasController {
 
   private int timePlayed;
   private boolean isPredictionStarted = false;
+  private boolean isZen = currentUser.isZenMode();
+  private boolean isHidden = currentUser.isHiddenMode();
+  private String labelText;
+  private String randomWord;
+  private String textToSpeechString;
+  private int hintCounter = 0;
 
   // mouse coordinates
   private double currentX;
@@ -95,31 +107,7 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, URISyntaxException, CsvException {
     graphic = canvas.getGraphicsContext2D();
-
-    // implement the category selector and display the category on the lbl
-    CategorySelector categorySelector = new CategorySelector();
-
-    // get words current user has played and all words from easy category
-    ArrayList<String> playedWords = currentUser.getWords();
-    List<String> allWords = categorySelector.getDifficultyList(currentUser.getWordsSettings());
-
-    // check if the player has played all the words
-    if (playedWords.containsAll(allWords)) {
-      currentUser.newRound();
-    }
-
-    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    }
-
-    currentUser.addWord(randomWord);
-    lblCategory.setText(randomWord);
-    currentWord = randomWord;
-
-    // set the initial time for the timer
-    lblTime.setText(String.valueOf(timeSettings));
+    chooseWord();
 
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
@@ -131,10 +119,21 @@ public class CanvasController {
 
     // when a new game page is loaded, we want the following:
     canvas.setDisable(true); // user can't draw unless user presses the ready button
-    btnToMenu.setDisable(
-        true); // user can't go back and create a new game before finishing the current game
-    btnSaveDrawing.setDisable(
-        true); // user can't save an empty canvas, drawing can only be saved after game ends
+
+    // before ready, we dont want hint button to function
+    btnHint.setVisible(false);
+    btnHint.setDisable(true);
+
+    lblWinOrLose.setTextFill(Color.BLUE);
+
+    if (!isZen) {
+      // user can't go back and create a new game before finishing the current game
+      btnToMenu.setDisable(true);
+      // set the initial time for the timer
+      lblTime.setText(String.valueOf(timeSettings));
+    }
+    // user can't save an empty canvas, drawing can only be saved after game ends
+    btnSaveDrawing.setDisable(true);
 
     model = new DoodlePrediction();
     speech = new TextToSpeech();
@@ -143,13 +142,20 @@ public class CanvasController {
     Task<Void> taskWelcomeSpeech =
         new Task<Void>() {
           protected Void call() {
-            // tell the player the word and instructions on how to start the game
-            speech.speak(
-                "You got "
-                    + timeSettings
-                    + " seconds to draw "
-                    + currentWord
-                    + ", press the ready button whenever you are ready!");
+            if (isZen) {
+              // custom speech for zen mode since it is a non-competitive mode
+              speech.speak("Welcome to Zen Mode! Your word is", currentWord);
+
+            } else {
+              // tell the player instructions on how to start the game,
+              // the time settings and the word/definitions depending on the game mode
+              speech.speak(
+                  "You got "
+                      + timeSettings
+                      + " seconds to draw "
+                      + textToSpeechString
+                      + ", press the ready button whenever you are ready!");
+            }
 
             return null;
           }
@@ -159,6 +165,64 @@ public class CanvasController {
     bgWelcomeSpeech.start();
   }
 
+  /**
+   * This method chooses the word for this canvas game instance. This will be based on game
+   * settings, if in ZEN mode, the choices is always from ALL categories.
+   *
+   * @throws CsvException
+   * @throws IOException
+   * @throws URISyntaxException
+   */
+  private void chooseWord() throws URISyntaxException, IOException, CsvException {
+    // implement the category selector and display the category on the lbl
+    CategorySelector categorySelector = new CategorySelector();
+    int wordsSettings = currentUser.getWordsSettings();
+
+    // get words current user has played and all words from words settings
+    ArrayList<String> playedWords = currentUser.getWords();
+    List<String> allWords = categorySelector.getDifficultyList(wordsSettings);
+
+    if (isZen) {
+      playedWords = currentUser.getZenWords();
+      wordsSettings = 1;
+      allWords = categorySelector.getDifficultyList(wordsSettings); // ALL words from all categories
+    }
+
+    // check if the player has played all the words
+    if (playedWords.containsAll(allWords)) {
+      if (isZen) {
+        currentUser.newZenRound();
+      } else {
+        currentUser.newRound();
+      }
+    }
+
+    randomWord = getNewWord(allWords, playedWords, categorySelector);
+
+    if (isZen) {
+      currentUser.addZenWords(randomWord);
+      lblCategory.setText(randomWord);
+    } else if (isHidden) {
+      btnHint.setDisable(false);
+      while (true) {
+        try {
+          textToSpeechString = DefinitionFetcher.getDefinition(randomWord);
+          labelText = StringUtils.repeat("_", randomWord.length());
+          break;
+        } catch (WordNotFoundException e) {
+          randomWord = getNewWord(allWords, playedWords, categorySelector);
+        }
+      }
+      lblCategory.setText(StringUtils.repeat("_", randomWord.length()));
+
+    } else {
+      currentUser.addWord(randomWord);
+      lblCategory.setText(randomWord);
+      textToSpeechString = randomWord;
+    }
+    currentWord = randomWord;
+  }
+
   @FXML
   private void onSwitchToMenu() {
     Scene sceneBtnIsIn = btnToMenu.getScene();
@@ -166,14 +230,28 @@ public class CanvasController {
   }
 
   @FXML
-  private void onStartGame() throws InterruptedException, ExecutionException {
+  private void onStartGame() throws InterruptedException, ExecutionException, IOException {
     // enable the canvas and disable to ready btn
     canvas.setDisable(false);
     btnReady.setDisable(true);
+    btnReady.setVisible(false);
 
-    // Start the timer
-
-    startTimer();
+    if (isZen) {
+      // user should be able to save drawing anytime
+      btnSaveDrawing.setDisable(false);
+      // since zen mode game doesn't end, zen word data must be written on start
+      currentUser.writeData(
+          new File(
+              "src/main/resources/data/users",
+              SceneManager.getMainUser().replace(" ", "_") + ".txt"));
+    } else if (isHidden) {
+      // when ready is clicked, we should see and use hint button
+      btnHint.setVisible(true);
+      btnHint.setDisable(false);
+      startTimer();
+    } else {
+      startTimer();
+    }
   }
 
   /** This method is called when the "Clear" button is pressed. */
@@ -273,8 +351,8 @@ public class CanvasController {
    * @param classifications The list of the DL predictions
    * @return if current word is included within the boundary which means the player has won
    */
-  private boolean isWin(List<Classification> classifications, int topPredictions) {
-    for (int i = 0; i < topPredictions; i++) {
+  private boolean isWin(List<Classification> classifications) {
+    for (int i = 0; i < classifications.size(); i++) {
       // format the category name from ML the same way as current word
       if (classifications.get(i).getClassName().replace("_", " ").equals(currentWord)) {
         // extra condition: user must meet confidence requirements for user to win
@@ -346,41 +424,66 @@ public class CanvasController {
                 throws TranslateException, InterruptedException, ExecutionException {
               // get the current time
               int temp = seconds.intValue();
+              long tempTime = System.currentTimeMillis();
 
               // run loop while timer is active
               while (timeline.getStatus() != Status.STOPPED) {
 
                 // when a second has passed, run the DL predictor
                 if (temp - seconds.intValue() >= 1) {
-
-                  // create a future task for getting the prediction string
-                  // required for accessing the variable from outside platform run later
-                  FutureTask<StringBuilder> predict =
-                      new FutureTask<StringBuilder>(
-                          new Callable<StringBuilder>() {
-                            public StringBuilder call() throws TranslateException {
-
-                              // get the list of the top 10 classifications and format the list into
-                              // stringbuilder
-                              return DoodlePrediction.getPredictionString(
-                                  model.getPredictions(getCurrentSnapshot(), 10));
-                            }
-                          });
                   // create a future task for checking wins
                   FutureTask<Boolean> winOrLose =
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
+
                               return isWin(
-                                  model.getPredictions(getCurrentSnapshot(), 10),
-                                  currentUser.getAccuracy());
+                                  model.getPredictions(
+                                      getCurrentSnapshot(), currentUser.getAccuracy()));
+                            }
+                          });
+                  FutureTask<Void> outsidePrediction =
+                      new FutureTask<Void>(
+                          new Callable<Void>() {
+                            public Void call() throws TranslateException {
+                              List<Classification> classifications =
+                                  model.getPredictions(getCurrentSnapshot(), 40);
+
+                              List<String> predictionString =
+                                  DoodlePrediction.getPredictionString(classifications, 40);
+
+                              if (predictionString.get(0).contains(randomWord)) {
+                                for (int i = 0; i <= 40; i++) {
+
+                                  if (classifications
+                                      .get(i)
+                                      .getClassName()
+                                      .replace("_", " ")
+                                      .equals(randomWord)) {
+
+                                    if (i <= 10) {
+                                      lblWinOrLose.setText("TOP 10");
+                                    } else if (i <= 20) {
+                                      lblWinOrLose.setText("TOP 20");
+                                    } else if (i <= 30) {
+                                      lblWinOrLose.setText("TOP 30");
+                                    } else if (i <= 40) {
+                                      lblWinOrLose.setText("TOP 40");
+                                    }
+                                  }
+                                }
+                              } else {
+                                lblWinOrLose.setText("NOT EVEN CLOSE");
+                              }
+
+                              return null;
                             }
                           });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
-                  Platform.runLater(predict);
                   Platform.runLater(winOrLose);
-                  updateTitle(predict.get().toString().replace("_", " ")); // remove the underscores
+                  Platform.runLater(outsidePrediction);
+                  getTop10Predictions();
 
                   // set the temp time
                   temp = seconds.intValue();
@@ -393,6 +496,13 @@ public class CanvasController {
                 }
               }
 
+              while (isZen) {
+                if ((int) (System.currentTimeMillis() - tempTime) / 1000 >= 1) {
+                  getTop10Predictions();
+                  tempTime = System.currentTimeMillis();
+                }
+              }
+
               return false;
             }
           };
@@ -400,85 +510,20 @@ public class CanvasController {
       Thread bgPredict = new Thread(taskPredict);
       bgPredict.start();
 
-      // bind the title property to the guesses label
-      lblGuesses.textProperty().bind(taskPredict.titleProperty());
-
       taskPredict.setOnSucceeded(
           event -> {
-            // once the game has ended (timer runs out or if they won), we want the
-            // following UX:
-            canvas.setDisable(true); // user should not be able to draw on the canvas
-            btnToMenu.setDisable(
-                false); // user can go back to the main menu to load the previous game or create a
-            // new
-            // game
-            clearButton.setDisable(true); // user can't alter or reset the drawing in any way
-
-            // allow user to save the current drawing and write on the text fields for
-            // custom directory and file name inputs
-            btnSaveDrawing.setDisable(false);
-
-            // close the ML Manager
-            model.closeManager();
+            setCanvas();
 
             // update the winOrLose label and use the text to speech to tell the user if the
-            // they
-            // have
-            // won or lost
+            // they have won or lost
             try {
               if (taskPredict.get()) { // returns true if user has won
-                lblWinOrLose.setTextFill(Color.GREEN);
-                lblWinOrLose.setText("WIN");
-                currentUser.addWin();
-                timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
-
-                // awarding the badges to players who win under certain time constraints
-                if (timePlayed < 10) {
-                  awardBadge("/images/Under_10s_win.png");
-                } else if (timePlayed < 20) {
-                  awardBadge("/images/Under_20s_win.png");
-                } else if (timePlayed < 30) {
-                  awardBadge("/images/Under_30s_win.png");
-                }
-
-                // since the default best time is -1, og condition will not work
-                // therefore I added an alternative condition to check if best time
-                // is the default value, in which it should be updated
-                if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
-                  currentUser.setBestWord(currentWord);
-                  currentUser.setBestTime(timePlayed);
-                }
-
-                // create a task for the winning text-to-speech message
-                Task<Void> taskWin =
-                    new Task<Void>() {
-                      protected Void call() {
-                        speech.speak("Congratulations! You won!");
-                        return null;
-                      }
-                    };
-                // run the bg thread for the task
-                Thread bgWinSpeech = new Thread(taskWin);
-                bgWinSpeech.start();
-
+                setCanvasWon();
               } else {
-                lblWinOrLose.setTextFill(Color.RED);
-                lblWinOrLose.setText("LOSE");
-                currentUser.addLoss();
-
-                // create a task for the losing text-to-speech message
-                Task<Void> taskLose =
-                    new Task<Void>() {
-                      protected Void call() {
-                        speech.speak("Sorry! You lost!");
-                        return null;
-                      }
-                    };
-                // run the bg thread for the task
-                Thread bgLoseSpeech = new Thread(taskLose);
-                bgLoseSpeech.start();
+                setCanvasLost();
               }
               SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+              SceneManager.replaceUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
               currentUser.writeData(
                   new File(
                       "src/main/resources/data/users",
@@ -501,6 +546,159 @@ public class CanvasController {
       currentUser.addBadge(badgeImagePath);
       imgBadge.setImage(new Image(badgeImagePath));
       lblReward.setText("New badge earned !");
+    }
+  }
+
+  /** This method sets up the canvas page after a game is finished. */
+  private void setCanvas() {
+    // user should not be able to draw on the canvas or reset the drawing
+    canvas.setDisable(true);
+    clearButton.setDisable(true);
+
+    btnToMenu.setDisable(false);
+
+    // allow user to save the current drawing and write on the text fields for
+    // custom directory and file name inputs
+    btnSaveDrawing.setDisable(false);
+
+    // player shouldn't be able to get hints after the game is over
+    btnHint.setDisable(true);
+    model.closeManager();
+  }
+
+  /**
+   * This method sets up the winning state of Canvas and runs a text-to-speech to inform the player
+   * that they have won.
+   */
+  private void setCanvasWon() {
+    lblWinOrLose.setTextFill(Color.GREEN);
+    lblWinOrLose.setText("WIN");
+    currentUser.addWin();
+    timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+    
+    // awarding the badges to players who win under certain time constraints
+    if (timePlayed < 10) {
+      awardBadge("/images/Under_10s_win.png");
+    } else if (timePlayed < 20) {
+      awardBadge("/images/Under_20s_win.png");
+    } else if (timePlayed < 30) {
+      awardBadge("/images/Under_30s_win.png");
+    }
+
+    // since the default best time is -1, og condition will not work
+    // therefore I added an alternative condition to check if best time
+    // is the default value, in which it should be updated
+    if (timePlayed < currentUser.getBestTime() || currentUser.getBestTime() == -1) {
+      currentUser.setBestWord(currentWord);
+      currentUser.setBestTime(timePlayed);
+    }
+
+    // create a task for the winning text-to-speech message
+    Task<Void> taskWin =
+        new Task<Void>() {
+          protected Void call() {
+            speech.speak("Congratulations! You won!");
+            return null;
+          }
+        };
+    // run the bg thread for the task
+    Thread bgWinSpeech = new Thread(taskWin);
+    bgWinSpeech.start();
+  }
+
+  /**
+   * This method sets up the losing state of Canvas and tells the user that they lost via
+   * text-to-speech
+   */
+  private void setCanvasLost() {
+    lblWinOrLose.setTextFill(Color.RED);
+    lblWinOrLose.setText("LOSE");
+    currentUser.addLoss();
+
+    // create a task for the losing text-to-speech message
+    Task<Void> taskLose =
+        new Task<Void>() {
+          protected Void call() {
+            speech.speak("Sorry! You lost!");
+            return null;
+          }
+        };
+    // run the bg thread for the task
+    Thread bgLoseSpeech = new Thread(taskLose);
+    bgLoseSpeech.start();
+  }
+
+  /**
+   * This method runs the top 10 prediction future task and sets the prediction string
+   *
+   * @throws ExecutionException
+   * @throws InterruptedException
+   */
+  private void getTop10Predictions() throws InterruptedException, ExecutionException {
+    // create a future task for getting the prediction string
+    // required for accessing the variable from outside platform run later
+    FutureTask<List<String>> predict =
+        new FutureTask<List<String>>(
+            new Callable<List<String>>() {
+              public List<String> call() throws TranslateException {
+
+                // get the list of the top 10 classifications and format the list into
+                // stringbuilder
+                return DoodlePrediction.getPredictionString(
+                    model.getPredictions(getCurrentSnapshot(), 10), currentUser.getAccuracy());
+              }
+            });
+
+    Platform.runLater(predict);
+    Platform.runLater(
+        () -> {
+          try {
+            txtFlowPrediction.getChildren().clear();
+            Text topX = new Text(predict.get().get(0));
+            if (topX.getText().contains(randomWord)) {
+              if (isWin(model.getPredictions(getCurrentSnapshot(), currentUser.getAccuracy()))) {
+                topX.setFill(Color.GREEN);
+              } else {
+                topX.setFill(Color.YELLOW);
+              }
+            } else {
+              topX.setFill(Color.RED);
+            }
+            Text secondString = new Text(predict.get().get(1));
+            secondString.setFill(Color.WHITE);
+            txtFlowPrediction.getChildren().addAll(topX, secondString);
+
+          } catch (InterruptedException | ExecutionException | TranslateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+        });
+  }
+
+  private String getNewWord(
+      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    // generate word that user has not played yet in current round
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    }
+
+    return randomWord;
+  }
+
+  @FXML
+  private void onHint() {
+    if (hintCounter < randomWord.length()) {
+      // set the string builder to the recent state of the label that shows
+      // the characters of the words
+      StringBuilder sb = new StringBuilder(labelText);
+      // open up the next character that's not been shown to the user in the
+      // previous state
+      sb.setCharAt(hintCounter, randomWord.charAt(hintCounter));
+      hintCounter++;
+      // update the label to show the new state
+      labelText = sb.toString();
+      lblCategory.setText(labelText);
     }
   }
 }

@@ -11,17 +11,32 @@ import java.util.Arrays;
 
 public class UserProfile {
 
+  // fields for the different modes
+  public static enum Mode {
+    ZEN,
+    NORMAL,
+    HIDDENWORD
+  }
+
   // fields that define the data stored for each user
   private String name;
   private int wins;
   private int loss;
   private ArrayList<String> words;
+  // design choice for adding a separate arraylist for zen mode:
+  // since this has a different purpose to speed drawing, users
+  // should be given to draw ALL words in zen mode but should
+  // not be repeated AND not added to the list of words
+  private ArrayList<String> zenWords;
   private String bestName;
   private int bestTime;
   private int rounds;
+
   // storing the badges data as an array list of the image paths represented as
   // strings
   private ArrayList<String> badgesEarned;
+  private int zenRounds;
+
 
   // fields for game settings; possible values 3-easy, 2-medium, 1-hard, 0-master
   private int accuracy;
@@ -31,23 +46,30 @@ public class UserProfile {
   // possible values: 1-easy, 10-medium, 25-hard, 50-master
   private int confidence;
 
+  private Mode mode;
+
   public UserProfile(String name) {
     // add underscore to names with spaces
     this.name = name.replace(" ", "_");
     this.wins = 0;
     this.loss = 0;
     this.words = new ArrayList<String>();
+    this.zenWords = new ArrayList<String>();
     this.bestName = "NIL";
-    // default best time is -1 which is recognised as no best time
-    this.bestTime = -1;
+    // default best time is 999 which is recognised as no best time
+    this.bestTime = 999;
     this.rounds = 0;
     this.badgesEarned = new ArrayList<String>();
+    this.zenRounds = 0;
 
     // default should be easy
     this.accuracy = 3;
     this.wordsSettings = 3;
     this.timeSettings = 60;
     this.confidence = 1;
+
+    // default mode should be normal
+    this.mode = Mode.NORMAL;
   }
 
   public void saveData() throws IOException {
@@ -73,14 +95,17 @@ public class UserProfile {
     writer.write(wins + "\n");
     writer.write(loss + "\n");
     writer.write(words.toString() + "\n");
+    writer.write(zenWords.toString() + "\n");
     writer.write(bestName + "\n");
     writer.write(bestTime + "\n");
     writer.write(rounds + "\n");
+    writer.write(zenRounds + "\n");
     writer.write(accuracy + "\n");
     writer.write(wordsSettings + "\n");
     writer.write(timeSettings + "\n");
     writer.write(confidence + "\n");
     writer.write(badgesEarned.toString() + "\n");
+    writer.write(mode + "\n");
 
     writer.close();
   }
@@ -100,9 +125,14 @@ public class UserProfile {
         new ArrayList<String>(
             Arrays.asList(
                 reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
+    this.zenWords =
+        new ArrayList<String>(
+            Arrays.asList(
+                reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
     this.bestName = reader.readLine();
     this.bestTime = Integer.valueOf(reader.readLine());
     this.rounds = Integer.valueOf(reader.readLine());
+    this.zenRounds = Integer.valueOf(reader.readLine());
     this.accuracy = Integer.valueOf(reader.readLine());
     this.wordsSettings = Integer.valueOf(reader.readLine());
     this.timeSettings = Integer.valueOf(reader.readLine());
@@ -111,6 +141,7 @@ public class UserProfile {
         new ArrayList<String>(
             Arrays.asList(
                 reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
+    this.mode = Mode.valueOf(reader.readLine());
 
     reader.close();
   }
@@ -165,6 +196,7 @@ public class UserProfile {
     addRound();
   }
 
+  /*SETTERS AND GETTERS for GAME SETTINGS*/
   public int getAccuracy() {
     return this.accuracy;
   }
@@ -203,5 +235,43 @@ public class UserProfile {
 
   public ArrayList<String> getBadgesEarned() {
     return this.badgesEarned;
+
+  public Mode getMode() {
+    return this.mode;
+  }
+
+  public void setMode(Mode mode) {
+    this.mode = mode;
+  }
+
+  /**
+   * This method returns a boolean if the mode is Zen. Created since Zen Mode will have a big impact
+   * on the Canvas page.
+   *
+   * @return if the current mode is Zen
+   */
+  public boolean isZenMode() {
+    return this.mode == Mode.ZEN;
+  }
+
+  public boolean isHiddenMode() {
+    return this.mode == Mode.HIDDENWORD;
+  }
+
+  public ArrayList<String> getZenWords() {
+    return this.zenWords;
+  }
+
+  public void addZenWords(String word) {
+    this.zenWords.add(word);
+  }
+
+  public void newZenRound() {
+    this.zenWords = new ArrayList<String>();
+    this.zenRounds++;
+  }
+
+  public String getName() {
+    return this.name;
   }
 }
