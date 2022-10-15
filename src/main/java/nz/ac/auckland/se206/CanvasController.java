@@ -443,14 +443,16 @@ public class CanvasController {
                             public Void call() throws TranslateException {
                               List<Classification> classifications =
                                   model.getPredictions(getCurrentSnapshot(), 100);
+                              boolean top40 = false;
 
-                              for (int i = 0; i <= 100; i++) {
+                              for (int i = 0; i <= 40; i++) {
 
                                 if (classifications
                                     .get(i)
                                     .getClassName()
                                     .replace("_", " ")
                                     .equals(randomWord)) {
+                                  top40 = true;
 
                                   if (i <= 10) {
                                     lblWinOrLose.setText("TOP 10");
@@ -460,12 +462,11 @@ public class CanvasController {
                                     lblWinOrLose.setText("TOP 30");
                                   } else if (i <= 40) {
                                     lblWinOrLose.setText("TOP 40");
-                                  } else {
-                                    lblWinOrLose.setText("NOT EVEN CLOSE");
                                   }
-
-                                  return null;
                                 }
+                              }
+                              if (!top40) {
+                                lblWinOrLose.setText("NOT EVEN CLOSE");
                               }
 
                               return null;
