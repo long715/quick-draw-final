@@ -14,15 +14,21 @@
             <Font size="58.0" />
          </font>
       </Button>
-      <Label id="title" fx:id="lblHeading" alignment="CENTER" contentDisplay="CENTER" layoutX="228.0" layoutY="24.0" prefHeight="95.0" prefWidth="850.0" stylesheets="@../css/badges.css">
+      <Label id="title" fx:id="lblHeading" alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="24.0" prefHeight="95.0" prefWidth="797.0" stylesheets="@../css/badges.css" wrapText="true">
          <font>
             <Font size="55.0" />
          </font>
       </Label>
-      <VBox id="vbox" layoutX="29.0" layoutY="189.0" prefHeight="524.0" prefWidth="1220.0" stylesheets="@../css/badges.css">
+      <VBox id="vbox" layoutX="29.0" layoutY="352.0" prefHeight="425.0" prefWidth="1224.0" stylesheets="@../css/badges.css">
          <children>
-            <ListView id="badgesList" fx:id="lstvBadges" orientation="HORIZONTAL" prefHeight="543.0" prefWidth="1220.0" stylesheets="@../css/badges.css" />
+            <ListView id="badgesList" fx:id="lstvBadges" editable="true" orientation="HORIZONTAL" prefHeight="445.0" prefWidth="1224.0" stylesheets="@../css/badges.css" />
          </children>
       </VBox>
+      <VBox layoutX="78.0" layoutY="799.0" prefHeight="86.0" prefWidth="1128.0">
+         <children>
+            <Label id="lblBadgeDetail" fx:id="lblBadgeDetail" alignment="CENTER" contentDisplay="CENTER" prefHeight="240.0" prefWidth="1135.0" stylesheets="@../css/badges.css" textOverrun="WORD_ELLIPSIS" />
+         </children>
+      </VBox>
+      <Label id="lblSubheading" fx:id="lblSubheading" layoutX="292.0" layoutY="173.0" prefHeight="69.0" prefWidth="831.0" stylesheets="@../css/badges.css" />
    </children>
 </AnchorPane>

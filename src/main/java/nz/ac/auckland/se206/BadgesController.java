@@ -12,7 +12,11 @@ public class BadgesController {
   @FXML private ListView<ImageView> lstvBadges;
   @FXML private ImageView imgView;
   @FXML private Label lblHeading;
+  @FXML private ListView<String> lstvBadgesInfo;
+  @FXML private Label lblBadgeDetail;
+  @FXML private Label lblSubheading;
   private ArrayList<ImageView> badgesList;
+  private ArrayList<String> badgesInfo;
   private ArrayList<String> badgeImagePaths;
 
   @FXML
@@ -23,7 +27,6 @@ public class BadgesController {
 
     // getting the badges earned by the user
     badgeImagePaths = user.getBadgesEarned();
-    badgesList = new ArrayList<ImageView>();
 
     // image path cannot be empty string
     badgeImagePaths.removeIf(s -> s == null || "".equals(s));
@@ -32,6 +35,10 @@ public class BadgesController {
       // if the user has earned some badges, we display them
       if (!(badgeImagePaths.isEmpty())) {
         lblHeading.setText("Badges Earned");
+        lblSubheading.setText("You have earned " + badgeImagePaths.size() + " out of 3 badges!");
+        lblBadgeDetail.setText("Click on the badge for more info");
+        badgesList = new ArrayList<ImageView>();
+        badgesInfo = new ArrayList<>();
 
         // converting badge image paths to images and adding them to the image view list
         for (String badgeURL : (badgeImagePaths)) {
@@ -39,9 +46,27 @@ public class BadgesController {
         }
         lstvBadges.getItems().addAll(badgesList);
 
+        // extracting the badge detail from the image's path
+        for (int i = 0; i < badgeImagePaths.size(); i++) {
+          String info =
+              badgeImagePaths.get(i).replace("/images/", "").replace("_", " ").replace(".png", "");
+          badgesInfo.add(info);
+        }
+
+        // adding a listener to track changes in selection and show detail of the
+        // selected badge
+        lstvBadges
+            .getSelectionModel()
+            .selectedItemProperty()
+            .addListener(
+                event -> {
+                  int i = lstvBadges.getSelectionModel().getSelectedIndex();
+                  lblBadgeDetail.setText("Badge awarded for : " + badgesInfo.get(i));
+                });
+
       } else {
 
-        lblHeading.setText("Play more to earn badges!");
+        lblHeading.setText("Play to earn badges!");
       }
     }
   }
