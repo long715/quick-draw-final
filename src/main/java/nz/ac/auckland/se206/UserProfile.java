@@ -37,7 +37,6 @@ public class UserProfile {
   private ArrayList<String> badgesEarned;
   private int zenRounds;
 
-
   // fields for game settings; possible values 3-easy, 2-medium, 1-hard, 0-master
   private int accuracy;
   private int wordsSettings;
@@ -196,7 +195,7 @@ public class UserProfile {
     addRound();
   }
 
-  /*SETTERS AND GETTERS for GAME SETTINGS*/
+  /* SETTERS AND GETTERS for GAME SETTINGS */
   public int getAccuracy() {
     return this.accuracy;
   }
@@ -235,6 +234,7 @@ public class UserProfile {
 
   public ArrayList<String> getBadgesEarned() {
     return this.badgesEarned;
+  }
 
   public Mode getMode() {
     return this.mode;
