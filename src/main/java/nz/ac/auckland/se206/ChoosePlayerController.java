@@ -62,6 +62,7 @@ public class ChoosePlayerController {
 
     // during initialise where the main user is null, cancel must always be disabled
     btnCancel.setDisable(true);
+    btnCancel.setVisible(false);
     // disable property depends whether or not there is a selected item
     btnOk
         .disableProperty()
@@ -146,6 +147,7 @@ public class ChoosePlayerController {
       }
 
       btnCancel.setDisable(false);
+      btnCancel.setVisible(true);
       // switch to the main menu aka onCancel
       onCancel();
     }
