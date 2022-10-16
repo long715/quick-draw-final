@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 
 public class BadgesController {
   @FXML private Button btnBack;
@@ -60,6 +61,9 @@ public class BadgesController {
             .selectedItemProperty()
             .addListener(
                 event -> {
+                  new AudioClip(
+                          getClass().getResource("/sounds/ListSelectionSound.wav").toExternalForm())
+                      .play();
                   int i = lstvBadges.getSelectionModel().getSelectedIndex();
                   lblBadgeDetail.setText("Badge awarded for : " + badgesInfo.get(i));
                 });
@@ -73,6 +77,7 @@ public class BadgesController {
 
   @FXML
   private void onBack() {
+    new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
     btnBack
         .getScene()
         .setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS)); // returns to stats screen
