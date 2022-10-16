@@ -99,7 +99,10 @@
 }
 
 #rightVBox{
-    -fx-background-color: black; 
+    -fx-background-color: black;
+    -fx-border-style: solid solid none none; 
+    -fx-border-color:white;
+    -fx-border-width: 0 3 0 0;
 }
 
 #middleHBox{
