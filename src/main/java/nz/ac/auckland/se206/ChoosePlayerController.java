@@ -3,11 +3,13 @@ package nz.ac.auckland.se206;
 import java.io.File;
 import java.io.IOException;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 public class ChoosePlayerController {
@@ -62,10 +64,27 @@ public class ChoosePlayerController {
     btnDelete
         .disableProperty()
         .bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
+    lstvPlayers.setOnMouseClicked(
+        event -> {
+          new AudioClip(getClass().getResource("/sounds/ListSelectionSound.wav").toExternalForm())
+              .play();
+        });
   }
 
   @FXML
   private void onCreate() throws IOException {
+    // creating a thread for the sound effect when create player button is clicked
+    Task<Void> taskPlay =
+        new Task<Void>() {
+          protected Void call() {
+            new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm())
+                .play();
+            return null;
+          }
+        };
+    Thread soundEffect = new Thread(taskPlay);
+    soundEffect.start();
+
     // creating the create player pop up
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/fxml/" + "createplayer" + ".fxml"));
@@ -86,6 +105,8 @@ public class ChoosePlayerController {
 
   @FXML
   private void onDelete() {
+    // sound effect
+    new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
     // only start deleting when an item is selected
     if (!lstvPlayers.getSelectionModel().isEmpty()) {
       // delete the user instance from hash map
@@ -128,6 +149,8 @@ public class ChoosePlayerController {
       }
 
       btnCancel.setDisable(false);
+      // playing sound when the ok button is clicked
+      new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
       // switch to the main menu aka onCancel
       onCancel();
     }
@@ -135,6 +158,7 @@ public class ChoosePlayerController {
 
   @FXML
   private void onCancel() {
+    new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
     btnCancel.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
 }
