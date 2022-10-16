@@ -1,9 +1,11 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 public class CreatePlayerController {
@@ -16,7 +18,17 @@ public class CreatePlayerController {
 
   @FXML
   private void onClose() throws IOException {
-
+    // creating a thread for the sound effect when join button is clicked
+    Task<Void> taskPlay =
+        new Task<Void>() {
+          protected Void call() {
+            new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm())
+                .play();
+            return null;
+          }
+        };
+    Thread soundEffect = new Thread(taskPlay);
+    soundEffect.start();
     String initialInput = txtPlayerName.getText().trim();
     // the initial name based on user input
     if (!initialInput.equalsIgnoreCase("")) {
