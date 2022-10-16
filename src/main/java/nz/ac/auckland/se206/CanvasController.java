@@ -512,55 +512,10 @@ public class CanvasController {
                                       getCurrentSnapshot(), currentUser.getAccuracy()));
                             }
                           });
-                  FutureTask<Void> outsidePrediction =
-                      new FutureTask<Void>(
-                          new Callable<Void>() {
-                            public Void call() throws TranslateException {
-
-                              // get the top 40 predictions and turn this into a string
-                              List<Classification> classifications =
-                                  model.getPredictions(getCurrentSnapshot(), 40);
-
-                              List<String> predictionString =
-                                  DoodlePrediction.getPredictionString(classifications, 40);
-
-                              // check if the string/top 40 has the word, if not tell the user
-                              // that they are not in the top 40
-                              if (predictionString.get(0).contains(randomWord)) {
-                                for (int i = 0; i <= 40; i++) {
-
-                                  // find the random word in the top 40, index in the list
-                                  // represented by i
-                                  if (classifications
-                                      .get(i)
-                                      .getClassName()
-                                      .replace("_", " ")
-                                      .equals(randomWord)) {
-
-                                    // categorise which TOP X the random word is in and tell
-                                    // the user that they are in TOP X
-                                    if (i <= 10) {
-                                      lblWinOrLose.setText("TOP 10");
-                                    } else if (i <= 20) {
-                                      lblWinOrLose.setText("TOP 20");
-                                    } else if (i <= 30) {
-                                      lblWinOrLose.setText("TOP 30");
-                                    } else if (i <= 40) {
-                                      lblWinOrLose.setText("TOP 40");
-                                    }
-                                  }
-                                }
-                              } else {
-                                lblWinOrLose.setText("NOT EVEN CLOSE");
-                              }
-
-                              return null;
-                            }
-                          });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
                   Platform.runLater(winOrLose);
-                  Platform.runLater(outsidePrediction);
+                  setOutsidePrediction();
                   getTop10Predictions();
 
                   // set the temp time
@@ -576,6 +531,7 @@ public class CanvasController {
 
               while (isZen) {
                 if ((int) (System.currentTimeMillis() - tempTime) / 1000 >= 1) {
+                  setOutsidePrediction();
                   getTop10Predictions();
                   tempTime = System.currentTimeMillis();
                 }
@@ -707,6 +663,60 @@ public class CanvasController {
   }
 
   /**
+   * Extracted from the startPredictions method so that it is usable in ALL modes. This thread tells
+   * the user where their random word is in the ranking.
+   */
+  private void setOutsidePrediction() {
+    FutureTask<Void> outsidePrediction =
+        new FutureTask<Void>(
+            new Callable<Void>() {
+              public Void call() throws TranslateException {
+
+                // get the top 40 predictions and turn this into a string
+                List<Classification> classifications =
+                    model.getPredictions(getCurrentSnapshot(), 40);
+
+                List<String> predictionString =
+                    DoodlePrediction.getPredictionString(classifications, 40);
+
+                // check if the string/top 40 has the word, if not tell the user
+                // that they are not in the top 40
+                if (predictionString.get(0).contains(randomWord)) {
+                  for (int i = 0; i <= 40; i++) {
+
+                    // find the random word in the top 40, index in the list
+                    // represented by i
+                    if (classifications
+                        .get(i)
+                        .getClassName()
+                        .replace("_", " ")
+                        .equals(randomWord)) {
+
+                      // categorise which TOP X the random word is in and tell
+                      // the user that they are in TOP X
+                      if (i <= 10) {
+                        lblWinOrLose.setText("TOP 10");
+                      } else if (i <= 20) {
+                        lblWinOrLose.setText("TOP 20");
+                      } else if (i <= 30) {
+                        lblWinOrLose.setText("TOP 30");
+                      } else if (i <= 40) {
+                        lblWinOrLose.setText("TOP 40");
+                      }
+                    }
+                  }
+                } else {
+                  lblWinOrLose.setText("NOT EVEN CLOSE");
+                }
+
+                return null;
+              }
+            });
+
+    Platform.runLater(outsidePrediction);
+  }
+
+  /**
    * This method runs the top 10 prediction future task and sets the prediction string
    *
    * @throws ExecutionException If retrieving result from a task has failed
@@ -728,19 +738,30 @@ public class CanvasController {
             });
 
     Platform.runLater(predict);
+    // don't show the colorings since prediction and accuracy settings aren't part of
+    // zen mode.
     Platform.runLater(
         () -> {
           try {
             txtFlowPrediction.getChildren().clear();
+            // this refers to the top x in accuracy settings, this will be
+            // coloured based on the conditions met in isWin
             Text topX = new Text(predict.get().get(0));
-            if (topX.getText().contains(randomWord)) {
-              if (isWin(model.getPredictions(getCurrentSnapshot(), currentUser.getAccuracy()))) {
-                topX.setFill(Color.GREEN);
+
+            if (!isZen) {
+              if (topX.getText().contains(randomWord)) {
+                if (isWin(model.getPredictions(getCurrentSnapshot(), currentUser.getAccuracy()))) {
+                  topX.setFill(Color.GREEN);
+                } else {
+                  topX.setFill(Color.YELLOW); // if confidence isnt met
+                }
               } else {
-                topX.setFill(Color.YELLOW);
+                topX.setFill(Color.RED);
               }
             } else {
-              topX.setFill(Color.RED);
+              // set the topX text to white, do not differentiate the topX from the other
+              // part in Zen mode since accuracy settings is not relevant
+              topX.setFill(Color.WHITE);
             }
             Text secondString = new Text(predict.get().get(1));
             secondString.setFill(Color.WHITE);
