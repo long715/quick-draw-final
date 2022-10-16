@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+.root {
+  -fx-background-color: black;
+  -fx-font-family: "Press Start 2P", cursive;
+}
+
+.button {
+  -fx-text-fill: white;
+  -fx-font-size: 50px;
+  -fx-background-color: #81a6e6;
+}
+
+.label {
+  -fx-text-fill: #83A9F2;
+  -fx-font-size: 25px;
+  -fx-font-family: "Press Start 2P", cursive;
+}
+
+
+
+.list-cell:hover{
+    -fx-text-fill: white;
+}
+
+.list-cell {
+   -fx-background-color: transparent;
+   -fx-alignment: center;
+   -fx-text-fill: yellow;
+   -fx-font-size: 25px;
+}
+
+.list-cell:filled:selected{    
+    -fx-background-color: #A4C2F4;
+    
+}
+
+.list-cell:empty {
+    visibility:hidden;
+}
+
+.button:hover {
+  -fx-background-color: #a4c2f4;
+}
+
+
+#badgesList {
+  -fx-background-color: transparent;
+  
+}
+
+#lblHeading {
+	-fx-text-fill: #A4C2F4;
+    -fx-font-size: 50px;
+	
+}
+
+#lblSubheading {
+	-fx-text-fill: yellow;
+    -fx-font-size: 22px;
+	
+}
+
+
+
+#btnBack {
+  -fx-background-color: #e43326;
+}

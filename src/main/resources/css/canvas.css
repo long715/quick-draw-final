@@ -92,6 +92,12 @@
     -fx-font-size: 35px; 
 }
 
+#lblReward{
+	-fx-font-size: 20px; 
+	-fx-text-fill: white;
+	
+}
+
 #rightVBox{
     -fx-background-color: black; 
 }

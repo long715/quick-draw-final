@@ -33,6 +33,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -68,6 +69,8 @@ public class CanvasController {
   @FXML private Button btnReady;
   @FXML private Button clearButton;
   @FXML private Button btnSaveDrawing;
+  @FXML private Label lblReward;
+  @FXML private ImageView imgBadge;
   @FXML private Button btnHint;
 
   private GraphicsContext graphic;
@@ -516,7 +519,6 @@ public class CanvasController {
             try {
               if (taskPredict.get()) { // returns true if user has won
                 setCanvasWon();
-
               } else {
                 setCanvasLost();
               }
@@ -531,6 +533,19 @@ public class CanvasController {
               e.printStackTrace();
             }
           });
+    }
+  }
+
+  /**
+   * This method is used to reward the player with a badge
+   *
+   * @param badgeImagePath The string representing the badge image's path.
+   */
+  private void awardBadge(String badgeImagePath) {
+    if (!(currentUser.getBadgesEarned().contains(badgeImagePath))) {
+      currentUser.addBadge(badgeImagePath);
+      imgBadge.setImage(new Image(badgeImagePath));
+      lblReward.setText("New badge earned !");
     }
   }
 
@@ -560,6 +575,15 @@ public class CanvasController {
     lblWinOrLose.setText("WIN");
     currentUser.addWin();
     timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+    
+    // awarding the badges to players who win under certain time constraints
+    if (timePlayed < 10) {
+      awardBadge("/images/Under_10s_win.png");
+    } else if (timePlayed < 20) {
+      awardBadge("/images/Under_20s_win.png");
+    } else if (timePlayed < 30) {
+      awardBadge("/images/Under_30s_win.png");
+    }
 
     // since the default best time is -1, og condition will not work
     // therefore I added an alternative condition to check if best time
