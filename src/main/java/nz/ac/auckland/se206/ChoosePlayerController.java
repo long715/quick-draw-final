@@ -29,6 +29,13 @@ public class ChoosePlayerController {
   @FXML private Button btnDelete;
   @FXML private ListView<String> lstvPlayers;
 
+  /**
+   * This is the entry method when the Choose Player instance is first loaded into the stage. Reads
+   * the existing user data/files and sets the list view in the page.
+   *
+   * @throws NumberFormatException
+   * @throws IOException
+   */
   @FXML
   private void initialize() throws NumberFormatException, IOException {
 
@@ -64,6 +71,13 @@ public class ChoosePlayerController {
         .bind(Bindings.isEmpty(lstvPlayers.getSelectionModel().getSelectedItems()));
   }
 
+  /**
+   * This method is executed when the plus button is clicked. It creates a secondary stage and loads
+   * the create player root. When the secondary stage is closed, this checks for the name of the
+   * created user and adds it into the list IF the user name is not an empty string.
+   *
+   * @throws IOException
+   */
   @FXML
   private void onCreate() throws IOException {
     // creating the create player pop up
@@ -84,6 +98,10 @@ public class ChoosePlayerController {
     name = ""; // reset name variable
   }
 
+  /**
+   * This method is executed when the minus sign is clicked. This will delete the selected item from
+   * the list view and delete its corresponding user file.
+   */
   @FXML
   private void onDelete() {
     // only start deleting when an item is selected
@@ -133,6 +151,10 @@ public class ChoosePlayerController {
     }
   }
 
+  /**
+   * This is executed when the cross button is clicked, this will load the menu of the previously
+   * selected user.
+   */
   @FXML
   private void onCancel() {
     btnCancel.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));

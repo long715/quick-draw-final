@@ -14,6 +14,17 @@ public class CreatePlayerController {
   private String tempName;
   private int counter = 1;
 
+  /**
+   * This method is executed when Submit/Join button is clicked. It parses the user input to ensure
+   * that it is a VALID user name:
+   *
+   * <p>1. no duplicates by appending a counter to the end of the user name if it is already an
+   * existing name. 2. if the user gave an empty string input, default name is "no name"
+   *
+   * <p>and creates the UserProfile instance where it creates the data file.
+   *
+   * @throws IOException
+   */
   @FXML
   private void onClose() throws IOException {
 

@@ -223,12 +223,44 @@ public class CanvasController {
     currentWord = randomWord;
   }
 
+  /**
+   * This method finds a random word from categories depending on the user game settings, that has
+   * not been played by the user before.
+   *
+   * @param allWords The list of words from a set of difficulty categories
+   * @param playedWords The list of words the user has played before
+   * @param categorySelector The instance of the class that fetches the words from the csv
+   * @return a string of the random word that the user has not played before
+   */
+  private String getNewWord(
+      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    // generate word that user has not played yet in current round
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    }
+
+    return randomWord;
+  }
+
+  /**
+   * This method is executed when the cross button is clicked in the Canvas page which switches the
+   * root to the menu instance of the user.
+   */
   @FXML
   private void onSwitchToMenu() {
     Scene sceneBtnIsIn = btnToMenu.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
 
+  /**
+   * This method is executed when the ready button is clicked, this method starts the timer, enables
+   * the convas and its components and the prediction threads.
+   *
+   * @throws InterruptedException
+   * @throws ExecutionException
+   * @throws IOException
+   */
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException, IOException {
     // enable the canvas and disable to ready btn
@@ -254,12 +286,19 @@ public class CanvasController {
     }
   }
 
-  /** This method is called when the "Clear" button is pressed. */
+  /**
+   * This method is called when the trash can icon button is pressed. This clears the whole canvas/
+   * removes all existing drawings.
+   */
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
+  /**
+   * This method is called when the Dark Blue paint button is pressed. This switches the brush color
+   * to dark blue.
+   */
   @FXML
   private void onDrawBlue() {
 
@@ -268,6 +307,10 @@ public class CanvasController {
     setStrokeProperties(12);
   }
 
+  /**
+   * This method is executed when the cyan paint button is clicked. This switches the brush color to
+   * dark blue.
+   */
   @FXML
   private void onDrawCyan() {
 
@@ -276,6 +319,10 @@ public class CanvasController {
     setStrokeProperties(12);
   }
 
+  /**
+   * This methid is executed when the purple paint button is clicked. This switches the brush color
+   * to purple.
+   */
   @FXML
   private void onDrawPurple() {
 
@@ -284,6 +331,10 @@ public class CanvasController {
     setStrokeProperties(12);
   }
 
+  /**
+   * This method is executed when the Magenta paint button is clicked. This switches the brush color
+   * to magenta.
+   */
   @FXML
   private void onDrawMagenta() {
     // This is the colour of the brush.
@@ -291,6 +342,10 @@ public class CanvasController {
     setStrokeProperties(12);
   }
 
+  /**
+   * This method is executed when the Erase icon is clicked. This switches the brush color to black
+   * and since the canvas color is black, this acts as an eraser for the canvas.
+   */
   @FXML
   private void onErase() {
     graphic.setStroke(Color.BLACK);
@@ -322,6 +377,12 @@ public class CanvasController {
         });
   }
 
+  /**
+   * This method is executed when the save button is clicked. This opens up a secondary stage/pop up
+   * which shows the save menu.
+   *
+   * @throws IOException
+   */
   @FXML
   private void onSave() throws IOException {
 
@@ -344,12 +405,11 @@ public class CanvasController {
   }
 
   /**
-   * This method checks if the current word is in the top x classifications where x is the number
-   * specified.
+   * This method checks if the current word is in the top x classifications. Edited: Changes on
+   * param because of the updated winOrLose task.
    *
-   * @param topPredictions The boundary value that current word is checked against
    * @param classifications The list of the DL predictions
-   * @return if current word is included within the boundary which means the player has won
+   * @return if current word is included in the top x classifications
    */
   private boolean isWin(List<Classification> classifications) {
     for (int i = 0; i < classifications.size(); i++) {
@@ -364,7 +424,9 @@ public class CanvasController {
   }
 
   /**
-   * Get the current snapshot of the canvas.
+   * Get the current snapshot of the canvas. Used in the ML predictions and in the save menu.
+   * Edited: Changes on the BufferedImage settings, instead of Binary, i've made it to RGB so that
+   * it registers the different brush colors.
    *
    * @return The BufferedImage corresponding to the current canvas content.
    */
@@ -412,6 +474,10 @@ public class CanvasController {
     timeline.playFromStart();
   }
 
+  /**
+   * This method is executed when onDrag is detected in the canvas, this is to prevent predictions
+   * on an empty canvas before the user starts drawing.
+   */
   @FXML
   private void startPrediction() {
 
@@ -675,17 +741,10 @@ public class CanvasController {
         });
   }
 
-  private String getNewWord(
-      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
-    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    }
-
-    return randomWord;
-  }
-
+  /**
+   * This method is executed when the Hint button is clicked (available for hidden word mode only)
+   * which updates the label showing the incomplete/hidden characters of the random word chosen.
+   */
   @FXML
   private void onHint() {
     if (hintCounter < randomWord.length()) {
