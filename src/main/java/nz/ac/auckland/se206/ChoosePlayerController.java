@@ -33,8 +33,8 @@ public class ChoosePlayerController {
    * This is the entry method when the Choose Player instance is first loaded into the stage. Reads
    * the existing user data/files and sets the list view in the page.
    *
-   * @throws NumberFormatException
-   * @throws IOException
+   * @throws NumberFormatException If inappropriate string format is trying to convert to int
+   * @throws IOException If errors occur when reading the files
    */
   @FXML
   private void initialize() throws NumberFormatException, IOException {
@@ -76,7 +76,7 @@ public class ChoosePlayerController {
    * the create player root. When the secondary stage is closed, this checks for the name of the
    * created user and adds it into the list IF the user name is not an empty string.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when trying to load the fxml file
    */
   @FXML
   private void onCreate() throws IOException {
@@ -128,7 +128,7 @@ public class ChoosePlayerController {
    * This method passes the chosen user profile to the SceneManager and create the UserProfile
    * instance.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when trying to load the fxml file
    */
   @FXML
   private void onChoose() throws IOException {
