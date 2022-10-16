@@ -152,7 +152,7 @@ public class GameSettingsController {
    * This sets the accuracy settings to Easy, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetAccuracyEasy() throws IOException {
@@ -166,7 +166,7 @@ public class GameSettingsController {
    * This sets the accuracy settings to Medium, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetAccuracyMedium() throws IOException {
@@ -179,7 +179,7 @@ public class GameSettingsController {
    * This sets the accuracy settings to Hard, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetAccuracyHard() throws IOException {
@@ -192,7 +192,7 @@ public class GameSettingsController {
    * This sets the words settings to Easy, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetWordsEasy() throws IOException {
@@ -205,7 +205,7 @@ public class GameSettingsController {
    * This sets the words settings to Medium, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetWordsMedium() throws IOException {
@@ -218,7 +218,7 @@ public class GameSettingsController {
    * This sets the words settings to Hard, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetWordsHard() throws IOException {
@@ -231,7 +231,7 @@ public class GameSettingsController {
    * This sets the words settings to Master, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetWordsMaster() throws IOException {
@@ -244,7 +244,7 @@ public class GameSettingsController {
    * This sets the time settings to Easy, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetTimeEasy() throws IOException {
@@ -257,7 +257,7 @@ public class GameSettingsController {
    * This sets the time settings to Medium, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetTimeMedium() throws IOException {
@@ -270,7 +270,7 @@ public class GameSettingsController {
    * This sets the time settings to Hard, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetTimeHard() throws IOException {
@@ -283,7 +283,7 @@ public class GameSettingsController {
    * This sets the time settings to Master, updates the game settings page and is saved to the user
    * data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetTimeMaster() throws IOException {
@@ -296,7 +296,7 @@ public class GameSettingsController {
    * This sets the Confidence settings to Easy, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetConfidenceEasy() throws IOException {
@@ -309,7 +309,7 @@ public class GameSettingsController {
    * This sets the Confidence settings to Medium, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetConfidenceMedium() throws IOException {
@@ -322,7 +322,7 @@ public class GameSettingsController {
    * This sets the Confidence settings to Hard, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetConfidenceHard() throws IOException {
@@ -335,7 +335,7 @@ public class GameSettingsController {
    * This sets the Confidence settings to Master, updates the game settings page and is saved to the
    * user data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetConfidenceMaster() throws IOException {
@@ -349,7 +349,7 @@ public class GameSettingsController {
    * game settings invisible to the user: this is because none of the games settings is integrated
    * in Zen mode
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetModeToZen() throws IOException {
@@ -364,7 +364,7 @@ public class GameSettingsController {
    * This method sets the mode settings to Hidden word mode, game settings is still visible to the
    * user in this mode.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetToHidden() throws IOException {
@@ -379,7 +379,7 @@ public class GameSettingsController {
    * This method sets the mode settings to Normal mode, game settings is visible to the user in this
    * mode.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving data to the file
    */
   @FXML
   private void onSetToNormal() throws IOException {

@@ -259,7 +259,7 @@ public class CanvasController {
    *
    * @throws InterruptedException If a running thread is interrupted
    * @throws ExecutionException If retrieving result from a task has failed
-   * @throws IOException If the model cannot be found on the file system.
+   * @throws IOException If errors occur when accessing the file
    */
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException, IOException {
@@ -381,7 +381,7 @@ public class CanvasController {
    * This method is executed when the save button is clicked. This opens up a secondary stage/pop up
    * which shows the save menu.
    *
-   * @throws IOException If the model cannot be found on the file system.
+   * @throws IOException If errors occur when loading the fxml file.
    */
   @FXML
   private void onSave() throws IOException {
