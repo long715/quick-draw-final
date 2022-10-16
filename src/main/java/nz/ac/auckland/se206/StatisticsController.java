@@ -20,6 +20,8 @@ public class StatisticsController {
   /**
    * This is the entry method executed when the Statistics page is firstly loaded. Updates the
    * components (labels, list view and piechart) based on the latest statistics of the user.
+   *
+   * @throws IOException If the fxml trying to be loaded is not found
    */
   @FXML
   private void initialize() throws IOException {

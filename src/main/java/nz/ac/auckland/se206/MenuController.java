@@ -19,7 +19,7 @@ public class MenuController {
    * This is the entry method executed when the instance is firstly loaded. It sets up the
    * statistics and game settings page of the selected user.
    *
-   * @throws IOException
+   * @throws IOException if the fxml file we are trying to load is not found
    */
   @FXML
   private void initialize() throws IOException {
@@ -36,7 +36,7 @@ public class MenuController {
    * This method is executed when the new game method is clicked. Creates a new instance of the
    * canvas page and loads that page.
    *
-   * @throws IOException
+   * @throws IOException if the fxml file we are trying to load is not found
    */
   @FXML
   private void onCreateGame() throws IOException {
