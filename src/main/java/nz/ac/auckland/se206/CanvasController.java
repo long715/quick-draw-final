@@ -210,10 +210,14 @@ public class CanvasController {
           labelText = StringUtils.repeat("_", randomWord.length());
           break;
         } catch (WordNotFoundException e) {
+          // if no definition is found, get a new word
           randomWord = getNewWord(allWords, playedWords, categorySelector);
         }
       }
       lblCategory.setText(StringUtils.repeat("_", randomWord.length()));
+      // Added this so that words from the hidden word mode is shown on the list of
+      // played words.
+      currentUser.addWord(randomWord);
 
     } else {
       currentUser.addWord(randomWord);
@@ -575,7 +579,7 @@ public class CanvasController {
     lblWinOrLose.setText("WIN");
     currentUser.addWin();
     timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
-    
+
     // awarding the badges to players who win under certain time constraints
     if (timePlayed < 10) {
       awardBadge("/images/Under_10s_win.png");
