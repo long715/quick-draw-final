@@ -15,6 +15,10 @@
     -fx-background-color: #E43326; 
 }
 
+#btnCancel:hover{
+    -fx-background-color: #de5f56; 
+  }
+
 #btnZen{
     -fx-background-color: #FF02FF;
     -fx-background-radius: 5;
