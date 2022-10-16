@@ -641,7 +641,7 @@ public class CanvasController {
     lblWinOrLose.setText("WIN");
     currentUser.addWin();
     timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
-    
+
     // awarding the badges to players who win under certain time constraints
     if (timePlayed < 10) {
       awardBadge("/images/Under_10s_win.png");
