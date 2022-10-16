@@ -26,6 +26,14 @@ public class CategorySelector {
   // shown in the csv file
   private Map<Difficulty, List<String>> difficulty2categories;
 
+  /**
+   * This is the constructor for CategorySelector which initialises the difficulty2categories hash
+   * map.
+   *
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws CsvException
+   */
   public CategorySelector() throws URISyntaxException, IOException, CsvException {
     // initialise the hash map and map the enums to its corresponding list
     difficulty2categories = new HashMap<>();
