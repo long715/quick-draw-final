@@ -102,8 +102,8 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws CsvException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an issue with the opencsv loading
+   * @throws URISyntaxException If string cannot be parsed as URI reference
    */
   public void initialize() throws ModelException, IOException, URISyntaxException, CsvException {
     graphic = canvas.getGraphicsContext2D();
@@ -169,9 +169,9 @@ public class CanvasController {
    * This method chooses the word for this canvas game instance. This will be based on game
    * settings, if in ZEN mode, the choices is always from ALL categories.
    *
-   * @throws CsvException
-   * @throws IOException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an issue with the opencsv loading
+   * @throws IOException If the model cannot be found on the file system.
+   * @throws URISyntaxException If string cannot be parsed as URI reference
    */
   private void chooseWord() throws URISyntaxException, IOException, CsvException {
     // implement the category selector and display the category on the lbl
@@ -257,9 +257,9 @@ public class CanvasController {
    * This method is executed when the ready button is clicked, this method starts the timer, enables
    * the convas and its components and the prediction threads.
    *
-   * @throws InterruptedException
-   * @throws ExecutionException
-   * @throws IOException
+   * @throws InterruptedException If a running thread is interrupted
+   * @throws ExecutionException If retrieving result from a task has failed
+   * @throws IOException If the model cannot be found on the file system.
    */
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException, IOException {
@@ -381,7 +381,7 @@ public class CanvasController {
    * This method is executed when the save button is clicked. This opens up a secondary stage/pop up
    * which shows the save menu.
    *
-   * @throws IOException
+   * @throws IOException If the model cannot be found on the file system.
    */
   @FXML
   private void onSave() throws IOException {
@@ -705,8 +705,8 @@ public class CanvasController {
   /**
    * This method runs the top 10 prediction future task and sets the prediction string
    *
-   * @throws ExecutionException
-   * @throws InterruptedException
+   * @throws ExecutionException If retrieving result from a task has failed
+   * @throws InterruptedException If a running thread was interrupted
    */
   private void getTop10Predictions() throws InterruptedException, ExecutionException {
     // create a future task for getting the prediction string
