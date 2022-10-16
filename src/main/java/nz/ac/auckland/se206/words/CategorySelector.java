@@ -44,6 +44,9 @@ public class CategorySelector {
    * the category and difficulty.
    *
    * @return list containing the category and its respective difficulty
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws CsvException
    */
   protected List<String[]> getLines() throws URISyntaxException, IOException, CsvException {
 
@@ -59,7 +62,7 @@ public class CategorySelector {
   /**
    * This method randomly chooses a category from a specified difficulty.
    *
-   * @param difficulty difficulty of the game
+   * @param wordsSettings The difficulty of the game
    * @return a category from the specified difficulty
    */
   public String getRandomCategory(int wordsSettings) {
@@ -73,8 +76,8 @@ public class CategorySelector {
   /**
    * This method returns the entire list of words of a given difficulty
    *
-   * @param difficulty
-   * @return
+   * @param wordsSettings The difficulty of the game
+   * @return a list containing all the words of the categories specified by the difficulty
    */
   public List<String> getDifficultyList(int wordsSettings) {
     List<String> listOfWords = new ArrayList<String>();

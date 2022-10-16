@@ -45,7 +45,8 @@ public class DoodlePrediction {
   }
 
   /**
-   * Prints the predictions class name and confidence level.
+   * Prints the list of predictions (first element is the predictions in the top 10, and the rest of
+   * the predictions are in the second element of the list).
    *
    * @param predictions The list of predictions to print.
    */
@@ -57,7 +58,8 @@ public class DoodlePrediction {
 
   /**
    * Builds string from the 1st to xth predictions and a string from xth to the size of the
-   * predictions list.
+   * predictions list. EDIT: Changed so that it can be used to check the status of the word in the
+   * list of predictions
    *
    * @param predictions The list of predictions
    * @param topK separator of the string
@@ -120,7 +122,9 @@ public class DoodlePrediction {
   }
 
   /**
-   * Predicts the categories of the input image, returning the top K predictions.
+   * Predicts the categories of the input image, returning the top K predictions. EDIT: Changes have
+   * been made so that the img isn't greyscale inverted, this is because, the canvas has been made
+   * black instead of white.
    *
    * @param bufImg BufferedImage file to classify.
    * @param k The number of classes to return.
@@ -171,6 +175,10 @@ public class DoodlePrediction {
     return classification.getProbability() * 100 >= predictor;
   }
 
+  /**
+   * This method closes the ML prediction model instance. Used after each game/before the canvas
+   * instance is replaced.
+   */
   public void closeManager() {
     model.getNDManager().close();
   }
