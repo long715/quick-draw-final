@@ -43,7 +43,8 @@ public class LeaderboardController {
           });
 
       for (UserProfile pfl : allUsers) {
-        allUserNames.add(pfl.getName());
+        // Fixed to show user name without underscore
+        allUserNames.add(pfl.getName().replace("_", " "));
         allBestWords.add(pfl.getBestWord());
         allBestTimes.add(String.valueOf(pfl.getBestTime()) + "s");
       }
