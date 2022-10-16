@@ -9,7 +9,7 @@
 
 <AnchorPane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0" stylesheets="@../css/badges.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.BadgesController">
    <children>
-      <Button id="btnBack" fx:id="btnBack" layoutX="-2.0" mnemonicParsing="false" onAction="#onBack" prefHeight="109.0" prefWidth="155.0" stylesheets="@../css/badges.css" text="X">
+      <Button id="btnBack" fx:id="btnBack" layoutX="-2.0" mnemonicParsing="false" onAction="#onBack" prefHeight="109.0" prefWidth="155.0" stylesheets="@../css/badges.css" text="x">
          <font>
             <Font size="58.0" />
          </font>

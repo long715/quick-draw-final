@@ -52,7 +52,8 @@ public class LeaderboardController {
       // corresponding list that will be displayed based on ranking since
       // the list has already been previously sorted
       for (UserProfile pfl : allUsers) {
-        allUserNames.add(pfl.getName());
+        // Fixed to show user name without underscore
+        allUserNames.add(pfl.getName().replace("_", " "));
         allBestWords.add(pfl.getBestWord());
         allBestTimes.add(String.valueOf(pfl.getBestTime()) + "s");
       }

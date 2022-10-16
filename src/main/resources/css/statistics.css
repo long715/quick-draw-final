@@ -65,3 +65,7 @@
 #btnBack {
   -fx-background-color: #e43326;
 }
+
+#btnBack:hover{
+  -fx-background-color: #de5f56; 
+}
