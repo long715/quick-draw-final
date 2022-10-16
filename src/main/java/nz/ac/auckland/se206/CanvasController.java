@@ -512,21 +512,29 @@ public class CanvasController {
                       new FutureTask<Void>(
                           new Callable<Void>() {
                             public Void call() throws TranslateException {
+
+                              // get the top 40 predictions and turn this into a string
                               List<Classification> classifications =
                                   model.getPredictions(getCurrentSnapshot(), 40);
 
                               List<String> predictionString =
                                   DoodlePrediction.getPredictionString(classifications, 40);
 
+                              // check if the string/top 40 has the word, if not tell the user
+                              // that they are not in the top 40
                               if (predictionString.get(0).contains(randomWord)) {
                                 for (int i = 0; i <= 40; i++) {
 
+                                  // find the random word in the top 40, index in the list
+                                  // represented by i
                                   if (classifications
                                       .get(i)
                                       .getClassName()
                                       .replace("_", " ")
                                       .equals(randomWord)) {
 
+                                    // categorise which TOP X the random word is in and tell
+                                    // the user that they are in TOP X
                                     if (i <= 10) {
                                       lblWinOrLose.setText("TOP 10");
                                     } else if (i <= 20) {
