@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.media.AudioClip;
 
 public class LeaderboardController {
 
@@ -69,6 +70,7 @@ public class LeaderboardController {
   /** Loads the Menu instance of the user in the scene. */
   @FXML
   private void onCancel() {
+    new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
     btnCancel.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
 }
