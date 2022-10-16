@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.AudioClip;
 
 public class MenuController {
 
@@ -20,6 +21,12 @@ public class MenuController {
     btnLoadGame.setDisable(true); // no game to load at initialisation
     lblUser.setText("Hi, " + SceneManager.getMainUser());
 
+    // event handler for load game button
+    btnLoadGame.setOnMouseClicked(
+        event -> {
+          new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
+        });
+
     // load the statistics screen and the game settings
     SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
     SceneManager.storeUi(SceneManager.AppUi.GAMESETTINGS, App.loadFxml("gamesettings"));
@@ -28,6 +35,8 @@ public class MenuController {
 
   @FXML
   private void onCreateGame() throws IOException {
+    // play sound
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
 
     // check if there's a previous game instance
     if (SceneManager.ifPrevGameExists()) {
@@ -46,12 +55,15 @@ public class MenuController {
 
   @FXML
   private void onClickLeaderboard() {
+
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.LEADERBOARD));
   }
 
   @FXML
   private void onSwitchToGame() {
+
     // load the game instance
     Scene sceneBtnIsIn = btnNewGame.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CANVAS));
@@ -66,6 +78,7 @@ public class MenuController {
 
   @FXML
   private void onChoosePlayer() {
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
     // load the choose player root
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
@@ -73,12 +86,14 @@ public class MenuController {
 
   @FXML
   private void onClickStatistics() {
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS));
   }
 
   @FXML
   private void onSwitchToGameSettings() {
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
     Scene sceneBtnIsIn = btnChoosePlayer.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.GAMESETTINGS));
   }
