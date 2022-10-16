@@ -7,10 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import nz.ac.auckland.se206.UserProfile.Mode;
 
 public class GameSettingsController {
   @FXML private Button btnMenu;
+
   @FXML private ToggleButton rbtnAccuracyE;
   @FXML private ToggleButton rbtnAccuracyM;
   @FXML private ToggleButton rbtnAccuracyH;
@@ -58,12 +60,15 @@ public class GameSettingsController {
     if (currentUser.getAccuracy() == 3) {
       rbtnAccuracyE.setSelected(true);
       lblAccuracyDesc.setText("*your word must be in the top 3");
+      playSelectSound();
     } else if (currentUser.getAccuracy() == 2) {
       rbtnAccuracyM.setSelected(true);
       lblAccuracyDesc.setText("*your word must be in the top 2");
+      playSelectSound();
     } else {
       rbtnAccuracyH.setSelected(true);
       lblAccuracyDesc.setText("*your word must be the top word");
+      playSelectSound();
     }
   }
 
@@ -74,18 +79,22 @@ public class GameSettingsController {
       // word settings is set to EASY
       rbtnWordsE.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy category");
+      playSelectSound();
     } else if (currentUser.getWordsSettings() == 2) {
       // word settings is set to MEDIUM
       rbtnWordsM.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy and medium category");
+      playSelectSound();
     } else if (currentUser.getWordsSettings() == 1) {
       // word settings is set to HARD
       rbtnWordsH.setSelected(true);
       lblWordsDesc.setText("*you will get a word from the easy, medium and hard category");
+      playSelectSound();
     } else {
       // word settings is set to MASTER
       rbtnWordsMaster.setSelected(true);
       lblWordsDesc.setText("*true masters play hard words only");
+      playSelectSound();
     }
   }
 
@@ -96,18 +105,22 @@ public class GameSettingsController {
       // time is set to EASY
       rbtnTimeE.setSelected(true);
       lblTimeDesc.setText("*you have 60 seconds to draw");
+      playSelectSound();
     } else if (currentUser.getTimeSettings() == 45) {
       // time is set to MEDIUM
       rbtnTimeM.setSelected(true);
       lblTimeDesc.setText("*you have 45 seconds to draw");
+      playSelectSound();
     } else if (currentUser.getTimeSettings() == 30) {
       // time is set to HARD
       rbtnTimeH.setSelected(true);
       lblTimeDesc.setText("*you have 30 seconds to draw");
+      playSelectSound();
     } else {
       // time is set to MASTER
       rbtnTimeMaster.setSelected(true);
       lblTimeDesc.setText("*you have 15 seconds to draw");
+      playSelectSound();
     }
   }
 
@@ -118,23 +131,28 @@ public class GameSettingsController {
       // confidence is set to EASY
       rbtnConfidenceE.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is at least legible");
+      playSelectSound();
     } else if (currentUser.getConfidence() == 10) {
       // confidence is set to MEDIUM
       rbtnConfidenceM.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is getting better...");
+      playSelectSound();
     } else if (currentUser.getConfidence() == 25) {
       // confidence is set to HARD
       rbtnConfidenceH.setSelected(true);
       lblConfidenceDesc.setText("*your drawing is pretty good!");
+      playSelectSound();
     } else {
       rbtnConfidenceMaster.setSelected(true);
       // confidence is set to MASTER
       lblConfidenceDesc.setText("*your drawing is an artwork!");
+      playSelectSound();
     }
   }
 
   @FXML
   private void onSwitchToMenu() {
+    new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
     Scene sceneBtnIsIn = btnMenu.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
@@ -276,5 +294,11 @@ public class GameSettingsController {
   private void setCurrentModeLabel() {
     // get the previous node and update the current mode label
     lblCurrentMode.setText("Current Mode: " + currentUser.getMode());
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays a sound when a toggle button is selected */
+  private void playSelectSound() {
+    new AudioClip(getClass().getResource("/sounds/radioSound.wav").toExternalForm()).play();
   }
 }
