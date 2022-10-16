@@ -34,6 +34,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -225,12 +226,16 @@ public class CanvasController {
 
   @FXML
   private void onSwitchToMenu() {
+    // play sound
+    playOnBack();
     Scene sceneBtnIsIn = btnToMenu.getScene();
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
 
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException, IOException {
+    // play sound
+    playOnClickSound();
     // enable the canvas and disable to ready btn
     canvas.setDisable(false);
     btnReady.setDisable(true);
@@ -258,6 +263,7 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    playSound();
   }
 
   @FXML
@@ -266,6 +272,7 @@ public class CanvasController {
     // This is the colour of the brush.
     graphic.setStroke(Color.DODGERBLUE);
     setStrokeProperties(12);
+    playSound();
   }
 
   @FXML
@@ -274,6 +281,7 @@ public class CanvasController {
     // This is the colour of the brush.
     graphic.setStroke(Color.CYAN);
     setStrokeProperties(12);
+    playSound();
   }
 
   @FXML
@@ -282,6 +290,7 @@ public class CanvasController {
     // This is the colour of the brush.
     graphic.setStroke(Color.DARKORCHID);
     setStrokeProperties(12);
+    playSound();
   }
 
   @FXML
@@ -289,10 +298,12 @@ public class CanvasController {
     // This is the colour of the brush.
     graphic.setStroke(Color.DEEPPINK);
     setStrokeProperties(12);
+    playSound();
   }
 
   @FXML
   private void onErase() {
+    playSound();
     graphic.setStroke(Color.BLACK);
     setStrokeProperties(14);
   }
@@ -324,7 +335,8 @@ public class CanvasController {
 
   @FXML
   private void onSave() throws IOException {
-
+    // play sound
+    playOnSave();
     // create new loader to load save menu modal
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/fxml/" + "savemenu" + ".fxml"));
@@ -546,6 +558,8 @@ public class CanvasController {
       currentUser.addBadge(badgeImagePath);
       imgBadge.setImage(new Image(badgeImagePath));
       lblReward.setText("New badge earned !");
+      // play sound
+      playOnAwarding();
     }
   }
 
@@ -571,16 +585,20 @@ public class CanvasController {
    * that they have won.
    */
   private void setCanvasWon() {
+    // play sound
+    playOnWin();
     lblWinOrLose.setTextFill(Color.GREEN);
     lblWinOrLose.setText("WIN");
     currentUser.addWin();
     timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
-    
+
     // awarding the badges to players who win under certain time constraints
     if (timePlayed < 10) {
       awardBadge("/images/Under_10s_win.png");
+
     } else if (timePlayed < 20) {
       awardBadge("/images/Under_20s_win.png");
+
     } else if (timePlayed < 30) {
       awardBadge("/images/Under_30s_win.png");
     }
@@ -611,6 +629,8 @@ public class CanvasController {
    * text-to-speech
    */
   private void setCanvasLost() {
+    // play sound
+    playOnLost();
     lblWinOrLose.setTextFill(Color.RED);
     lblWinOrLose.setText("LOSE");
     currentUser.addLoss();
@@ -699,6 +719,48 @@ public class CanvasController {
       // update the label to show the new state
       labelText = sb.toString();
       lblCategory.setText(labelText);
+      // play sound
+      playOnHint();
     }
+  }
+
+  /** This method plays a sound when the hint button is clicked */
+  private void playOnHint() {
+    new AudioClip(getClass().getResource("/sounds/radioSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays a sound when the save button is clicked */
+  private void playOnSave() {
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays sound when the player loses */
+  private void playOnLost() {
+    new AudioClip(getClass().getResource("/sounds/OnLostSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays a sound when the player wins */
+  private void playOnWin() {
+    new AudioClip(getClass().getResource("/sounds/OnWinSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays sound when a button is clicked */
+  private void playOnClickSound() {
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays a sound when the back button is clicked */
+  private void playOnBack() {
+    new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays a sound when something is selected */
+  private void playSound() {
+    new AudioClip(getClass().getResource("/sounds/radioSound.wav").toExternalForm()).play();
+  }
+
+  /** This method plays a sound when player is rewarded */
+  private void playOnAwarding() {
+    new AudioClip(getClass().getResource("/sounds/OnAward.wav").toExternalForm()).play();
   }
 }

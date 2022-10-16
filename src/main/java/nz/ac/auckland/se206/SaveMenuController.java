@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.media.AudioClip;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -38,6 +39,8 @@ public class SaveMenuController {
 
   @FXML
   private void onChooseFile() {
+    // play sound
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
     // get the directory from the chooser and set the label to
     // show the user the chosen directory
     FileChooser fc = new FileChooser();
@@ -49,10 +52,13 @@ public class SaveMenuController {
 
   @FXML
   private void onSave() throws IOException {
+    // play sound
+    new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
     // if dir doesnt contain the .bmp extension, its considered as
     // invalid
     if (!txtDir.getText().contains(".bmp")) {
       lblWarning.setText("Does not contain .bmp extension");
+      new AudioClip(getClass().getResource("/sounds/OnLostSound.wav").toExternalForm()).play();
       return;
     }
     pathName = txtDir.getText();
