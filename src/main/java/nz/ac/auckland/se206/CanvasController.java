@@ -33,6 +33,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -68,6 +69,8 @@ public class CanvasController {
   @FXML private Button btnReady;
   @FXML private Button clearButton;
   @FXML private Button btnSaveDrawing;
+  @FXML private Label lblReward;
+  @FXML private ImageView imgBadge;
   @FXML private Button btnHint;
 
   private GraphicsContext graphic;
@@ -120,6 +123,8 @@ public class CanvasController {
     // before ready, we dont want hint button to function
     btnHint.setVisible(false);
     btnHint.setDisable(true);
+
+    lblWinOrLose.setTextFill(Color.BLUE);
 
     if (!isZen) {
       // user can't go back and create a new game before finishing the current game
@@ -497,14 +502,53 @@ public class CanvasController {
                       new FutureTask<Boolean>(
                           new Callable<Boolean>() {
                             public Boolean call() throws TranslateException {
+
                               return isWin(
                                   model.getPredictions(
                                       getCurrentSnapshot(), currentUser.getAccuracy()));
                             }
                           });
+                  FutureTask<Void> outsidePrediction =
+                      new FutureTask<Void>(
+                          new Callable<Void>() {
+                            public Void call() throws TranslateException {
+                              List<Classification> classifications =
+                                  model.getPredictions(getCurrentSnapshot(), 40);
+
+                              List<String> predictionString =
+                                  DoodlePrediction.getPredictionString(classifications, 40);
+
+                              if (predictionString.get(0).contains(randomWord)) {
+                                for (int i = 0; i <= 40; i++) {
+
+                                  if (classifications
+                                      .get(i)
+                                      .getClassName()
+                                      .replace("_", " ")
+                                      .equals(randomWord)) {
+
+                                    if (i <= 10) {
+                                      lblWinOrLose.setText("TOP 10");
+                                    } else if (i <= 20) {
+                                      lblWinOrLose.setText("TOP 20");
+                                    } else if (i <= 30) {
+                                      lblWinOrLose.setText("TOP 30");
+                                    } else if (i <= 40) {
+                                      lblWinOrLose.setText("TOP 40");
+                                    }
+                                  }
+                                }
+                              } else {
+                                lblWinOrLose.setText("NOT EVEN CLOSE");
+                              }
+
+                              return null;
+                            }
+                          });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
                   Platform.runLater(winOrLose);
+                  Platform.runLater(outsidePrediction);
                   getTop10Predictions();
 
                   // set the temp time
@@ -541,11 +585,11 @@ public class CanvasController {
             try {
               if (taskPredict.get()) { // returns true if user has won
                 setCanvasWon();
-
               } else {
                 setCanvasLost();
               }
               SceneManager.replaceUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
+              SceneManager.replaceUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
               currentUser.writeData(
                   new File(
                       "src/main/resources/data/users",
@@ -555,6 +599,19 @@ public class CanvasController {
               e.printStackTrace();
             }
           });
+    }
+  }
+
+  /**
+   * This method is used to reward the player with a badge
+   *
+   * @param badgeImagePath The string representing the badge image's path.
+   */
+  private void awardBadge(String badgeImagePath) {
+    if (!(currentUser.getBadgesEarned().contains(badgeImagePath))) {
+      currentUser.addBadge(badgeImagePath);
+      imgBadge.setImage(new Image(badgeImagePath));
+      lblReward.setText("New badge earned !");
     }
   }
 
@@ -584,6 +641,15 @@ public class CanvasController {
     lblWinOrLose.setText("WIN");
     currentUser.addWin();
     timePlayed = timeSettings - Integer.parseInt(lblTime.getText());
+    
+    // awarding the badges to players who win under certain time constraints
+    if (timePlayed < 10) {
+      awardBadge("/images/Under_10s_win.png");
+    } else if (timePlayed < 20) {
+      awardBadge("/images/Under_20s_win.png");
+    } else if (timePlayed < 30) {
+      awardBadge("/images/Under_30s_win.png");
+    }
 
     // since the default best time is -1, og condition will not work
     // therefore I added an alternative condition to check if best time
@@ -648,6 +714,7 @@ public class CanvasController {
                     model.getPredictions(getCurrentSnapshot(), 10), currentUser.getAccuracy());
               }
             });
+
     Platform.runLater(predict);
     Platform.runLater(
         () -> {

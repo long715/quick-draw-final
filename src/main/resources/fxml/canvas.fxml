@@ -5,6 +5,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -66,6 +67,8 @@
             <Button id="btnReady" fx:id="btnReady" layoutX="106.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStartGame" stylesheets="@../css/canvas.css" text="READY" />
             <Button id="btnSave" fx:id="btnSaveDrawing" layoutX="1038.0" layoutY="17.0" mnemonicParsing="false" onAction="#onSave" stylesheets="@../css/canvas.css" text="SAVE" />
             <Button id="btnHint" fx:id="btnHint" layoutX="104.0" layoutY="14.0" mnemonicParsing="false" onAction="#onHint" stylesheets="@../css/canvas.css" text="GET HINT" />
+            <Label fx:id="lblReward" layoutX="369.0" layoutY="17.0" prefHeight="45.0" prefWidth="382.0" stylesheets="@../css/canvas.css" underline="true" />
+            <ImageView fx:id="imgBadge" fitHeight="143.0" fitWidth="191.0" layoutX="794.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
 

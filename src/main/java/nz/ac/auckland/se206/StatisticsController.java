@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,15 +14,16 @@ public class StatisticsController {
   @FXML private Label lblBestWord;
   @FXML private PieChart pieChart;
   @FXML private Button btnBack;
-  @FXML private ListView<String> lstvWordHistory;
+  @FXML private ListView lstvWordHistory;
+  @FXML private Button btnViewBadges;
 
   /**
    * This is the entry method executed when the Statistics page is firstly loaded. Updates the
    * components (labels, list view and piechart) based on the latest statistics of the user.
    */
   @FXML
-  private void initialize() {
-
+  private void initialize() throws IOException {
+    SceneManager.storeUi(SceneManager.AppUi.BADGES, App.loadFxml("badges"));
     // set the labels to show the relevant information for the current user
     UserProfile user = SceneManager.getProfile(SceneManager.getMainUser());
     if (!(user == null)) {
@@ -48,5 +51,11 @@ public class StatisticsController {
   @FXML
   private void onBack() {
     btnBack.getScene().setRoot(SceneManager.getUi(SceneManager.AppUi.MENU)); // returns to menu
+  }
+
+  @FXML
+  private void onClickViewBadges() {
+    Scene sceneBtnIsIn = btnViewBadges.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.BADGES));
   }
 }

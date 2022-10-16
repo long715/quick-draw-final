@@ -31,6 +31,10 @@ public class UserProfile {
   private String bestName;
   private int bestTime;
   private int rounds;
+
+  // storing the badges data as an array list of the image paths represented as
+  // strings
+  private ArrayList<String> badgesEarned;
   private int zenRounds;
 
   // fields for game settings; possible values 3-easy, 2-medium, 1-hard, 0-master
@@ -57,9 +61,10 @@ public class UserProfile {
     this.words = new ArrayList<String>();
     this.zenWords = new ArrayList<String>();
     this.bestName = "NIL";
-    // default best time is -1 which is recognised as no best time
-    this.bestTime = -1;
+    // default best time is 999 which is recognised as no best time
+    this.bestTime = 999;
     this.rounds = 0;
+    this.badgesEarned = new ArrayList<String>();
     this.zenRounds = 0;
 
     // default should be easy
@@ -110,6 +115,7 @@ public class UserProfile {
     writer.write(wordsSettings + "\n");
     writer.write(timeSettings + "\n");
     writer.write(confidence + "\n");
+    writer.write(badgesEarned.toString() + "\n");
     writer.write(mode + "\n");
 
     writer.close();
@@ -130,7 +136,8 @@ public class UserProfile {
     this.wins = Integer.valueOf(reader.readLine());
     this.loss = Integer.valueOf(reader.readLine());
     // input is parsed so that the remaining string is "A,B,C"
-    // this is then separated via the commas and made into elements of an intermediate array
+    // this is then separated via the commas and made into elements of an
+    // intermediate array
     // convert this array to ArrayList format
     this.words =
         new ArrayList<String>(
@@ -148,6 +155,10 @@ public class UserProfile {
     this.wordsSettings = Integer.valueOf(reader.readLine());
     this.timeSettings = Integer.valueOf(reader.readLine());
     this.confidence = Integer.valueOf(reader.readLine());
+    this.badgesEarned =
+        new ArrayList<String>(
+            Arrays.asList(
+                reader.readLine().replace("[", "").replace("]", "").replace(" ", "").split(",")));
     this.mode = Mode.valueOf(reader.readLine());
 
     reader.close();
@@ -214,7 +225,7 @@ public class UserProfile {
     addRound();
   }
 
-  /*SETTERS AND GETTERS for GAME SETTINGS*/
+  /* SETTERS AND GETTERS for GAME SETTINGS */
   public int getAccuracy() {
     return this.accuracy;
   }
@@ -245,6 +256,14 @@ public class UserProfile {
 
   public void setConfidence(int confidence) {
     this.confidence = confidence;
+  }
+
+  public void addBadge(String badgeFileName) {
+    this.badgesEarned.add(badgeFileName);
+  }
+
+  public ArrayList<String> getBadgesEarned() {
+    return this.badgesEarned;
   }
 
   public Mode getMode() {
@@ -295,5 +314,9 @@ public class UserProfile {
   public void newZenRound() {
     this.zenWords = new ArrayList<String>();
     this.zenRounds++;
+  }
+
+  public String getName() {
+    return this.name;
   }
 }

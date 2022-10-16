@@ -12,6 +12,7 @@ public class MenuController {
   @FXML private Button btnLoadGame;
   @FXML private Button btnChoosePlayer;
   @FXML private Button btnStatistics;
+  @FXML private Button btnLeaderboard;
   @FXML private Label lblUser;
 
   /**
@@ -28,6 +29,7 @@ public class MenuController {
     // load the statistics screen and the game settings
     SceneManager.storeUi(SceneManager.AppUi.STATISTICS, App.loadFxml("statistics"));
     SceneManager.storeUi(SceneManager.AppUi.GAMESETTINGS, App.loadFxml("gamesettings"));
+    SceneManager.storeUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
   }
 
   /**
@@ -58,6 +60,12 @@ public class MenuController {
    * This method is called by the onCreateGame() method or is executed when the "load game" button
    * is clicked. This loads the stored canvas page.
    */
+  @FXML
+  private void onClickLeaderboard() {
+    Scene sceneBtnIsIn = btnChoosePlayer.getScene();
+    sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.LEADERBOARD));
+  }
+
   @FXML
   private void onSwitchToGame() {
     // load the game instance

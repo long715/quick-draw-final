@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,14 +23,17 @@ public class SceneManager {
     CANVAS,
     CHOOSEPLAYER,
     STATISTICS,
-    GAMESETTINGS
+    GAMESETTINGS,
+    BADGES,
+    LEADERBOARD
   }
 
   private static String mainUser = "";
 
   // use hashmap to store the instances of each root
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
-  // use hashmap to store user profile instances using its name (string) as the key
+  // use hashmap to store user profile instances using its name (string) as the
+  // key
   private static HashMap<String, UserProfile> profileMap = new HashMap<String, UserProfile>();
 
   /**
@@ -135,5 +140,9 @@ public class SceneManager {
 
   public static String getMainUser() {
     return mainUser;
+  }
+
+  public static List<UserProfile> getAllProfiles() {
+    return new ArrayList<UserProfile>(profileMap.values());
   }
 }
