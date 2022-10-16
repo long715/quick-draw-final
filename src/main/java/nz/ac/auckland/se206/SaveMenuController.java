@@ -56,7 +56,7 @@ public class SaveMenuController {
    * Takes the directory (text value) in the text area, which is used as the path to create the .bmp
    * file of the canvas snapshot. The warning label should show the user why their input is invalid.
    *
-   * @throws IOException
+   * @throws IOException If and IO error occurs anywhere when saving the snapshot
    */
   @FXML
   private void onSave() throws IOException {
@@ -80,7 +80,7 @@ public class SaveMenuController {
     // create the file path for the saved canvas drawing
     Path newFilePath = Paths.get(pathName);
 
-    /** CHECKING FOR WARNINGS */
+    // CHECKING FOR WARNINGS
     File file = new File(pathName);
 
     // check if file name is invalid

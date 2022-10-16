@@ -17,8 +17,8 @@ public class DefinitionFetcher {
    *
    * @param query String whose definition we need to fetch
    * @return the definition of the query string
-   * @throws IOException
-   * @throws WordNotFoundException
+   * @throws IOException If error occurs when accessing the api url
+   * @throws WordNotFoundException If definition for the word could not be found in the database
    */
   public static String getDefinition(String query) throws IOException, WordNotFoundException {
 

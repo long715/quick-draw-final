@@ -19,6 +19,7 @@ public class BadgesController {
   private ArrayList<String> badgesInfo;
   private ArrayList<String> badgeImagePaths;
 
+  /** Entry method that displays the latest badge statistics of the user in the components. */
   @FXML
   private void initialize() {
 
@@ -71,6 +72,7 @@ public class BadgesController {
     }
   }
 
+  /** This loads the statistics root instance of the user to the scene. */
   @FXML
   private void onBack() {
     btnBack

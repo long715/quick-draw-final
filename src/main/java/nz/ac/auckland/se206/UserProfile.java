@@ -81,7 +81,7 @@ public class UserProfile {
    * This method creates a NEW file for a new user in the users folder. This should only be called
    * when initialising the file.
    *
-   * @throws IOException
+   * @throws IOException If an I/O error occurs when tring to create or write to file
    */
   public void saveData() throws IOException {
     // create the file in the data folder
@@ -97,7 +97,7 @@ public class UserProfile {
    * to update the local data.
    *
    * @param file The file object that we will write on
-   * @throws IOException
+   * @throws IOException If and I/O error occurs when writing fields to file
    */
   public void writeData(File file) throws IOException {
     // write into the file with all its details
@@ -125,8 +125,8 @@ public class UserProfile {
    * This method reads the user file and assigns the UserProfile fields with the data from the file.
    *
    * @param file The file to read the data from
-   * @throws NumberFormatException
-   * @throws IOException
+   * @throws NumberFormatException If the value trying to be converted to number is invalid
+   * @throws IOException If the file or line from file trying to be read is not found
    */
   public void readDataFromFile(File file) throws NumberFormatException, IOException {
     // reads data from existing file and updating the userprofile instance fields

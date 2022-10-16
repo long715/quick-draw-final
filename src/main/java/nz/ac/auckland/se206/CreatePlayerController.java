@@ -23,7 +23,7 @@ public class CreatePlayerController {
    *
    * <p>and creates the UserProfile instance where it creates the data file.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when saving the data to the file
    */
   @FXML
   private void onClose() throws IOException {

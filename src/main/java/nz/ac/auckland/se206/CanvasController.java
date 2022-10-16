@@ -102,8 +102,8 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws CsvException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an issue with the opencsv loading
+   * @throws URISyntaxException If string cannot be parsed as URI reference
    */
   public void initialize() throws ModelException, IOException, URISyntaxException, CsvException {
     graphic = canvas.getGraphicsContext2D();
@@ -169,9 +169,9 @@ public class CanvasController {
    * This method chooses the word for this canvas game instance. This will be based on game
    * settings, if in ZEN mode, the choices is always from ALL categories.
    *
-   * @throws CsvException
-   * @throws IOException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an issue with the opencsv loading
+   * @throws IOException If the model cannot be found on the file system.
+   * @throws URISyntaxException If string cannot be parsed as URI reference
    */
   private void chooseWord() throws URISyntaxException, IOException, CsvException {
     // implement the category selector and display the category on the lbl
@@ -261,9 +261,9 @@ public class CanvasController {
    * This method is executed when the ready button is clicked, this method starts the timer, enables
    * the convas and its components and the prediction threads.
    *
-   * @throws InterruptedException
-   * @throws ExecutionException
-   * @throws IOException
+   * @throws InterruptedException If a running thread is interrupted
+   * @throws ExecutionException If retrieving result from a task has failed
+   * @throws IOException If errors occur when accessing the file
    */
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException, IOException {
@@ -385,7 +385,7 @@ public class CanvasController {
    * This method is executed when the save button is clicked. This opens up a secondary stage/pop up
    * which shows the save menu.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when loading the fxml file.
    */
   @FXML
   private void onSave() throws IOException {
@@ -516,21 +516,29 @@ public class CanvasController {
                       new FutureTask<Void>(
                           new Callable<Void>() {
                             public Void call() throws TranslateException {
+
+                              // get the top 40 predictions and turn this into a string
                               List<Classification> classifications =
                                   model.getPredictions(getCurrentSnapshot(), 40);
 
                               List<String> predictionString =
                                   DoodlePrediction.getPredictionString(classifications, 40);
 
+                              // check if the string/top 40 has the word, if not tell the user
+                              // that they are not in the top 40
                               if (predictionString.get(0).contains(randomWord)) {
                                 for (int i = 0; i <= 40; i++) {
 
+                                  // find the random word in the top 40, index in the list
+                                  // represented by i
                                   if (classifications
                                       .get(i)
                                       .getClassName()
                                       .replace("_", " ")
                                       .equals(randomWord)) {
 
+                                    // categorise which TOP X the random word is in and tell
+                                    // the user that they are in TOP X
                                     if (i <= 10) {
                                       lblWinOrLose.setText("TOP 10");
                                     } else if (i <= 20) {
@@ -701,8 +709,8 @@ public class CanvasController {
   /**
    * This method runs the top 10 prediction future task and sets the prediction string
    *
-   * @throws ExecutionException
-   * @throws InterruptedException
+   * @throws ExecutionException If retrieving result from a task has failed
+   * @throws InterruptedException If a running thread was interrupted
    */
   private void getTop10Predictions() throws InterruptedException, ExecutionException {
     // create a future task for getting the prediction string
