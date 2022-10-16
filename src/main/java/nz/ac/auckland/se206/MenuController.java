@@ -16,6 +16,12 @@ public class MenuController {
   @FXML private Button btnLeaderboard;
   @FXML private Label lblUser;
 
+  /**
+   * This is the entry method executed when the instance is firstly loaded. It sets up the
+   * statistics and game settings page of the selected user.
+   *
+   * @throws IOException if the fxml file we are trying to load is not found
+   */
   @FXML
   private void initialize() throws IOException {
     btnLoadGame.setDisable(true); // no game to load at initialisation
@@ -33,6 +39,12 @@ public class MenuController {
     SceneManager.storeUi(SceneManager.AppUi.LEADERBOARD, App.loadFxml("leaderboard"));
   }
 
+  /**
+   * This method is executed when the new game method is clicked. Creates a new instance of the
+   * canvas page and loads that page.
+   *
+   * @throws IOException if the fxml file we are trying to load is not found
+   */
   @FXML
   private void onCreateGame() throws IOException {
     // play sound
@@ -53,6 +65,10 @@ public class MenuController {
     btnLoadGame.setDisable(false);
   }
 
+  /**
+   * This method is called by the onCreateGame() method or is executed when the "load game" button
+   * is clicked. This loads the stored canvas page.
+   */
   @FXML
   private void onClickLeaderboard() {
 
@@ -76,6 +92,7 @@ public class MenuController {
     }
   }
 
+  /** This method loads the Choose Player instance when the avatar icon is clicked. */
   @FXML
   private void onChoosePlayer() {
     new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
@@ -84,6 +101,10 @@ public class MenuController {
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.CHOOSEPLAYER));
   }
 
+  /**
+   * This method loads the stored statistics page of the selected user when the piechart icon is
+   * clicked.
+   */
   @FXML
   private void onClickStatistics() {
     new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
@@ -91,6 +112,10 @@ public class MenuController {
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.STATISTICS));
   }
 
+  /**
+   * This method loads the stored GAME statistics page of the user when the "game settings" button
+   * is clicked.
+   */
   @FXML
   private void onSwitchToGameSettings() {
     new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();

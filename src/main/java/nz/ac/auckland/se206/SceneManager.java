@@ -85,7 +85,7 @@ public class SceneManager {
     profileMap.remove(name);
   }
 
-  /** This method deletes the canvas from sceneMap. */
+  /** This method deletes the canvas from sceneMap hashmap. */
   public static void deleteCanvas() {
     sceneMap.remove(AppUi.CANVAS);
   }

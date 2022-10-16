@@ -37,6 +37,11 @@ public class GameSettingsController {
 
   private UserProfile currentUser = SceneManager.getProfile(SceneManager.getMainUser());
 
+  /**
+   * The entry method when the game settings instance is firstly loaded to the stage. This reads the
+   * game settings of the user and updates the radiobutton selection in the page. This also checks
+   * its latest selected mode
+   */
   @FXML
   private void initialize() {
 
@@ -150,6 +155,10 @@ public class GameSettingsController {
     }
   }
 
+  /**
+   * This method is executed when the cross button is clicked, which loads the menu instance of the
+   * user.
+   */
   @FXML
   private void onSwitchToMenu() {
     new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();
@@ -157,6 +166,12 @@ public class GameSettingsController {
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
 
+  /**
+   * This sets the accuracy settings to Easy, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetAccuracyEasy() throws IOException {
     currentUser.setAccuracy(3);
@@ -165,6 +180,12 @@ public class GameSettingsController {
     setAccuracySettings();
   }
 
+  /**
+   * This sets the accuracy settings to Medium, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetAccuracyMedium() throws IOException {
     currentUser.setAccuracy(2);
@@ -172,6 +193,12 @@ public class GameSettingsController {
     setAccuracySettings();
   }
 
+  /**
+   * This sets the accuracy settings to Hard, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetAccuracyHard() throws IOException {
     currentUser.setAccuracy(1);
@@ -179,6 +206,12 @@ public class GameSettingsController {
     setAccuracySettings();
   }
 
+  /**
+   * This sets the words settings to Easy, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetWordsEasy() throws IOException {
     currentUser.setWordsSettings(3);
@@ -186,6 +219,12 @@ public class GameSettingsController {
     setWordsSettings();
   }
 
+  /**
+   * This sets the words settings to Medium, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetWordsMedium() throws IOException {
     currentUser.setWordsSettings(2);
@@ -193,6 +232,12 @@ public class GameSettingsController {
     setWordsSettings();
   }
 
+  /**
+   * This sets the words settings to Hard, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetWordsHard() throws IOException {
     currentUser.setWordsSettings(1);
@@ -200,6 +245,12 @@ public class GameSettingsController {
     setWordsSettings();
   }
 
+  /**
+   * This sets the words settings to Master, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetWordsMaster() throws IOException {
     currentUser.setWordsSettings(0);
@@ -207,6 +258,12 @@ public class GameSettingsController {
     setWordsSettings();
   }
 
+  /**
+   * This sets the time settings to Easy, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetTimeEasy() throws IOException {
     currentUser.setTimeSettings(60);
@@ -214,6 +271,12 @@ public class GameSettingsController {
     setTimeSettings();
   }
 
+  /**
+   * This sets the time settings to Medium, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetTimeMedium() throws IOException {
     currentUser.setTimeSettings(45);
@@ -221,6 +284,12 @@ public class GameSettingsController {
     setTimeSettings();
   }
 
+  /**
+   * This sets the time settings to Hard, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetTimeHard() throws IOException {
     currentUser.setTimeSettings(30);
@@ -228,6 +297,12 @@ public class GameSettingsController {
     setTimeSettings();
   }
 
+  /**
+   * This sets the time settings to Master, updates the game settings page and is saved to the user
+   * data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetTimeMaster() throws IOException {
     currentUser.setTimeSettings(15);
@@ -235,6 +310,12 @@ public class GameSettingsController {
     setTimeSettings();
   }
 
+  /**
+   * This sets the Confidence settings to Easy, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetConfidenceEasy() throws IOException {
     currentUser.setConfidence(1);
@@ -242,6 +323,12 @@ public class GameSettingsController {
     setConfidenceSettings();
   }
 
+  /**
+   * This sets the Confidence settings to Medium, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetConfidenceMedium() throws IOException {
     currentUser.setConfidence(10);
@@ -249,6 +336,12 @@ public class GameSettingsController {
     setConfidenceSettings();
   }
 
+  /**
+   * This sets the Confidence settings to Hard, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetConfidenceHard() throws IOException {
     currentUser.setConfidence(25);
@@ -256,6 +349,12 @@ public class GameSettingsController {
     setConfidenceSettings();
   }
 
+  /**
+   * This sets the Confidence settings to Master, updates the game settings page and is saved to the
+   * user data file.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetConfidenceMaster() throws IOException {
     currentUser.setConfidence(50);
@@ -263,6 +362,13 @@ public class GameSettingsController {
     setConfidenceSettings();
   }
 
+  /**
+   * This method sets the mode settings to Zen mode, updates the game settings page by making the
+   * game settings invisible to the user: this is because none of the games settings is integrated
+   * in Zen mode
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetModeToZen() throws IOException {
     currentUser.setMode(Mode.ZEN);
@@ -272,6 +378,12 @@ public class GameSettingsController {
     currentUser.saveData();
   }
 
+  /**
+   * This method sets the mode settings to Hidden word mode, game settings is still visible to the
+   * user in this mode.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetToHidden() throws IOException {
     currentUser.setMode(Mode.HIDDENWORD);
@@ -281,6 +393,12 @@ public class GameSettingsController {
     currentUser.saveData();
   }
 
+  /**
+   * This method sets the mode settings to Normal mode, game settings is visible to the user in this
+   * mode.
+   *
+   * @throws IOException If errors occur when saving data to the file
+   */
   @FXML
   private void onSetToNormal() throws IOException {
     currentUser.setMode(Mode.NORMAL);

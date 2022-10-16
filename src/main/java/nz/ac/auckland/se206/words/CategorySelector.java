@@ -26,6 +26,14 @@ public class CategorySelector {
   // shown in the csv file
   private Map<Difficulty, List<String>> difficulty2categories;
 
+  /**
+   * This is the constructor for CategorySelector which initialises the difficulty2categories hash
+   * map.
+   *
+   * @throws URISyntaxException If string could not be parsed as a URI reference
+   * @throws IOException If errors occur when accessing the csv file
+   * @throws CsvException If error occurs in the opencsv
+   */
   public CategorySelector() throws URISyntaxException, IOException, CsvException {
     // initialise the hash map and map the enums to its corresponding list
     difficulty2categories = new HashMap<>();
@@ -44,6 +52,9 @@ public class CategorySelector {
    * the category and difficulty.
    *
    * @return list containing the category and its respective difficulty
+   * @throws URISyntaxException If string could not be parsed as a URI reference
+   * @throws IOException If error occurs when reading the files
+   * @throws CsvException If error occurs in the opencsv
    */
   protected List<String[]> getLines() throws URISyntaxException, IOException, CsvException {
 
@@ -59,7 +70,7 @@ public class CategorySelector {
   /**
    * This method randomly chooses a category from a specified difficulty.
    *
-   * @param difficulty difficulty of the game
+   * @param wordsSettings The difficulty of the game
    * @return a category from the specified difficulty
    */
   public String getRandomCategory(int wordsSettings) {
@@ -73,8 +84,8 @@ public class CategorySelector {
   /**
    * This method returns the entire list of words of a given difficulty
    *
-   * @param difficulty
-   * @return
+   * @param wordsSettings The difficulty of the game
+   * @return a list containing all the words of the categories specified by the difficulty
    */
   public List<String> getDifficultyList(int wordsSettings) {
     List<String> listOfWords = new ArrayList<String>();

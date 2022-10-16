@@ -103,8 +103,8 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws CsvException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an issue with the opencsv loading
+   * @throws URISyntaxException If string cannot be parsed as URI reference
    */
   public void initialize() throws ModelException, IOException, URISyntaxException, CsvException {
     graphic = canvas.getGraphicsContext2D();
@@ -170,9 +170,9 @@ public class CanvasController {
    * This method chooses the word for this canvas game instance. This will be based on game
    * settings, if in ZEN mode, the choices is always from ALL categories.
    *
-   * @throws CsvException
-   * @throws IOException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an issue with the opencsv loading
+   * @throws IOException If the model cannot be found on the file system.
+   * @throws URISyntaxException If string cannot be parsed as URI reference
    */
   private void chooseWord() throws URISyntaxException, IOException, CsvException {
     // implement the category selector and display the category on the lbl
@@ -211,10 +211,14 @@ public class CanvasController {
           labelText = StringUtils.repeat("_", randomWord.length());
           break;
         } catch (WordNotFoundException e) {
+          // if no definition is found, get a new word
           randomWord = getNewWord(allWords, playedWords, categorySelector);
         }
       }
       lblCategory.setText(StringUtils.repeat("_", randomWord.length()));
+      // Added this so that words from the hidden word mode is shown on the list of
+      // played words.
+      currentUser.addWord(randomWord);
 
     } else {
       currentUser.addWord(randomWord);
@@ -224,6 +228,30 @@ public class CanvasController {
     currentWord = randomWord;
   }
 
+  /**
+   * This method finds a random word from categories depending on the user game settings, that has
+   * not been played by the user before.
+   *
+   * @param allWords The list of words from a set of difficulty categories
+   * @param playedWords The list of words the user has played before
+   * @param categorySelector The instance of the class that fetches the words from the csv
+   * @return a string of the random word that the user has not played before
+   */
+  private String getNewWord(
+      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
+    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    // generate word that user has not played yet in current round
+    while (playedWords.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
+    }
+
+    return randomWord;
+  }
+
+  /**
+   * This method is executed when the cross button is clicked in the Canvas page which switches the
+   * root to the menu instance of the user.
+   */
   @FXML
   private void onSwitchToMenu() {
     // play sound
@@ -232,6 +260,14 @@ public class CanvasController {
     sceneBtnIsIn.setRoot(SceneManager.getUi(SceneManager.AppUi.MENU));
   }
 
+  /**
+   * This method is executed when the ready button is clicked, this method starts the timer, enables
+   * the convas and its components and the prediction threads.
+   *
+   * @throws InterruptedException If a running thread is interrupted
+   * @throws ExecutionException If retrieving result from a task has failed
+   * @throws IOException If errors occur when accessing the file
+   */
   @FXML
   private void onStartGame() throws InterruptedException, ExecutionException, IOException {
     // play sound
@@ -259,13 +295,20 @@ public class CanvasController {
     }
   }
 
-  /** This method is called when the "Clear" button is pressed. */
+  /**
+   * This method is called when the trash can icon button is pressed. This clears the whole canvas/
+   * removes all existing drawings.
+   */
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     playSound();
   }
 
+  /**
+   * This method is called when the Dark Blue paint button is pressed. This switches the brush color
+   * to dark blue.
+   */
   @FXML
   private void onDrawBlue() {
 
@@ -275,6 +318,10 @@ public class CanvasController {
     playSound();
   }
 
+  /**
+   * This method is executed when the cyan paint button is clicked. This switches the brush color to
+   * dark blue.
+   */
   @FXML
   private void onDrawCyan() {
 
@@ -284,6 +331,10 @@ public class CanvasController {
     playSound();
   }
 
+  /**
+   * This methid is executed when the purple paint button is clicked. This switches the brush color
+   * to purple.
+   */
   @FXML
   private void onDrawPurple() {
 
@@ -293,6 +344,10 @@ public class CanvasController {
     playSound();
   }
 
+  /**
+   * This method is executed when the Magenta paint button is clicked. This switches the brush color
+   * to magenta.
+   */
   @FXML
   private void onDrawMagenta() {
     // This is the colour of the brush.
@@ -301,6 +356,10 @@ public class CanvasController {
     playSound();
   }
 
+  /**
+   * This method is executed when the Erase icon is clicked. This switches the brush color to black
+   * and since the canvas color is black, this acts as an eraser for the canvas.
+   */
   @FXML
   private void onErase() {
     playSound();
@@ -333,6 +392,12 @@ public class CanvasController {
         });
   }
 
+  /**
+   * This method is executed when the save button is clicked. This opens up a secondary stage/pop up
+   * which shows the save menu.
+   *
+   * @throws IOException If errors occur when loading the fxml file.
+   */
   @FXML
   private void onSave() throws IOException {
     // play sound
@@ -356,12 +421,11 @@ public class CanvasController {
   }
 
   /**
-   * This method checks if the current word is in the top x classifications where x is the number
-   * specified.
+   * This method checks if the current word is in the top x classifications. Edited: Changes on
+   * param because of the updated winOrLose task.
    *
-   * @param topPredictions The boundary value that current word is checked against
    * @param classifications The list of the DL predictions
-   * @return if current word is included within the boundary which means the player has won
+   * @return if current word is included in the top x classifications
    */
   private boolean isWin(List<Classification> classifications) {
     for (int i = 0; i < classifications.size(); i++) {
@@ -376,7 +440,9 @@ public class CanvasController {
   }
 
   /**
-   * Get the current snapshot of the canvas.
+   * Get the current snapshot of the canvas. Used in the ML predictions and in the save menu.
+   * Edited: Changes on the BufferedImage settings, instead of Binary, i've made it to RGB so that
+   * it registers the different brush colors.
    *
    * @return The BufferedImage corresponding to the current canvas content.
    */
@@ -424,6 +490,10 @@ public class CanvasController {
     timeline.playFromStart();
   }
 
+  /**
+   * This method is executed when onDrag is detected in the canvas, this is to prevent predictions
+   * on an empty canvas before the user starts drawing.
+   */
   @FXML
   private void startPrediction() {
 
@@ -454,47 +524,10 @@ public class CanvasController {
                                       getCurrentSnapshot(), currentUser.getAccuracy()));
                             }
                           });
-                  FutureTask<Void> outsidePrediction =
-                      new FutureTask<Void>(
-                          new Callable<Void>() {
-                            public Void call() throws TranslateException {
-                              List<Classification> classifications =
-                                  model.getPredictions(getCurrentSnapshot(), 40);
-
-                              List<String> predictionString =
-                                  DoodlePrediction.getPredictionString(classifications, 40);
-
-                              if (predictionString.get(0).contains(randomWord)) {
-                                for (int i = 0; i <= 40; i++) {
-
-                                  if (classifications
-                                      .get(i)
-                                      .getClassName()
-                                      .replace("_", " ")
-                                      .equals(randomWord)) {
-
-                                    if (i <= 10) {
-                                      lblWinOrLose.setText("TOP 10");
-                                    } else if (i <= 20) {
-                                      lblWinOrLose.setText("TOP 20");
-                                    } else if (i <= 30) {
-                                      lblWinOrLose.setText("TOP 30");
-                                    } else if (i <= 40) {
-                                      lblWinOrLose.setText("TOP 40");
-                                    }
-                                  }
-                                }
-                              } else {
-                                lblWinOrLose.setText("NOT EVEN CLOSE");
-                              }
-
-                              return null;
-                            }
-                          });
 
                   // get the top 10 list and check if the current word is within the top 3 (EASY)
                   Platform.runLater(winOrLose);
-                  Platform.runLater(outsidePrediction);
+                  setOutsidePrediction();
                   getTop10Predictions();
 
                   // set the temp time
@@ -510,6 +543,7 @@ public class CanvasController {
 
               while (isZen) {
                 if ((int) (System.currentTimeMillis() - tempTime) / 1000 >= 1) {
+                  setOutsidePrediction();
                   getTop10Predictions();
                   tempTime = System.currentTimeMillis();
                 }
@@ -649,10 +683,64 @@ public class CanvasController {
   }
 
   /**
+   * Extracted from the startPredictions method so that it is usable in ALL modes. This thread tells
+   * the user where their random word is in the ranking.
+   */
+  private void setOutsidePrediction() {
+    FutureTask<Void> outsidePrediction =
+        new FutureTask<Void>(
+            new Callable<Void>() {
+              public Void call() throws TranslateException {
+
+                // get the top 40 predictions and turn this into a string
+                List<Classification> classifications =
+                    model.getPredictions(getCurrentSnapshot(), 40);
+
+                List<String> predictionString =
+                    DoodlePrediction.getPredictionString(classifications, 40);
+
+                // check if the string/top 40 has the word, if not tell the user
+                // that they are not in the top 40
+                if (predictionString.get(0).contains(randomWord)) {
+                  for (int i = 0; i <= 40; i++) {
+
+                    // find the random word in the top 40, index in the list
+                    // represented by i
+                    if (classifications
+                        .get(i)
+                        .getClassName()
+                        .replace("_", " ")
+                        .equals(randomWord)) {
+
+                      // categorise which TOP X the random word is in and tell
+                      // the user that they are in TOP X
+                      if (i <= 10) {
+                        lblWinOrLose.setText("TOP 10");
+                      } else if (i <= 20) {
+                        lblWinOrLose.setText("TOP 20");
+                      } else if (i <= 30) {
+                        lblWinOrLose.setText("TOP 30");
+                      } else if (i <= 40) {
+                        lblWinOrLose.setText("TOP 40");
+                      }
+                    }
+                  }
+                } else {
+                  lblWinOrLose.setText("NOT EVEN CLOSE");
+                }
+
+                return null;
+              }
+            });
+
+    Platform.runLater(outsidePrediction);
+  }
+
+  /**
    * This method runs the top 10 prediction future task and sets the prediction string
    *
-   * @throws ExecutionException
-   * @throws InterruptedException
+   * @throws ExecutionException If retrieving result from a task has failed
+   * @throws InterruptedException If a running thread was interrupted
    */
   private void getTop10Predictions() throws InterruptedException, ExecutionException {
     // create a future task for getting the prediction string
@@ -670,19 +758,30 @@ public class CanvasController {
             });
 
     Platform.runLater(predict);
+    // don't show the colorings since prediction and accuracy settings aren't part of
+    // zen mode.
     Platform.runLater(
         () -> {
           try {
             txtFlowPrediction.getChildren().clear();
+            // this refers to the top x in accuracy settings, this will be
+            // coloured based on the conditions met in isWin
             Text topX = new Text(predict.get().get(0));
-            if (topX.getText().contains(randomWord)) {
-              if (isWin(model.getPredictions(getCurrentSnapshot(), currentUser.getAccuracy()))) {
-                topX.setFill(Color.GREEN);
+
+            if (!isZen) {
+              if (topX.getText().contains(randomWord)) {
+                if (isWin(model.getPredictions(getCurrentSnapshot(), currentUser.getAccuracy()))) {
+                  topX.setFill(Color.GREEN);
+                } else {
+                  topX.setFill(Color.YELLOW); // if confidence isnt met
+                }
               } else {
-                topX.setFill(Color.YELLOW);
+                topX.setFill(Color.RED);
               }
             } else {
-              topX.setFill(Color.RED);
+              // set the topX text to white, do not differentiate the topX from the other
+              // part in Zen mode since accuracy settings is not relevant
+              topX.setFill(Color.WHITE);
             }
             Text secondString = new Text(predict.get().get(1));
             secondString.setFill(Color.WHITE);
@@ -695,17 +794,10 @@ public class CanvasController {
         });
   }
 
-  private String getNewWord(
-      List<String> allWords, List<String> playedWords, CategorySelector categorySelector) {
-    String randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    // generate word that user has not played yet in current round
-    while (playedWords.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(currentUser.getWordsSettings());
-    }
-
-    return randomWord;
-  }
-
+  /**
+   * This method is executed when the Hint button is clicked (available for hidden word mode only)
+   * which updates the label showing the incomplete/hidden characters of the random word chosen.
+   */
   @FXML
   private void onHint() {
     if (hintCounter < randomWord.length()) {

@@ -47,6 +47,12 @@ public class UserProfile {
 
   private Mode mode;
 
+  /**
+   * Constructor for the User Profile instance, the user can only decide the name, other statistics
+   * is based on the game and should have a default settings of EASY.
+   *
+   * @param name
+   */
   public UserProfile(String name) {
     // add underscore to names with spaces
     this.name = name.replace(" ", "_");
@@ -71,6 +77,12 @@ public class UserProfile {
     this.mode = Mode.NORMAL;
   }
 
+  /**
+   * This method creates a NEW file for a new user in the users folder. This should only be called
+   * when initialising the file.
+   *
+   * @throws IOException If an I/O error occurs when tring to create or write to file
+   */
   public void saveData() throws IOException {
     // create the file in the data folder
     File file = new File("src/main/resources/data/users", name + ".txt");
@@ -85,7 +97,7 @@ public class UserProfile {
    * to update the local data.
    *
    * @param file The file object that we will write on
-   * @throws IOException
+   * @throws IOException If and I/O error occurs when writing fields to file
    */
   public void writeData(File file) throws IOException {
     // write into the file with all its details
@@ -109,6 +121,13 @@ public class UserProfile {
     writer.close();
   }
 
+  /**
+   * This method reads the user file and assigns the UserProfile fields with the data from the file.
+   *
+   * @param file The file to read the data from
+   * @throws NumberFormatException If the value trying to be converted to number is invalid
+   * @throws IOException If the file or line from file trying to be read is not found
+   */
   public void readDataFromFile(File file) throws NumberFormatException, IOException {
     // reads data from existing file and updating the userprofile instance fields
     BufferedReader reader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
@@ -145,11 +164,12 @@ public class UserProfile {
     reader.close();
   }
 
-  // below are all the simple getter/setter and increment methods
+  /** This method increments the number of wins field of the user. */
   public void addWin() {
     this.wins += 1;
   }
 
+  /** This method increments the number of losses field of the user. */
   public void addLoss() {
     this.loss += 1;
   }
@@ -158,6 +178,11 @@ public class UserProfile {
     return this.words;
   }
 
+  /**
+   * This method adds the word to the list of played words of the user.
+   *
+   * @param word The word to be added to the list
+   */
   public void addWord(String word) {
     this.words.add(word);
   }
@@ -186,10 +211,15 @@ public class UserProfile {
     return this.loss;
   }
 
+  /** This method increments the number of rounds field of the user. */
   public void addRound() {
     this.rounds++;
   }
 
+  /**
+   * This method is officially called when creating the new round, it resets the list of words and
+   * adds a round.
+   */
   public void newRound() {
     this.words = new ArrayList<String>();
     addRound();
@@ -254,6 +284,11 @@ public class UserProfile {
     return this.mode == Mode.ZEN;
   }
 
+  /**
+   * This method returns a boolean if the mode is Hidden Mode.
+   *
+   * @return true if the current mode is Hidden Mode
+   */
   public boolean isHiddenMode() {
     return this.mode == Mode.HIDDENWORD;
   }
@@ -262,10 +297,20 @@ public class UserProfile {
     return this.zenWords;
   }
 
+  /**
+   * This method adds a word into the list of words the user has played in the ZEN mode.
+   *
+   * @param word The word to be added to the list
+   */
   public void addZenWords(String word) {
     this.zenWords.add(word);
   }
 
+  /**
+   * This method is called when moving into the next Zen Round. It clears the existing lists and
+   * increments the number of zen rounds. This is specially done when the user has played all words
+   * from all categories.
+   */
   public void newZenRound() {
     this.zenWords = new ArrayList<String>();
     this.zenRounds++;

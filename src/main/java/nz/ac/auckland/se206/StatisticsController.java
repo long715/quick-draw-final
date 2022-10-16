@@ -18,6 +18,12 @@ public class StatisticsController {
   @FXML private ListView lstvWordHistory;
   @FXML private Button btnViewBadges;
 
+  /**
+   * This is the entry method executed when the Statistics page is firstly loaded. Updates the
+   * components (labels, list view and piechart) based on the latest statistics of the user.
+   *
+   * @throws IOException If the fxml trying to be loaded is not found
+   */
   @FXML
   private void initialize() throws IOException {
     SceneManager.storeUi(SceneManager.AppUi.BADGES, App.loadFxml("badges"));
@@ -44,6 +50,7 @@ public class StatisticsController {
     }
   }
 
+  /** Loads the Menu instance of the user on the scene. */
   @FXML
   private void onBack() {
     new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();

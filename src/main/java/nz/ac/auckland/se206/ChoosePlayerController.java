@@ -31,6 +31,13 @@ public class ChoosePlayerController {
   @FXML private Button btnDelete;
   @FXML private ListView<String> lstvPlayers;
 
+  /**
+   * This is the entry method when the Choose Player instance is first loaded into the stage. Reads
+   * the existing user data/files and sets the list view in the page.
+   *
+   * @throws NumberFormatException If inappropriate string format is trying to convert to int
+   * @throws IOException If errors occur when reading the files
+   */
   @FXML
   private void initialize() throws NumberFormatException, IOException {
 
@@ -57,6 +64,7 @@ public class ChoosePlayerController {
 
     // during initialise where the main user is null, cancel must always be disabled
     btnCancel.setDisable(true);
+    btnCancel.setVisible(false);
     // disable property depends whether or not there is a selected item
     btnOk
         .disableProperty()
@@ -71,6 +79,13 @@ public class ChoosePlayerController {
         });
   }
 
+  /**
+   * This method is executed when the plus button is clicked. It creates a secondary stage and loads
+   * the create player root. When the secondary stage is closed, this checks for the name of the
+   * created user and adds it into the list IF the user name is not an empty string.
+   *
+   * @throws IOException If errors occur when trying to load the fxml file
+   */
   @FXML
   private void onCreate() throws IOException {
     // creating a thread for the sound effect when create player button is clicked
@@ -103,6 +118,10 @@ public class ChoosePlayerController {
     name = ""; // reset name variable
   }
 
+  /**
+   * This method is executed when the minus sign is clicked. This will delete the selected item from
+   * the list view and delete its corresponding user file.
+   */
   @FXML
   private void onDelete() {
     // sound effect
@@ -131,7 +150,7 @@ public class ChoosePlayerController {
    * This method passes the chosen user profile to the SceneManager and create the UserProfile
    * instance.
    *
-   * @throws IOException
+   * @throws IOException If errors occur when trying to load the fxml file
    */
   @FXML
   private void onChoose() throws IOException {
@@ -151,11 +170,17 @@ public class ChoosePlayerController {
       btnCancel.setDisable(false);
       // playing sound when the ok button is clicked
       new AudioClip(getClass().getResource("/sounds/ButtonClickSound.wav").toExternalForm()).play();
+      btnCancel.setVisible(true);
+
       // switch to the main menu aka onCancel
       onCancel();
     }
   }
 
+  /**
+   * This is executed when the cross button is clicked, this will load the menu of the previously
+   * selected user.
+   */
   @FXML
   private void onCancel() {
     new AudioClip(getClass().getResource("/sounds/OnBackSound.wav").toExternalForm()).play();

@@ -37,6 +37,11 @@ public class SaveMenuController {
     this.stage = stage;
   }
 
+  /**
+   * Gets the selected directory from the file chooser and updates the text area with the chosen
+   * directory with the file extension. This is beacuse the text value is used to create the file
+   * path where the canvas snapshot will be saved.
+   */
   @FXML
   private void onChooseFile() {
     // play sound
@@ -50,6 +55,12 @@ public class SaveMenuController {
     }
   }
 
+  /**
+   * Takes the directory (text value) in the text area, which is used as the path to create the .bmp
+   * file of the canvas snapshot. The warning label should show the user why their input is invalid.
+   *
+   * @throws IOException If and IO error occurs anywhere when saving the snapshot
+   */
   @FXML
   private void onSave() throws IOException {
     // play sound
@@ -75,7 +86,7 @@ public class SaveMenuController {
     // create the file path for the saved canvas drawing
     Path newFilePath = Paths.get(pathName);
 
-    /** CHECKING FOR WARNINGS */
+    // CHECKING FOR WARNINGS
     File file = new File(pathName);
 
     // check if file name is invalid
@@ -110,7 +121,8 @@ public class SaveMenuController {
   }
 
   /**
-   * Save the current snapshot on a bitmap file.
+   * Save the current snapshot on a bitmap file. This is the snapshot saved to the user's local
+   * machine.
    *
    * @return The file of the saved image.
    * @throws IOException If the image cannot be saved.
