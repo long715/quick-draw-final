@@ -1,0 +1,14 @@
+38
+19
+[vase, bottlecap, bowtie, line, lollipop, grass, face, asparagus, octopus, trafficlight, horse, postcard, tennisracquet, tooth, elephant, lightbulb, rabbit, hourglass, hottub, drums, waterslide, ceilingfan, bracelet, spider, duck, ?aircraftcarrier, axe, icecream, hexagon, lightbulb, paperclip, toothbrush, fireplace, octagon, keyboard, pizza, tornado, nose, belt, teapot, tennisracquet, paperclip, bed, shovel]
+[]
+hexagon
+2
+0
+0
+2
+3
+45
+1
+[/images/Under_10s_win.png, /images/Under_20s_win.png, /images/Under_30s_win.png]
+NORMAL

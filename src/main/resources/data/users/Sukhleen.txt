@@ -1,0 +1,14 @@
+2
+2
+[foot, strawberry, triangle, chandelier]
+[]
+foot
+4
+0
+0
+3
+3
+15
+1
+[/images/Under_10s_win.png, /images/Under_30s_win.png]
+NORMAL

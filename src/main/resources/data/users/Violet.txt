@@ -1,0 +1,14 @@
+2
+7
+[bowtie, snowman, hammer, chair, pineapple, skull, ladder, lightning, traffic light]
+[]
+chair
+45
+0
+0
+3
+3
+15
+1
+[]
+HIDDENWORD
